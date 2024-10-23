@@ -1,0 +1,27 @@
+body {
+    font-family: 'Roboto', sans-serif !important; /* Utilisez la même police que dans le NavBar */
+    font-size: 16px !important; /* Taille de police globale */
+}
+
+.accordion-button {
+    border-radius: 0.375rem !important;
+    font-size: 16px !important;
+    background-color: #20247b !important; /* Couleur d'arrière-plan */
+    color: #ffffff !important; /* Couleur du texte */
+}
+
+.accordion-header {
+    font-size: 16px !important;
+}
+
+.accordion-body {
+    padding: 1rem !important;
+    font-size: 16px !important;
+    background-color: #f8f9fa !important;
+}
+
+.accordion-item {
+    border: 1px solid #e9ecef !important;
+    margin-bottom: 0.5rem !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
