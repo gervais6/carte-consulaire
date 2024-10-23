@@ -2,7 +2,7 @@ import React from "react";
 import '../pages/Compte.css';
 import Header from "../pages/Header";
 import Footer from "../pages/Footer";
-
+import {  FaCamera } from "react-icons/fa6";
 const Compte = () => {
   return (
     <div>
@@ -13,7 +13,6 @@ const Compte = () => {
 <div id="contact" class="contact-area section-padding">
 	<div class="container mt-5">										
 
-		<h7>Creez un compte</h7>
 				<br/>
 				<br/>
 
@@ -52,14 +51,45 @@ const Compte = () => {
 							</div>
 
 
-                            <div class="form-group col-md-12 mb-5 ">
-								<input type="file" name="password" class="form-control" placeholder="password" required="required"/>
-								<p style={{fontSize:12,marginLeft:10}}>Afin de vérifier les informations saisies ainsi que votre nationalité ,veuillez charger une copie  de la page 02  de votre passsport</p>
+							<div className="row gutters mt-4">
 
-							</div>
+							<div className="col-12 mb-3">
+    <div
+        className="photo-upload-container d-flex flex-column justify-content-center align-items-center"
+        style={{
+            border: "2px dashed gray",
+            height: 150,
+            borderRadius: 10,
+            cursor: "pointer",
+            position: "relative",
+            transition: "border-color 0.3s",
+            backgroundColor: "#f9f9f9",
+            width: "102%", // Assurez-vous que la largeur est à 102%
 
+        }}
+        onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#20247b")}
+        onMouseLeave={(e) => (e.currentTarget.style.borderColor = "gray")}
+    >
+        <input
+            type="file"
+            className="form-control-file"
+            id="photo"
+            name="photo"
+            style={{
+                position: "absolute",
+                opacity: 0,
+                width: "100%",
+                height: "100%",
+                cursor: "pointer"
+            }}
+        />
+        <FaCamera size={40} style={{ color: "#20247b", marginBottom: 5 }} /> {/* Icône au-dessus du texte */}
+        <span style={{ color: "gray", textAlign: "center" }}>Afin de vérifier les informations saisies ainsi que votre nationalité ,Veuillez charger une copie de la page 02 de votre Passport</span>
+    </div>
 
-							<div class="col-md-12 text-center mb-5">
+</div>                            </div>
+
+							<div class="col-md-12 text-center mt-5 mb-5">
 								<button type="submit" value="Send message" name="submit" id="submitButton" class="btn btn-contact-bg  " title="Submit Your Message!" style={{backgroundColor:'#20247b',borderRadius:5,padding:"15px 27px", width: "100%",fontSize:15,color:"white"} }>Inscrivez Vous </button>
 							</div>
 						</div>

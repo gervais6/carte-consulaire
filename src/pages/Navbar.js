@@ -119,7 +119,7 @@ const Navbar = () => {
         </div>
       </header>
 
-      <main className="d-none d-lg-block">
+<main className="d-none d-lg-block">
     <section className="section services-section" id="services">
         <div className="container">
             <div className="row">

@@ -28,7 +28,6 @@ const Connect = () => {
             </div>					
             <div className="row">
               <div className="col-lg-7">
-                <h7>Connectez-vous</h7>
                 <br/>
                 <br/>
 
