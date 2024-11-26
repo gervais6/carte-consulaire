@@ -10,7 +10,7 @@ const Profile = () => {
     const [activeTab, setActiveTab] = useState('demande'); // Gère l'onglet actif
 
     return (
-        <div>
+        <div style={{ overflowY: 'auto', maxHeight: '100vh' }}>
             <Header />
             <div className="container">
                 <div className="profile">
@@ -30,6 +30,7 @@ const Profile = () => {
                                 >
                                     <FaCamera /> Changer
                                 </button>
+                                
                             </div>
 
                             {/* Responsive Navigation */}
@@ -50,24 +51,22 @@ const Profile = () => {
 
                             <ul className="profile-header-tab nav nav-tabs nav-tabs-v2 ms-5 d-none d-md-flex">
                                 <li className="nav-item">
-                                    <a
-                                        href="#profile-post"
-                                        className={`nav-link ${activeTab === 'demande' ? 'active' : ''}`}
-                                        onClick={() => setActiveTab('demande')}
-                                        style={{ borderRadius: 0 }}
-                                    >
-                                        <div className="nav-field" style={{ fontSize: 16, color: "black" }}>Demande de carte consulaire</div>
-                                    </a>
+                                <button
+                                    className={`btn btn-outline-primary w-100 mb-2   ${activeTab === 'demande' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('demande')}
+                                >
+                                    Demande de carte consulaire
+                                </button>
+
                                 </li>
                                 <li className="nav-item">
-                                    <a
-                                        href="#profile-followers"
-                                        className={`nav-link ${activeTab === 'suivi' ? 'active' : ''}`}
-                                        onClick={() => setActiveTab('suivi')}
-                                        style={{ borderRadius: 0 }}
-                                    >
-                                        <div className="nav-field" style={{ fontSize: 16, color: "black" }}>Suivi carte consulaire</div>
-                                    </a>
+                                <button
+                                    className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('suivi')}
+                                >
+                                    Suivi carte consulaire
+                                </button>
+
                                 </li>
                             </ul>
                         </div>
@@ -76,7 +75,6 @@ const Profile = () => {
                     <div className="profile-container">
                         <div className="profile-sidebar">
                             <div className="desktop-sticky-top">
-
                                 <button className="btn btn-danger w-100" aria-label="Déconnexion">
                                     Déconnexion
                                 </button>
@@ -137,7 +135,7 @@ const Profile = () => {
                                                 <button
                                                     type="submit"
                                                     className="btn btn-primary w-100"
-                                                    style={{ fontSize: "17px", backgroundColor: "#20247b", padding: "10px 20px" }}
+                                                    style={{ fontSize: " 17px", backgroundColor: "#20247b", padding: "10px 20px" }}
                                                     aria-label="Soumettre la demande"
                                                 >
                                                     Soumettre la demande
@@ -147,7 +145,7 @@ const Profile = () => {
 
                                         {activeTab === 'suivi' && (
                                             <div className="container">
-                                                <h5 style={{ fontSize: "20px ", marginBottom: "20px" }}>Suivi de votre carte consulaire</h5>
+                                                <h5 style={{ fontSize: "20px", marginBottom: "20px" }}>Suivi de votre carte consulaire</h5>
                                                 <button
                                                     className={`btn w-100 ${activeTab === 'suivi' ? 'btn-outline-secondary' : 'btn-outline-primary'}`}
                                                     style={{ fontSize: "17px", padding: "10px 20px" }}

@@ -1,42 +1,93 @@
-import React from "react";
 import Header from "../pages/Header";
 import Footer from "../pages/Footer";
-import '../pages/Mdp.css';  // Ajout du fichier CSS pour la mise en page
+
+
+import React, { useEffect, useState } from "react";
+import '../pages/Compte.css';
+import { Link } from "react-router-dom";
 
 const MotsDePasseOublier = () => {
-    return (
-        <div className="page-container"> {/* Conteneur qui prend toute la page */}
-            <Header />
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-            <div className="content-wrap"> {/* Conteneur pour le contenu */}
-                <div className="container padding-bottom-3x mb-2 mt-5">
-                    <div className="row justify-content-center">
-                        <div className="col-lg-8 col-md-10">
-                            <h2 className="text-center mb-4">Vous avez oublié votre mot de passe ?</h2>
-                            <form className="card mt-4 shadow-sm">
-                                <div className="card-body">
-                                    <div className="form-group">
-                                        <label htmlFor="email-for-pass" style={{marginLeft:-15}}>Entrez votre adresse e-mail</label>
-                                        <input className="form-control mb-2" type="email" id="email-for-pass" required style={{ fontSize: 15 }} />
-                                        <small className="form-text text-muted"style={{fontSize:10}}>
-                                            Saisissez l'adresse e-mail que vous avez utilisée lors de votre inscription. Ensuite, nous enverrons un code par e-mail à cette adresse.
-                                        </small>
-                                    </div>
-                                </div>
-                                <div className="card-footer text-center">
-                                <button className="btn btn-primary" style={{ background: "#20247b", fontSize: 14, float: "left" }} type="submit">
-    Obtenir un nouveau mot de passe
-</button>
-                                </div>
-                            </form>
-                        </div>
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return (
+    <div>
+      <Header />
+      <div className="container-fluid">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+        <div id="contact" className="contact-area section-padding">
+          <div className="container">										
+            <div className="section-title text-center mt-5">
+            </div>					
+            <div className="row">
+              <div className="col-lg-7">
+                <br/>
+                <br/>
+
+                <div className="contact">
+                  <form className="form" name="enq" method="post" action="contact.php" onsubmit="return validation();">
+                    <div className="row">
+                        
+                      <div className="form-group col-md-12 mb-3">
+                        <input type="email" name="email" className="form-control" placeholder="Veuillez entrer votre e-mail " required="required"/>
+                      </div>
+
+
+
+                      <div className="col-md-12 text-center mb-5">
+                        <button type="submit" value="Send message" name="submit" id="submitButton" className="btn btn-contact-bg" title="Submit Your Message!" style={{backgroundColor:'#20247b',borderRadius: 5,padding:"15px 27px", width: "100%",fontSize:15,color:"white"}}>Envoyer</button>
+                      </div>
                     </div>
-                </div>
-            </div>
+                  </form>
 
-            <Footer /> {/* Footer toujours en bas */}
+                </div>
+              </div>
+
+              {/* Section d'adresse et contact - masquée sur mobile */}
+              {windowWidth >= 768 && (
+                <div className="col-lg-5">
+                  <div className="single_address">
+                    <i className="fa fa-map-marker"></i>
+                    <h4>Notre adresse</h4>
+                    <p>Zone Captage, Dakar</p>
+                  </div>
+                  <div className="single_address">
+                    <i className="fa fa-envelope"></i>
+                    <h4>Envoyez votre message</h4>
+                    <p>Info@example.com</p>
+                  </div>
+                  <div className="single_address">
+                    <i className="fa fa-phone"></i>
+                    <h4>Appelez-nous au</h4>
+                    <p>(+221) 771001897</p>
+                  </div>
+                  <div className="single_address">
+                    <i className="fa fa-clock-o"></i>
+                    <h4>Temps de travail</h4>
+                    <p>Du lundi au vendredi : de 8h00 à 16h00. <br/>Samedi : 10h00 - 14h00</p>
+                  </div>					
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-    );
-}
+      </div>
+      <Footer />
+    </div>
+  );
+};
 
 export default MotsDePasseOublier;
+
+
+
+
