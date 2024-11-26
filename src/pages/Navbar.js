@@ -144,7 +144,7 @@ const Navbar = () => {
         </div>
       </header>
 
-      <main className="d-none d-lg-block">
+      <main className="">
         <section className="section services-section" id="services">
           <div className="container">
             <div className="row">
@@ -193,7 +193,7 @@ const Navbar = () => {
         </section>
       </main>
 
-      <Footer className="d-none d-lg-block" />
+      <Footer className="" />
     </>
   );
 };

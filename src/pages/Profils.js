@@ -17,10 +17,38 @@ const Profile = () => {
                     <div className="profile-header">
                         <div className="profile-header-cover"></div>
                         <div className="profile-header-content">
-                            <div className="profile-header-img">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
+                            <div className="profile-header-img" style={{ width: '150px', height: '150px' }}>
+                                <img 
+                                    src="https://bootdey.com/img/Content/avatar/avatar7.png" 
+                                    alt="" 
+                                    style={{ width: '100%', height: '100%', borderRadius: '50%' }} // Rounded profile picture
+                                />
+                                <button 
+                                    className="btn btn-light mt-2" 
+                                    style={{ position: 'absolute', bottom: '10px', right: '10px' }} 
+                                    aria-label="Changer la photo de profil"
+                                >
+                                    <FaCamera /> Changer
+                                </button>
                             </div>
-                            <ul className="profile-header-tab nav nav-tabs nav-tabs-v2 ms-5">
+
+                            {/* Responsive Navigation */}
+                            <div className="d-md-none mb-3">
+                                <button
+                                    className={`btn btn-outline-primary w-100 mb-2 ${activeTab === 'demande' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('demande')}
+                                >
+                                    Demande de carte consulaire
+                                </button>
+                                <button
+                                    className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('suivi')}
+                                >
+                                    Suivi carte consulaire
+                                </button>
+                            </div>
+
+                            <ul className="profile-header-tab nav nav-tabs nav-tabs-v2 ms-5 d-none d-md-flex">
                                 <li className="nav-item">
                                     <a
                                         href="#profile-post"
@@ -28,7 +56,7 @@ const Profile = () => {
                                         onClick={() => setActiveTab('demande')}
                                         style={{ borderRadius: 0 }}
                                     >
-                                        <div className="nav-field" style={{ fontSize: 14, color: "black" }}>Demande de carte consulaire</div>
+                                        <div className="nav-field" style={{ fontSize: 16, color: "black" }}>Demande de carte consulaire</div>
                                     </a>
                                 </li>
                                 <li className="nav-item">
@@ -38,7 +66,7 @@ const Profile = () => {
                                         onClick={() => setActiveTab('suivi')}
                                         style={{ borderRadius: 0 }}
                                     >
-                                        <div className="nav-field" style={{ fontSize: 14, color: "black" }}>Suivi carte consulaire</div>
+                                        <div className="nav-field" style={{ fontSize: 16, color: "black" }}>Suivi carte consulaire</div>
                                     </a>
                                 </li>
                             </ul>
@@ -48,10 +76,10 @@ const Profile = () => {
                     <div className="profile-container">
                         <div className="profile-sidebar">
                             <div className="desktop-sticky-top">
-                                <h4>John Smith</h4>
-                                <div className="font-weight-600 mb-3 text-muted mt-n2">@johnsmith</div>
-                                <div className="font-weight-600 mb-3 text-muted mt-n2">@Liberté 6</div>
-                                <hr className="mt-4 mb-4" />
+
+                                <button className="btn btn-danger w-100" aria-label="Déconnexion">
+                                    Déconnexion
+                                </button>
                             </div>
                         </div>
 
@@ -63,173 +91,73 @@ const Profile = () => {
                                         {activeTab === 'demande' && (
                                             <form>
                                                 <div className="mb-3">
-                                                    <label htmlFor="nom" className="form-label">Nom complet</label>
-                                                    <input type="text" className="form-control" id="nom" placeholder="Entrez votre nom complet" required />
+                                                    <label htmlFor="nom" className="form-label" style={{ fontSize: "16px" }}>Nom complet</label>
+                                                    <input type="text" className="form-control" id="nom" placeholder="Entrez votre nom complet" required style={{ fontSize: "16px" }} />
                                                 </div>
                                                 <div className="mb-3">
-                                                    <label htmlFor="date_naissance" className="form-label">Date de naissance</label>
-                                                    <input type="date" className="form-control" id="date_naissance" required />
+                                                    <label htmlFor="date_naissance" className="form-label" style={{ fontSize: "16px" }}>Date de naissance</label>
+                                                    <input type="date" className="form-control" id="date_naissance" required style={{ fontSize: "16px" }} min="1900-01-01" max={new Date().toISOString().split("T")[0]} />
                                                 </div>
                                                 <div className="mb-3">
-                                                    <label htmlFor="lieu_naissance" className="form-label">Lieu de naissance</label>
-                                                    <input type="text" className="form-control" id="lieu_naissance" placeholder="Entrez votre lieu de naissance" required />
+                                                    <label htmlFor="lieu_naissance" className="form-label" style={{ fontSize: "16px" }}>Lieu de naissance</label>
+                                                    <input type="text" className="form-control" id="lieu_naissance" placeholder="Entrez votre lieu de naissance" required style={{ fontSize: "16px" }} />
                                                 </div>
                                                 <div className="mb-3">
-                                                    <label htmlFor="nationalite" className="form-label">Nationalité</label>
-                                                    <input type="text" className="form-control" id="nationalite" placeholder="Entrez votre nationalité" required />
+                                                    <label htmlFor="nationalite" className="form-label" style={{ fontSize: "16px" }}>Nationalité</label>
+                                                    <input type="text" className="form-control" id="nationalite" placeholder="Entrez votre nationalité" required style={{ fontSize: "16px" }} />
                                                 </div>
                                                 <div className="mb-3">
-                                                    <label htmlFor="adresse" className="form-label">Adresse actuelle</label>
-                                                    <input type="text" className="form-control" id="adresse" placeholder="Entrez votre adresse actuelle" required />
+                                                    <label htmlFor="adresse" className="form-label" style={{ fontSize: "16px" }}>Adresse actuelle</label>
+                                                    <input type="text" className="form-control" id="adresse" placeholder="Entrez votre adresse actuelle" required style={{ fontSize: "16px" }} />
                                                 </div>
                                                 <div className="mb-3">
-                                                    <label htmlFor="email" className="form-label">Adresse e-mail</label>
-                                                    <input type="email" className="form-control" id="email" placeholder="Entrez votre e-mail" required />
+                                                    <label htmlFor="email" className="form-label" style={{ fontSize: "16px" }}>Adresse e-mail</label>
+                                                    <input type="email" className="form-control" id="email" placeholder="Entrez votre e-mail" required style={{ fontSize: "16px" }} />
                                                 </div>
                                                 <div className="mb-3">
-                                                    <label htmlFor="telephone" className="form-label">Numéro de téléphone</label>
-                                                    <input type="tel" className="form-control" id="telephone" placeholder="Entrez votre numéro de téléphone" required />
+                                                    <label htmlFor="telephone" className="form-label" style={{ fontSize: "16px" }}>Numéro de téléphone</label>
+                                                    <input type="tel" className="form-control" id="telephone" placeholder="Entrez votre numéro de téléphone" required style={{ fontSize: "16px" }} />
                                                 </div>
                                                 <div className="mb-3">
-                                                    <label htmlFor="numero_piece_identite" className="form-label">Numéro de pièce d'identité</label>
-                                                    <input type="text" className="form-control" id="numero_piece_identite" placeholder="Entrez le numéro de votre pièce d'identité" required />
+                                                    <label htmlFor="numero_piece_identite" className="form-label" style={{ fontSize: "16px" }}>Numéro de pièce d'identité</label>
+                                                    <input type="text" className="form-control" id="numero_piece_identite" placeholder="Entrez le numéro de votre pièce d'identité" required style={{ fontSize: "16px" }} />
                                                 </div>
                                                 <div className="mb-3">
-                                                    <label htmlFor="date_expiration_piece" className="form-label">Date d'expiration de la pièce d'identité</label>
-                                                    <input type="date" className="form-control" id="date_expiration_piece" required />
+                                                    <label htmlFor="date_expiration_piece" className="form-label" style={{ fontSize: "16px" }}>Date d'expiration de la pièce d'identité</label>
+                                                    <input type="date" className="form-control" id="date_expiration_piece" required style={{ fontSize: "16px" }} min={new Date().toISOString().split("T")[0]} />
                                                 </div>
                                                 <div className="mb-3">
-                                                    <label htmlFor="photo_identite" className="form-label">Photo d'identité (format JPG ou PNG)</label>
+                                                    <label htmlFor="photo_identite" className="form-label" style={{ fontSize: "16px" }}>Photo d'identité (format JPG ou PNG)</label>
                                                     <input type="file" className="form-control" id="photo_identite" accept=".jpg, .png" required />
                                                 </div>
                                                 <div className="mb-3">
-                                                    <label htmlFor="justificatif_domicile" className="form-label">Justificatif de domicile</label>
+                                                    <label htmlFor="justificatif_domicile" className="form-label" style={{ fontSize: "16px" }}>Justificatif de domicile</label>
                                                     <input type="file" className="form-control" id="justificatif_domicile" accept=".pdf, .jpg, .png" required />
                                                 </div>
-                                                <button type="submit" className="btn btn-primary" style={{ fontSize: "17px", backgroundColor: '#20247b' }}>Soumettre la demande</button>
+                                                <button
+                                                    type="submit"
+                                                    className="btn btn-primary w-100"
+                                                    style={{ fontSize: "17px", backgroundColor: "#20247b", padding: "10px 20px" }}
+                                                    aria-label="Soumettre la demande"
+                                                >
+                                                    Soumettre la demande
+                                                </button>
                                             </form>
                                         )}
 
-                                       {activeTab === 'suivi' && (
-    <div className="container">
-<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"/>
-<div class="container bootstrap snippets bootdey">
-    <section id="news" class="white-bg padding-top-bottom">
-        <div class="container bootstrap snippets bootdey">
-            <div class="timeline">
-                <div class="date-title">
-                    <span>March 2014</span>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6 news-item">
-                        <div class="news-content">
-                            <div class="date">
-                                <p>28</p>
-                                <small>Fri</small>
-                            </div>
-                            <h2 class="news-title">Title 1</h2>
-                            <div class="news-media">
-                                <a class="colorbox cboxElement" href="#">
-                                </a>
-                            </div>
-                            <p>No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure…</p>
-                            <a class="read-more" href="#">Read More</a>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 news-item right">
-                        <div class="news-content">
-                            <div class="date">
-                                <p>27</p>
-                                <small>Thu</small>
-                            </div>
-                            <h2 class="news-title">Title 2</h2>
-                            <div class="news-media gallery">
-                                <a class="colorbox cboxElement" href="#">
-                                </a>
-                                <a class="colorbox cboxElement" href="#"></a>
-                            </div>
-                            <p>But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure…</p>
-                            <a class="read-more" href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-6 news-item">
-                        <div class="news-content">
-                            <div class="date">
-                                <p>26</p>
-                                <small>Wen</small>
-                            </div>
-                            <h2 class="news-title">Title 3</h2>
-                            <div class="news-media video">
-                                <a class="colorbox-video cboxElement" href="#">
-                                </a>
-                            </div>
-                            <p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized…</p>
-                            <a class="read-more" href="#">Read More</a>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 news-item right">
-                        <div class="news-content">
-                            <div class="date">
-                                <p>25</p>
-                                <small>Tue</small>
-                            </div>
-                            <h2 class="news-title">Title 4</h2>
-                            <div class="news-media gallery">
-                                <a class="colorbox cboxElement" href="#">
-                                </a>
-                                <a class="colorbox cboxElement" href="#"></a>
-                            </div>
-                            <p>The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains…</p>
-                            <a class="read-more" href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="date-title">
-                    <span>February 2014</span>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6 news-item">
-                        <div class="news-content">
-                            <div class="date">
-                                <p>27</p>
-                                <small>Thu</small>
-                            </div>
-                            <h2 class="news-title">Title 5</h2>
-                            <div class="news-media video">
-                                <a class="colorbox-video cboxElement" href="#">
-                                </a>
-                            </div>
-                            <p>But who has any right to find fault with a man who chooses to enjoy a pleasure…</p>
-                            <a class="read-more" href="#">Read More</a>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 news-item right">
-                        <div class="news-content">
-                            <div class="date">
-                                <p>24</p>
-                                <small>Mon</small>
-                            </div>
-                            <h2 class="news-title">Title 6</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                            <a class="read-more" href="#">Read More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    </div>
-    </div>
+                                        {activeTab === 'suivi' && (
+                                            <div className="container">
+                                                <h5 style={{ fontSize: "20px ", marginBottom: "20px" }}>Suivi de votre carte consulaire</h5>
+                                                <button
+                                                    className={`btn w-100 ${activeTab === 'suivi' ? 'btn-outline-secondary' : 'btn-outline-primary'}`}
+                                                    style={{ fontSize: "17px", padding: "10px 20px" }}
+                                                    onClick={() => setActiveTab('suivi')}
+                                                    aria-label="Vérifier le suivi"
+                                                >
+                                                    Vérifier le suivi
+                                                </button>
+                                            </div>
                                         )}
-
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +165,7 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
+            <Footer /> {/* Footer présent ici */}
         </div>
     );
 };

@@ -146,6 +146,7 @@ p {
  width: 100%;
  transition: background 0.6s ease-in;
  z-index: 99999;
+ background-color: #20247b;
 }
 .navbar .navbar-brand {
  font-family: 'Lobster', cursive;

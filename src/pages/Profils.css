@@ -506,3 +506,24 @@ body{
 .news-content .news-media.gallery{
     box-shadow:4px 4px 0 #bbb,8px 8px 0 #ddd;
 }
+/* Profils.css */
+
+/* Existing styles... */
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    .nav-field {
+        font-size: 14px; /* Adjust the font size for mobile */
+        padding: 10px; /* Adjust padding if necessary */
+    }
+
+    .profile-header-tab {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center align items */
+    }
+
+    .nav-item {
+        width: 100%; /* Make items full width */
+        text-align: center; /* Center text */
+    }
+}
