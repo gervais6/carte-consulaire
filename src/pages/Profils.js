@@ -65,7 +65,9 @@ const Profile = () => {
                                 >
                                     Suivi carte consulaire
                                 </button>
-                                <button className="btn btn-danger w-100 mt-2" aria-label="Déconnexion">
+                                <button className="btn btn-outline-secondary w-100 mt-2" aria-label="Déconnexion"
+                                                                    style={{backgroundColor:'white',color:'gray',padding:'8px'}}
+>
                                     Déconnexion
                                 </button>
                             </div>
