@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '../pages/Profils.css';
@@ -78,9 +78,19 @@ const Profile = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Logique pour soumettre le formulaire
         console.log('Form submitted:', formData);
     };
+
+    // Détection de la taille de l'écran
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return (
         <div style={{ overflowY: 'auto', maxHeight: '100vh', backgroundColor: '#f8f9fa' }}>
@@ -90,7 +100,7 @@ const Profile = () => {
                     <div className="profile-header">
                         <div className="profile-header-cover"></div>
                         <div className="profile-header-content">
-                            <div className="profile-header-img" style={{ width: '150px', height: '150px', position: 'relative' }}>
+                            <div className="profile-header-img" style={{ width: '150px', height: '150px ', position: 'relative' }}>
                                 <img 
                                     src={profileImage} 
                                     alt="Profile" 
@@ -106,7 +116,7 @@ const Profile = () => {
                                     style={{ display: 'none' }} 
                                     onChange={handleImageChange} 
                                 />
-                            </ div>
+                            </div>
 
                             <div className="d-md-none mb-3">
                                 <button
@@ -146,7 +156,7 @@ const Profile = () => {
                                     <button
                                         className={`btn btn-outline-secondary w-100 mb-2 ms-3 ${activeTab === 'suivi' ? 'active' : ''}`}
                                         onClick={() => setActiveTab('suivi')}
-                                        style={{ backgroundColor: '#20247b ', color: 'white', padding: '6px', borderRadius: '5px' }}
+                                        style={{ backgroundColor: '#20247b', color: 'white', padding: '6px', borderRadius: '5px' }}
                                     >
                                         Suivi de carte consulaire
                                     </button>
@@ -171,138 +181,177 @@ const Profile = () => {
                                         {activeTab === 'demande' && (
                                             <form onSubmit={handleSubmit} style={{ backgroundColor: '#ffffff', padding: '20px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.1)' }}>
                                                 <h5 className="mb-4" style={{ color: '#20247b' }}>Demande de carte consulaire</h5>
-                                                {currentStep === 0 && (
+                                                {isMobile && <p>Étape {currentStep + 1} sur 5</p>}
+                                                {isMobile ? (
+                                                    <>
+                                                        {currentStep === 0 && (
+                                                            <>
+                                                                <div className="mb-3">
+                                                                    <label htmlFor="nom">Nom Complet</label>
+                                                                    <input type="text" className="form-control" id="nom" placeholder="Entrez votre nom complet" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                                </div >
+                                                                <div className="mb-3">
+                                                                    <label htmlFor="date_naissance">Date de Naissance</label>
+                                                                    <input type="date" className="form-control" id="date_naissance" required style={{ fontSize: "16px" }} min="1900-01-01" max={new Date().toISOString().split("T")[0]} onChange={handleChange} />
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                        {currentStep === 1 && (
+                                                            <>
+                                                                <div className="mb-3">
+                                                                    <label htmlFor="lieu_naissance">Lieu de Naissance</label>
+                                                                    <input type="text" className="form-control" id="lieu_naissance" placeholder="Entrez votre lieu de naissance" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                                </div>
+                                                                <div className="mb-3">
+                                                                    <label htmlFor="nationalite">Nationalité</label>
+                                                                    <input type="text" className="form-control" id="nationalite" placeholder="Entrez votre nationalité" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                        {currentStep === 2 && (
+                                                            <>
+                                                                <div className="mb-3">
+                                                                    <label htmlFor="adresse">Adresse</label>
+                                                                    <input type="text" className="form-control" id="adresse" placeholder="Entrez votre adresse actuelle" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                                </div>
+                                                                <div className="mb-3">
+                                                                    <label htmlFor="email">E-mail</label>
+                                                                    <input type="email" className="form-control" id="email" placeholder="Entrez votre e-mail" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                        {currentStep === 3 && (
+                                                            <>
+                                                                <div className="mb-3">
+                                                                    <label htmlFor="telephone">Numéro de Téléphone</label>
+                                                                    <input type="tel" className="form-control" id="telephone" placeholder="Entrez votre numéro de téléphone" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                                </div>
+                                                                <div className="mb-3">
+                                                                    <label htmlFor="numero_piece_identite">Numéro de Pièce d'Identité</label>
+                                                                    <input type="text" className="form-control" id="numero_piece_identite" placeholder="Entrez le numéro de votre pièce d'identité" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                        {currentStep === 4 && (
+                                                            <>
+                                                                <div className="mb-3">
+                                                                    <label htmlFor="date_expiration_piece">Date d'Expiration de la Pièce</label>
+                                                                    <input type="date" className="form-control" id="date_expiration_piece" required style={{ fontSize: "16px" }} min={new Date().toISOString().split("T")[0]} onChange={handleChange} />
+                                                                </div>
+                                                                <div className="mb-3">
+                                                                    <label htmlFor="photo_identite">Photo d'Identité</label>
+                                                                    <input type="file" className="form-control" id="photo_identite" accept=".jpg, .png" required onChange={handleChange} />
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                        <div className="d-flex justify-content-between">
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-secondary w-50 me-2"
+                                                                style={{ fontSize: "15px", backgroundColor: '#20247b' }}
+                                                                onClick={prevStep}
+                                                                disabled={currentStep === 0}
+                                                            >
+                                                                Précédent
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-primary w-50"
+                                                                style={{ fontSize: "15px", backgroundColor: '#20247b' }}
+                                                                onClick={nextStep}
+                                                                disabled={currentStep === 4 && !formData.photoIdentite}
+                                                            >
+                                                                {currentStep === 4 ? 'Soumettre la demande' : 'Suivant'}
+                                                            </button>
+                                                        </div>
+                                                    </>
+                                                ) : (
                                                     <>
                                                         <div className="mb-3">
-                                                            <label htmlFor="nom" className="form-label" style={{ fontSize: "16px" }}>Nom complet</label>
+                                                            <label htmlFor="nom">Nom Complet</label>
                                                             <input type="text" className="form-control" id="nom" placeholder="Entrez votre nom complet" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                         </div>
                                                         <div className="mb-3">
-                                                            <label htmlFor="date_naissance" className="form-label" style={{ fontSize: "16px" }}>Date de naissance</label>
+                                                            <label htmlFor="date_naissance">Date de Naissance</label>
                                                             <input type="date" className="form-control" id="date_naissance" required style={{ fontSize: "16px" }} min="1900-01-01" max={new Date().toISOString().split("T")[0]} onChange={handleChange} />
                                                         </div>
-                                                    </>
-                                                )}
-                                                {currentStep === 1 && (
-                                                    <>
                                                         <div className="mb-3">
-                                                            <label htmlFor="lieu_naissance" className="form-label" style={{ fontSize: "16px" }}>Lieu de naissance</label>
-                                                            <input type="text" className="form-control" id="lieu_naissance" placeholder="Entrez votre lieu de naissance" required style={{ fontSize : "16px" }} onChange={handleChange} />
+                                                            <label htmlFor="lieu_naissance">Lieu de Naissance</label>
+                                                            <input type="text" className="form-control" id="lieu_naissance" placeholder="Entrez votre lieu de naissance" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                         </div>
                                                         <div className="mb-3">
-                                                            <label htmlFor="nationalite" className="form-label" style={{ fontSize: "16px" }}>Nationalité</label>
+                                                            <label htmlFor="nationalite">Nationalité</label>
                                                             <input type="text" className="form-control" id="nationalite" placeholder="Entrez votre nationalité" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                         </div>
-                                                    </>
-                                                )}
-                                                {currentStep === 2 && (
-                                                    <>
                                                         <div className="mb-3">
-                                                            <label htmlFor="adresse" className="form-label" style={{ fontSize: "16px" }}>Adresse actuelle</label>
+                                                            <label htmlFor="adresse">Adresse</label>
                                                             <input type="text" className="form-control" id="adresse" placeholder="Entrez votre adresse actuelle" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                         </div>
                                                         <div className="mb-3">
-                                                            <label htmlFor="email" className="form-label" style={{ fontSize: "16px" }}>Adresse e-mail</label>
+                                                            <label htmlFor="email">E-mail</label>
                                                             <input type="email" className="form-control" id="email" placeholder="Entrez votre e-mail" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                         </div>
-                                                    </>
-                                                )}
-                                                {currentStep === 3 && (
-                                                    <>
                                                         <div className="mb-3">
-                                                            <label htmlFor="telephone" className="form-label" style={{ fontSize: "16px" }}>Numéro de téléphone</label>
+                                                            <label htmlFor="telephone">Numéro de Téléphone</label>
                                                             <input type="tel" className="form-control" id="telephone" placeholder="Entrez votre numéro de téléphone" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                         </div>
                                                         <div className="mb-3">
-                                                            <label htmlFor="numero_piece_identite" className="form-label" style={{ fontSize: "16px" }}>Numéro de pièce d'identité</label>
+                                                            <label htmlFor="numero_piece_identite">Numéro de Pièce d'Identité</label>
                                                             <input type="text" className="form-control" id="numero_piece_identite" placeholder="Entrez le numéro de votre pièce d'identité" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                         </div>
-                                                    </>
-                                                )}
-                                                {currentStep === 4 && (
-                                                    <>
                                                         <div className="mb-3">
-                                                            <label htmlFor="date_expiration_piece" className="form-label" style={{ fontSize: "16px" }}>Date d'expiration de la pièce d'identité</label>
+                                                            <label htmlFor="date_expiration_piece">Date d'Expiration de la Pièce</label>
                                                             <input type="date" className="form-control" id="date_expiration_piece" required style={{ fontSize: "16px" }} min={new Date().toISOString().split("T")[0]} onChange={handleChange} />
                                                         </div>
                                                         <div className="mb-3">
-                                                            <label htmlFor="photo_identite" className="form-label" style={{ fontSize: "16px" }}>Photo d'identité (format JPG ou PNG)</label>
+                                                            <label htmlFor="photo_identite">Photo d'Identité</label>
                                                             <input type="file" className="form-control" id="photo_identite" accept=".jpg, .png" required onChange={handleChange} />
                                                         </div>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="justificatif_domicile">Justificatif de Domicile</label>
+                                                            <input type="file" className="form-control" id="justificatif_domicile" accept=".jpg, .png" required onChange={handleChange} />
+                                                        </div>
+                                                        <button
+                                                            type="submit"
+                                                            className="btn btn-primary w-100"
+                                                            style={{ fontSize: "15px", backgroundColor: '#20247b' }}
+                                                            aria-label="Soumettre la demande"
+                                                        >
+                                                            Soumettre la demande
+                                                        </button>
                                                     </>
                                                 )}
-                                                <div className="d-flex justify-content-between">
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-secondary w-50 me-2"
-                                                        style={{ fontSize: "15px", backgroundColor: '#20247b' }}
-                                                        onClick={prevStep}
-                                                        disabled={currentStep === 0}
-                                                    >
-                                                        Précédent
-                                                    </button>
-                                                    <button
-                                                        type="button"
-                                                        className="btn btn-primary w-50"
-                                                        style={{ fontSize: "15px", backgroundColor: '#20247b' }}
-                                                        onClick={nextStep}
-                                                        disabled={currentStep === 4 && !formData.photoIdentite}
-                                                    >
-                                                        {currentStep === 4 ? 'Soumettre la demande' : 'Suivant'}
-                                                    </button>
-                                                </div>
                                             </form>
                                         )}
 
                                         {activeTab === 'suivi' && (
                                             <div className="container" style={{ backgroundColor: '#ffffff', padding: '20px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.1)' }}>
-                                                <h5 className="mb-4" style={{ color: '#20247b' }}>Suivi de votre demande</h5>
+                                                <h5 className="mb-4" style={{ color: '#20247b' }}>Suivi de carte consulaire</h5>
                                                 <div className="mb-3">
-                                                    <label htmlFor="numero_s uivi" className="form-label" style={{ fontSize: "16px" }}>Numéro de suivi</label>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="numero_suivi"
-                                                        placeholder="Entrez votre numéro de suivi"
-                                                        value={trackingNumber}
-                                                        onChange={(e) => setTrackingNumber(e.target.value)}
-                                                        required
-                                                        style={{ fontSize: "16px" }}
-                                                    />
+                                                    <label htmlFor="tracking_number">Numéro de suivi</label>
+                                                    <input type="text" className="form-control" id="tracking_number" placeholder="Entrez votre numéro de suivi" required style={{ fontSize: "16px" }} onChange={(e) => setTrackingNumber(e.target.value)} />
                                                 </div>
                                                 <button
+                                                    type="button"
                                                     className="btn btn-primary w-100"
                                                     style={{ fontSize: "15px", backgroundColor: '#20247b' }}
-                                                    aria-label="Vérifier le suivi"
                                                     onClick={handleCheckTracking}
                                                 >
-                                                    Vérifier le suivi
+                                                    Vérifier le statut
                                                 </button>
-
                                                 {showDetails && (
                                                     <div className="mt-4">
-                                                        <h6 style={{ fontSize: "18px" }}>Statut de votre demande :</h6>
-                                                        <p style={{ fontSize: "16px", color: "green" }}>{status}</p>
-
-                                                        <h6 style={{ fontSize: "18px" }}>Historique des demandes :</h6>
-                                                        <ul>
+                                                        <h6 className="mb-3" style={{ color: '#20247b' }}>Statut actuel : {status}</h6>
+                                                        <h6 className="mb-3" style={{ color: '#20247b' }}>Historique</h6>
+                                                        <ul className="list-group">
                                                             {history.map((item) => (
-                                                                <li key={item.id} style={{ fontSize: "16px" }}>
-                                                                    Demande #{item.id} - Soumise le {item.date} - Statut : {item.status}
+                                                                <li key={item.id} className="list-group-item">
+                                                                    <div className="d-flex justify-content-between">
+                                                                        <span style={{ fontSize: "15px" }}>{item.date}</span>
+                                                                        <span style={{ fontSize: "15px" }}>{item.status}</span>
+                                                                    </div>
                                                                 </li>
                                                             ))}
-                                                        </ul>
-                                                        <h6 style={{ fontSize: "18px" }}>Timeline des étapes :</h6>
-                                                        <ul>
-                                                            <li style={{ fontSize: "16px" }}>Soumission de la demande - 01/11/2024</li>
-                                                            <li style={{ fontSize: "16px" }}>Traitement en cours - 05/11/2024</li>
-                                                            <li style={{ fontSize: "16px" }}>Prête à être récupérée - 10/11/2024</li>
-                                                        </ul>
-
-                                                        <h6 style={{ fontSize: "18px" }}>Détails de la demande :</h6>
-                                                        <ul>
-                                                            <li style={{ fontSize: "16px" }}>Type de carte : Carte consulaire</li>
-                                                            <li style={{ fontSize: "16px" }}>Date de soumission : 01/11/2024</li>
                                                         </ul>
                                                     </div>
                                                 )}
