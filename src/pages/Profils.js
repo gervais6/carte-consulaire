@@ -37,7 +37,7 @@ const Profile = () => {
                                 <button
                                     className={`btn btn-outline-secondary w-100 mb-2 ${activeTab === 'demande' ? 'active' : ''}`}
                                     onClick={() => setActiveTab('demande')}
-                                    style={{backgroundColor:'white',color:'gray',padding:'8px'}}
+                                    style={{backgroundColor:'#20247b',color:'white',padding:'8px'}}
                                 >
                                     Demande de carte consulaire
                                 </button>
@@ -61,7 +61,7 @@ const Profile = () => {
                                     <button
                                         className={`btn btn-outline-secondary w-100 mb-2 ${activeTab === 'demande' ? 'active' : ''}`}
                                         onClick={() => setActiveTab('demande')}
-                                        style={{backgroundColor:'white',color:'gray',padding:'8px'}}
+                                        style={{backgroundColor:'#20247b',color:'white',padding:'8px'}}
                                         >
                                         Demande de carte consulaire
                                     </button>
