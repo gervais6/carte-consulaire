@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '../pages/Profils.css';
-import { FaCamera } from 'react-icons/fa'; // Importation de l'icône de la caméra
+import { FaCamera } from 'react-icons/fa'; 
 import Header from '../pages/Header';
 import Footer from '../pages/Footer';
 
@@ -12,12 +12,12 @@ const Profile = () => {
     const [status, setStatus] = useState(''); 
     const [history, setHistory] = useState([
         { id: 1, date: '01/11/2024', status: 'Soumise' },
-        { id: 2, date: '05/11/2 024', status: 'En cours de traitement' },
+        { id: 2, date: '05/11/2024', status: 'En cours de traitement' },
         { id: 3, date: '10/11/2024', status: 'Prête à être récupérée' },
     ]);
     const [showDetails, setShowDetails] = useState(false); 
-    const [profileImage, setProfileImage] = useState("https://bootdey.com/img/Content/avatar/avatar7.png"); // Image de profil par défaut
-    const [imageFile, setImageFile] = useState(null); // État pour le fichier image
+    const [profileImage, setProfileImage] = useState("https://bootdey.com/img/Content/avatar/avatar7.png"); 
+    const [imageFile, setImageFile] = useState(null); 
 
     const handleCheckTracking = () => {
         if (trackingNumber) {
@@ -33,10 +33,10 @@ const Profile = () => {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setProfileImage(reader.result); // Met à jour l'image de profil avec le fichier sélectionné
+                setProfileImage(reader.result); 
             };
             reader.readAsDataURL(file);
-            setImageFile(file); // Enregistre le fichier image
+            setImageFile(file); 
         }
     };
 
@@ -66,7 +66,6 @@ const Profile = () => {
                                 />
                             </div>
 
-                            {/* Responsive Navigation */}
                             <div className="d-md-none mb-3">
                                 <button
                                     className={`btn btn-outline-secondary w-100 mb-2 ${activeTab === 'demande' ? 'active' : ''}`}
@@ -76,7 +75,7 @@ const Profile = () => {
                                     Demande de carte consulaire
                                 </button>
                                 <button
-                                    className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi' ? 'active' : '' }`}
+                                    className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi ' ? 'active' : '' }`}
                                     onClick={() => setActiveTab('suivi')}
                                     style={{ backgroundColor: 'white', color: 'gray', padding: '8px', borderRadius: '5px' }}
                                 >
@@ -148,7 +147,7 @@ const Profile = () => {
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="adresse" className="form-label" style={{ fontSize: "16px" }}>Adresse actuelle</label>
-                                                    <input type="text" className="form-control" id="adresse" placeholder="Entrez votre adresse actuelle" required style={{ fontSize: "16px" }} />
+                                                    <input type="text" className="form-control" id="adresse" placeholder="Ent rez votre adresse actuelle" required style={{ fontSize: "16px" }} />
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="email" className="form-label" style={{ fontSize: "16px" }}>Adresse e-mail</label>
@@ -223,7 +222,7 @@ const Profile = () => {
                                                                 </li>
                                                             ))}
                                                         </ul>
- <h6 style={{ fontSize: "18px" }}>Timeline des étapes :</h6>
+                                                        <h6 style={{ fontSize: "18px" }}>Timeline des étapes :</h6>
                                                         <ul>
                                                             <li style={{ fontSize: "16px" }}>Soumission de la demande - 01/11/2024</li>
                                                             <li style={{ fontSize: "16px" }}>Traitement en cours - 05/11/2024</li>
