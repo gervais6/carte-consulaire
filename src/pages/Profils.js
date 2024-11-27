@@ -19,6 +19,22 @@ const Profile = () => {
     const [profileImage, setProfileImage] = useState("https://bootdey.com/img/Content/avatar/avatar7.png"); 
     const [imageFile, setImageFile] = useState(null); 
 
+    // État pour le formulaire étape par étape
+    const [currentStep, setCurrentStep] = useState(0);
+    const [formData, setFormData] = useState({
+        nom: '',
+        dateNaissance: '',
+        lieuNaissance: '',
+        nationalite: '',
+        adresse: '',
+        email: '',
+        telephone: '',
+        numeroPieceIdentite: '',
+        dateExpirationPiece: '',
+        photoIdentite: null,
+        justificatifDomicile: null,
+    });
+
     const handleCheckTracking = () => {
         if (trackingNumber) {
             setStatus('En cours de traitement'); 
@@ -38,6 +54,32 @@ const Profile = () => {
             reader.readAsDataURL(file);
             setImageFile(file); 
         }
+    };
+
+    const handleChange = (e) => {
+        const { id, value, files } = e.target;
+        setFormData({
+            ...formData,
+            [id]: files ? files[0] : value,
+        });
+    };
+
+    const nextStep = () => {
+        if (currentStep < 4) { // 5 étapes au total
+            setCurrentStep(currentStep + 1);
+        }
+    };
+
+    const prevStep = () => {
+        if (currentStep > 0) {
+            setCurrentStep(currentStep - 1);
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Logique pour soumettre le formulaire
+        console.log('Form submitted:', formData);
     };
 
     return (
@@ -64,7 +106,7 @@ const Profile = () => {
                                     style={{ display: 'none' }} 
                                     onChange={handleImageChange} 
                                 />
-                            </div>
+                            </ div>
 
                             <div className="d-md-none mb-3">
                                 <button
@@ -75,7 +117,7 @@ const Profile = () => {
                                     Demande de carte consulaire
                                 </button>
                                 <button
-                                    className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi ' ? 'active' : '' }`}
+                                    className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi' ? 'active' : ''}`}
                                     onClick={() => setActiveTab('suivi')}
                                     style={{ backgroundColor: 'white', color: 'gray', padding: '8px', borderRadius: '5px' }}
                                 >
@@ -127,60 +169,88 @@ const Profile = () => {
                                 <div className="col-xl-12">
                                     <div className="container mt-5">
                                         {activeTab === 'demande' && (
-                                            <form onSubmit={(e) => { e.preventDefault(); /* Handle form submission */ }} style={{ backgroundColor: '#ffffff', padding: '20px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.1)' }}>
+                                            <form onSubmit={handleSubmit} style={{ backgroundColor: '#ffffff', padding: '20px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.1)' }}>
                                                 <h5 className="mb-4" style={{ color: '#20247b' }}>Demande de carte consulaire</h5>
-                                                <div className="mb-3">
-                                                    <label htmlFor="nom" className="form-label" style={{ fontSize: "16px" }}>Nom complet</label>
-                                                    <input type="text" className="form-control" id="nom" placeholder="Entrez votre nom complet" required style={{ fontSize: "16px" }} />
+                                                {currentStep === 0 && (
+                                                    <>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="nom" className="form-label" style={{ fontSize: "16px" }}>Nom complet</label>
+                                                            <input type="text" className="form-control" id="nom" placeholder="Entrez votre nom complet" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                        </div>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="date_naissance" className="form-label" style={{ fontSize: "16px" }}>Date de naissance</label>
+                                                            <input type="date" className="form-control" id="date_naissance" required style={{ fontSize: "16px" }} min="1900-01-01" max={new Date().toISOString().split("T")[0]} onChange={handleChange} />
+                                                        </div>
+                                                    </>
+                                                )}
+                                                {currentStep === 1 && (
+                                                    <>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="lieu_naissance" className="form-label" style={{ fontSize: "16px" }}>Lieu de naissance</label>
+                                                            <input type="text" className="form-control" id="lieu_naissance" placeholder="Entrez votre lieu de naissance" required style={{ fontSize : "16px" }} onChange={handleChange} />
+                                                        </div>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="nationalite" className="form-label" style={{ fontSize: "16px" }}>Nationalité</label>
+                                                            <input type="text" className="form-control" id="nationalite" placeholder="Entrez votre nationalité" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                        </div>
+                                                    </>
+                                                )}
+                                                {currentStep === 2 && (
+                                                    <>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="adresse" className="form-label" style={{ fontSize: "16px" }}>Adresse actuelle</label>
+                                                            <input type="text" className="form-control" id="adresse" placeholder="Entrez votre adresse actuelle" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                        </div>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="email" className="form-label" style={{ fontSize: "16px" }}>Adresse e-mail</label>
+                                                            <input type="email" className="form-control" id="email" placeholder="Entrez votre e-mail" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                        </div>
+                                                    </>
+                                                )}
+                                                {currentStep === 3 && (
+                                                    <>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="telephone" className="form-label" style={{ fontSize: "16px" }}>Numéro de téléphone</label>
+                                                            <input type="tel" className="form-control" id="telephone" placeholder="Entrez votre numéro de téléphone" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                        </div>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="numero_piece_identite" className="form-label" style={{ fontSize: "16px" }}>Numéro de pièce d'identité</label>
+                                                            <input type="text" className="form-control" id="numero_piece_identite" placeholder="Entrez le numéro de votre pièce d'identité" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                        </div>
+                                                    </>
+                                                )}
+                                                {currentStep === 4 && (
+                                                    <>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="date_expiration_piece" className="form-label" style={{ fontSize: "16px" }}>Date d'expiration de la pièce d'identité</label>
+                                                            <input type="date" className="form-control" id="date_expiration_piece" required style={{ fontSize: "16px" }} min={new Date().toISOString().split("T")[0]} onChange={handleChange} />
+                                                        </div>
+                                                        <div className="mb-3">
+                                                            <label htmlFor="photo_identite" className="form-label" style={{ fontSize: "16px" }}>Photo d'identité (format JPG ou PNG)</label>
+                                                            <input type="file" className="form-control" id="photo_identite" accept=".jpg, .png" required onChange={handleChange} />
+                                                        </div>
+                                                    </>
+                                                )}
+                                                <div className="d-flex justify-content-between">
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-secondary w-50 me-2"
+                                                        style={{ fontSize: "15px", backgroundColor: '#20247b' }}
+                                                        onClick={prevStep}
+                                                        disabled={currentStep === 0}
+                                                    >
+                                                        Précédent
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-primary w-50"
+                                                        style={{ fontSize: "15px", backgroundColor: '#20247b' }}
+                                                        onClick={nextStep}
+                                                        disabled={currentStep === 4 && !formData.photoIdentite}
+                                                    >
+                                                        {currentStep === 4 ? 'Soumettre la demande' : 'Suivant'}
+                                                    </button>
                                                 </div>
-                                                <div className="mb-3">
-                                                    <label htmlFor="date_naissance" className="form-label" style={{ fontSize: "16px" }}>Date de naissance</label>
-                                                    <input type="date" className="form-control" id="date_naissance" required style={{ fontSize: "16px" }} min="1900-01-01" max={new Date().toISOString().split("T")[0]} />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <label htmlFor="lieu_naissance" className="form-label" style={{ fontSize: "16px" }}>Lieu de naissance</label>
-                                                    <input type="text" className="form-control" id="lieu_naissance" placeholder="Entrez votre lieu de naissance" required style={{ fontSize: "16px" }} />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <label htmlFor="nationalite" className="form-label" style={{ fontSize: "16px" }}>Nationalité</label>
-                                                    <input type="text" className="form-control" id="nationalite" placeholder="Entrez votre nationalité" required style={{ fontSize: "16px" }} />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <label htmlFor="adresse" className="form-label" style={{ fontSize: "16px" }}>Adresse actuelle</label>
-                                                    <input type="text" className="form-control" id="adresse" placeholder="Ent rez votre adresse actuelle" required style={{ fontSize: "16px" }} />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <label htmlFor="email" className="form-label" style={{ fontSize: "16px" }}>Adresse e-mail</label>
-                                                    <input type="email" className="form-control" id="email" placeholder="Entrez votre e-mail" required style={{ fontSize: "16px" }} />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <label htmlFor="telephone" className="form-label" style={{ fontSize: "16px" }}>Numéro de téléphone</label>
-                                                    <input type="tel" className="form-control" id="telephone" placeholder="Entrez votre numéro de téléphone" required style={{ fontSize: "16px" }} />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <label htmlFor="numero_piece_identite" className="form-label" style={{ fontSize: "16px" }}>Numéro de pièce d'identité</label>
-                                                    <input type="text" className="form-control" id="numero_piece_identite" placeholder="Entrez le numéro de votre pièce d'identité" required style={{ fontSize: "16px" }} />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <label htmlFor="date_expiration_piece" className="form-label" style={{ fontSize: "16px" }}>Date d'expiration de la pièce d'identité</label>
-                                                    <input type="date" className="form-control" id="date_expiration_piece" required style={{ fontSize: "16px" }} min={new Date().toISOString().split("T")[0]} />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <label htmlFor="photo_identite" className="form-label" style={{ fontSize: "16px" }}>Photo d'identité (format JPG ou PNG)</label>
-                                                    <input type="file" className="form-control" id="photo_identite" accept=".jpg, .png" required />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <label htmlFor="justificatif_domicile" className="form-label" style={{ fontSize: "16px" }}>Justificatif de domicile</label>
-                                                    <input type="file" className="form-control" id="justificatif_domicile" accept=".pdf, .jpg, .png" required />
-                                                </div>
-                                                <button
-                                                    type="submit"
-                                                    className="btn btn-primary w-100"
-                                                    style={{ fontSize: "15px", backgroundColor: '#20247b' }}
-                                                    aria-label="Soumettre la demande"
-                                                >
-                                                    Soumettre la demande
-                                                </button>
                                             </form>
                                         )}
 
@@ -188,7 +258,7 @@ const Profile = () => {
                                             <div className="container" style={{ backgroundColor: '#ffffff', padding: '20px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.1)' }}>
                                                 <h5 className="mb-4" style={{ color: '#20247b' }}>Suivi de votre demande</h5>
                                                 <div className="mb-3">
-                                                    <label htmlFor="numero_suivi" className="form-label" style={{ fontSize: "16px" }}>Numéro de suivi</label>
+                                                    <label htmlFor="numero_s uivi" className="form-label" style={{ fontSize: "16px" }}>Numéro de suivi</label>
                                                     <input
                                                         type="text"
                                                         className="form-control"
