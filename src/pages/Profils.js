@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '../pages/Profils.css';
-import { FaCamera } from 'react-icons/fa';
+import { FaCamera } from 'react-icons/fa'; // Importation de l'icône de la caméra
 import Header from '../pages/Header';
 import Footer from '../pages/Footer';
 
@@ -12,10 +12,12 @@ const Profile = () => {
     const [status, setStatus] = useState(''); 
     const [history, setHistory] = useState([
         { id: 1, date: '01/11/2024', status: 'Soumise' },
-        { id: 2, date: '05/11/2024', status: 'En cours de traitement' },
+        { id: 2, date: '05/11/2 024', status: 'En cours de traitement' },
         { id: 3, date: '10/11/2024', status: 'Prête à être récupérée' },
     ]);
     const [showDetails, setShowDetails] = useState(false); 
+    const [profileImage, setProfileImage] = useState("https://bootdey.com/img/Content/avatar/avatar7.png"); // Image de profil par défaut
+    const [imageFile, setImageFile] = useState(null); // État pour le fichier image
 
     const handleCheckTracking = () => {
         if (trackingNumber) {
@@ -26,27 +28,42 @@ const Profile = () => {
         }
     };
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setProfileImage(reader.result); // Met à jour l'image de profil avec le fichier sélectionné
+            };
+            reader.readAsDataURL(file);
+            setImageFile(file); // Enregistre le fichier image
+        }
+    };
+
     return (
-        <div style={{ overflowY: 'auto', maxHeight: '100vh' }}>
+        <div style={{ overflowY: 'auto', maxHeight: '100vh', backgroundColor: '#f8f9fa' }}>
             <Header />
             <div className="container">
                 <div className="profile">
                     <div className="profile-header">
                         <div className="profile-header-cover"></div>
                         <div className="profile-header-content">
-                            <div className="profile-header-img" style={{ width: '150px', height: '150px' }}>
+                            <div className="profile-header-img" style={{ width: '150px', height: '150px', position: 'relative' }}>
                                 <img 
-                                    src="https://bootdey.com/img/Content/avatar/avatar7.png" 
-                                    alt="" 
-                                    style={{ width: '100%', height: '100%', borderRadius: '50%' }} 
+                                    src={profileImage} 
+                                    alt="Profile" 
+                                    style={{ width: '100%', height: '100%', borderRadius: '50%', border: '3px solid #20247b' }} 
                                 />
-                                <button 
-                                    className="btn btn-light mt-2" 
-                                    style={{ position: 'absolute', bottom: '10px', right: '10px' }} 
-                                    aria-label="Changer la photo de profil"
-                                >
-                                    <FaCamera /> Changer
-                                </button>
+                                <label htmlFor="upload-photo" style={{ position: 'absolute', bottom: '10px', right: '10px', cursor: 'pointer' }}>
+                                    <FaCamera style={{ fontSize: '24px', color: 'white', backgroundColor: '#20247b', borderRadius: '50%', padding: '5px' }} />
+                                </label>
+                                <input 
+                                    type="file" 
+                                    id="upload-photo" 
+                                    accept="image/*" 
+                                    style={{ display: 'none' }} 
+                                    onChange={handleImageChange} 
+                                />
                             </div>
 
                             {/* Responsive Navigation */}
@@ -54,20 +71,22 @@ const Profile = () => {
                                 <button
                                     className={`btn btn-outline-secondary w-100 mb-2 ${activeTab === 'demande' ? 'active' : ''}`}
                                     onClick={() => setActiveTab('demande')}
-                                    style={{backgroundColor:'#20247b',color:'white',padding:'8px'}}
+                                    style={{ backgroundColor: '#20247b', color: 'white', padding: '8px', borderRadius: '5px' }}
                                 >
                                     Demande de carte consulaire
                                 </button>
                                 <button
-                                    className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi' ? 'active' : ''}`}
+                                    className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi' ? 'active' : '' }`}
                                     onClick={() => setActiveTab('suivi')}
-                                    style={{backgroundColor:'white',color:'gray',padding:'8px'}}
+                                    style={{ backgroundColor: 'white', color: 'gray', padding: '8px', borderRadius: '5px' }}
                                 >
                                     Suivi carte consulaire
                                 </button>
-                                <button className="btn btn-outline-secondary w-100 mt-2" aria-label="Déconnexion"
-                                                                    style={{backgroundColor:'white',color:'gray',padding:'8px'}}
->
+                                <button
+                                    className="btn btn-outline-secondary w-100 mt-2" 
+                                    aria-label="Déconnexion"
+                                    style={{ backgroundColor: 'white', color: 'gray', padding: '8px', borderRadius: '5px' }}
+                                >
                                     Déconnexion
                                 </button>
                             </div>
@@ -75,23 +94,21 @@ const Profile = () => {
                             <ul className="profile-header-tab nav nav-tabs nav-tabs-v2 ms-5 d-none d-md-flex">
                                 <li className="nav-item">
                                     <button
-                                        className={`btn btn-outline-secondary w-100 mb-2 ${activeTab === 'demande' ? 'active' : ''}`}
+                                        className={`btn btn-outline-secondary w-100 ${activeTab === 'demande' ? 'active' : ''}`}
                                         onClick={() => setActiveTab('demande')}
-                                        style={{backgroundColor:'#20247b',color:'white',padding:'6px'}}
+                                        style={{ backgroundColor: '#20247b', color: 'white', padding: '6px', borderRadius: '5px' }}
                                     >
                                         Demande de carte consulaire
                                     </button>
                                 </li>
-                                <li className="nav -item">
-
+                                <li className="nav-item">
                                     <button
-                                        className={`btn btn-outline-secondary w-100 mb-2 ${activeTab === 'suivi' ? 'active' : ''}`}
+                                        className={`btn btn-outline-secondary w-100 mb-2 ms-3 ${activeTab === 'suivi' ? 'active' : ''}`}
                                         onClick={() => setActiveTab('suivi')}
-                                        style={{backgroundColor:'#20247b',color:'white',padding:'6px'}}
+                                        style={{ backgroundColor: '#20247b ', color: 'white', padding: '6px', borderRadius: '5px' }}
                                     >
-                                        suivi de carte consulaire
+                                        Suivi de carte consulaire
                                     </button>
-
                                 </li>
                             </ul>
                         </div>
@@ -100,7 +117,7 @@ const Profile = () => {
                     <div className="profile-container">
                         <div className="profile-sidebar">
                             <div className="desktop-sticky-top">
-                                <button className="btn btn-danger w-100" aria-label="Déconnexion">
+                                <button className="btn btn-danger w-100" aria-label="Déconnexion" style={{ borderRadius: '5px' }}>
                                     Déconnexion
                                 </button>
                             </div>
@@ -111,7 +128,8 @@ const Profile = () => {
                                 <div className="col-xl-12">
                                     <div className="container mt-5">
                                         {activeTab === 'demande' && (
-                                            <form onSubmit={(e) => { e.preventDefault(); /* Handle form submission */ }}>
+                                            <form onSubmit={(e) => { e.preventDefault(); /* Handle form submission */ }} style={{ backgroundColor: '#ffffff', padding: '20px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.1)' }}>
+                                                <h5 className="mb-4" style={{ color: '#20247b' }}>Demande de carte consulaire</h5>
                                                 <div className="mb-3">
                                                     <label htmlFor="nom" className="form-label" style={{ fontSize: "16px" }}>Nom complet</label>
                                                     <input type="text" className="form-control" id="nom" placeholder="Entrez votre nom complet" required style={{ fontSize: "16px" }} />
@@ -146,7 +164,7 @@ const Profile = () => {
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="date_expiration_piece" className="form-label" style={{ fontSize: "16px" }}>Date d'expiration de la pièce d'identité</label>
-                                                    <input type="date" className="form-control" id="date_expiration_piece" required style={{ fontSize: "16px" }} min={new Date(). toISOString().split("T")[0]} />
+                                                    <input type="date" className="form-control" id="date_expiration_piece" required style={{ fontSize: "16px" }} min={new Date().toISOString().split("T")[0]} />
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="photo_identite" className="form-label" style={{ fontSize: "16px" }}>Photo d'identité (format JPG ou PNG)</label>
@@ -159,7 +177,7 @@ const Profile = () => {
                                                 <button
                                                     type="submit"
                                                     className="btn btn-primary w-100"
-                                                    style={{ fontSize: "15px", backgroundColor:'#20247b' }}
+                                                    style={{ fontSize: "15px", backgroundColor: '#20247b' }}
                                                     aria-label="Soumettre la demande"
                                                 >
                                                     Soumettre la demande
@@ -168,8 +186,8 @@ const Profile = () => {
                                         )}
 
                                         {activeTab === 'suivi' && (
-                                            <div className="container">
-                                                <h5 style={{ fontSize: "20px", marginBottom: "20px" }}></h5>
+                                            <div className="container" style={{ backgroundColor: '#ffffff', padding: '20px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0,0,0,0.1)' }}>
+                                                <h5 className="mb-4" style={{ color: '#20247b' }}>Suivi de votre demande</h5>
                                                 <div className="mb-3">
                                                     <label htmlFor="numero_suivi" className="form-label" style={{ fontSize: "16px" }}>Numéro de suivi</label>
                                                     <input
@@ -185,7 +203,7 @@ const Profile = () => {
                                                 </div>
                                                 <button
                                                     className="btn btn-primary w-100"
-                                                    style={{ fontSize: "15px", backgroundColor:'#20247b' }}
+                                                    style={{ fontSize: "15px", backgroundColor: '#20247b' }}
                                                     aria-label="Vérifier le suivi"
                                                     onClick={handleCheckTracking}
                                                 >
@@ -205,8 +223,7 @@ const Profile = () => {
                                                                 </li>
                                                             ))}
                                                         </ul>
-
-                                                        <h6 style={{ fontSize: "18px" }}>Timeline des étapes :</h6>
+ <h6 style={{ fontSize: "18px" }}>Timeline des étapes :</h6>
                                                         <ul>
                                                             <li style={{ fontSize: "16px" }}>Soumission de la demande - 01/11/2024</li>
                                                             <li style={{ fontSize: "16px" }}>Traitement en cours - 05/11/2024</li>
