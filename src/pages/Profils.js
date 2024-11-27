@@ -30,43 +30,51 @@ const Profile = () => {
                                 >
                                     <FaCamera /> Changer
                                 </button>
-                                
                             </div>
 
                             {/* Responsive Navigation */}
                             <div className="d-md-none mb-3">
                                 <button
-                                    className={`btn btn-outline-primary w-100 mb-2 ${activeTab === 'demande' ? 'active' : ''}`}
+                                    className={`btn btn-outline-secondary w-100 mb-2 ${activeTab === 'demande' ? 'active' : ''}`}
                                     onClick={() => setActiveTab('demande')}
+                                    style={{backgroundColor:'white',color:'gray',padding:'8px'}}
                                 >
                                     Demande de carte consulaire
                                 </button>
                                 <button
                                     className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi' ? 'active' : ''}`}
                                     onClick={() => setActiveTab('suivi')}
+                                    style={{backgroundColor:'white',color:'gray',padding:'8px'}}
+
                                 >
                                     Suivi carte consulaire
+                                </button>
+                                <button className="btn btn-outline-secondary w-100 mt-2" aria-label="Déconnexion"
+                                    style={{backgroundColor:'white',color:'gray',padding:'8px'}}
+>
+                                    Déconnexion
                                 </button>
                             </div>
 
                             <ul className="profile-header-tab nav nav-tabs nav-tabs-v2 ms-5 d-none d-md-flex">
                                 <li className="nav-item">
-                                <button
-                                    className={`btn btn-outline-primary w-100 mb-2   ${activeTab === 'demande' ? 'active' : ''}`}
-                                    onClick={() => setActiveTab('demande')}
-                                >
-                                    Demande de carte consulaire
-                                </button>
-
+                                    <button
+                                        className={`btn btn-outline-secondary w-100 mb-2 ${activeTab === 'demande' ? 'active' : ''}`}
+                                        onClick={() => setActiveTab('demande')}
+                                        style={{backgroundColor:'white',color:'gray',padding:'8px'}}
+                                        >
+                                        Demande de carte consulaire
+                                    </button>
                                 </li>
                                 <li className="nav-item">
-                                <button
-                                    className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi' ? 'active' : ''}`}
-                                    onClick={() => setActiveTab('suivi')}
-                                >
-                                    Suivi carte consulaire
-                                </button>
+                                    <button
+                                        className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi' ? 'active' : ''}`}
+                                        onClick={() => setActiveTab('suivi')}
+                                        style={{backgroundColor:'white',color:'gray',padding:'8px'}}
 
+                                    >
+                                        Suivi carte consulaire
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -135,7 +143,7 @@ const Profile = () => {
                                                 <button
                                                     type="submit"
                                                     className="btn btn-primary w-100"
-                                                    style={{ fontSize: " 17px", backgroundColor: "#20247b", padding: "10px 20px" }}
+                                                    style={{ fontSize: "15px", backgroundColor: "#20247b",}}
                                                     aria-label="Soumettre la demande"
                                                 >
                                                     Soumettre la demande
