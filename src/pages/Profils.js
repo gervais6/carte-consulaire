@@ -2,12 +2,29 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '../pages/Profils.css';
-import { FaCheckCircle, FaHourglassHalf, FaClock, FaCamera } from 'react-icons/fa';
+import { FaCamera } from 'react-icons/fa';
 import Header from '../pages/Header';
 import Footer from '../pages/Footer';
 
 const Profile = () => {
-    const [activeTab, setActiveTab] = useState('demande'); // Gère l'onglet actif
+    const [activeTab, setActiveTab] = useState('demande'); 
+    const [trackingNumber, setTrackingNumber] = useState('');
+    const [status, setStatus] = useState(''); 
+    const [history, setHistory] = useState([
+        { id: 1, date: '01/11/2024', status: 'Soumise' },
+        { id: 2, date: '05/11/2024', status: 'En cours de traitement' },
+        { id: 3, date: '10/11/2024', status: 'Prête à être récupérée' },
+    ]);
+    const [showDetails, setShowDetails] = useState(false); 
+
+    const handleCheckTracking = () => {
+        if (trackingNumber) {
+            setStatus('En cours de traitement'); 
+            setShowDetails(true); 
+        } else {
+            alert("Veuillez entrer un numéro de suivi valide.");
+        }
+    };
 
     return (
         <div style={{ overflowY: 'auto', maxHeight: '100vh' }}>
@@ -21,7 +38,7 @@ const Profile = () => {
                                 <img 
                                     src="https://bootdey.com/img/Content/avatar/avatar7.png" 
                                     alt="" 
-                                    style={{ width: '100%', height: '100%', borderRadius: '50%' }} // Rounded profile picture
+                                    style={{ width: '100%', height: '100%', borderRadius: '50%' }} 
                                 />
                                 <button 
                                     className="btn btn-light mt-2" 
@@ -45,13 +62,10 @@ const Profile = () => {
                                     className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi' ? 'active' : ''}`}
                                     onClick={() => setActiveTab('suivi')}
                                     style={{backgroundColor:'white',color:'gray',padding:'8px'}}
-
                                 >
                                     Suivi carte consulaire
                                 </button>
-                                <button className="btn btn-outline-secondary w-100 mt-2" aria-label="Déconnexion"
-                                    style={{backgroundColor:'white',color:'gray',padding:'8px'}}
->
+                                <button className="btn btn-danger w-100 mt-2" aria-label="Déconnexion">
                                     Déconnexion
                                 </button>
                             </div>
@@ -61,20 +75,21 @@ const Profile = () => {
                                     <button
                                         className={`btn btn-outline-secondary w-100 mb-2 ${activeTab === 'demande' ? 'active' : ''}`}
                                         onClick={() => setActiveTab('demande')}
-                                        style={{backgroundColor:'#20247b',color:'white',padding:'8px'}}
-                                        >
+                                        style={{backgroundColor:'#20247b',color:'white',padding:'6px'}}
+                                    >
                                         Demande de carte consulaire
                                     </button>
                                 </li>
-                                <li className="nav-item">
-                                    <button
-                                        className={`btn btn-outline-secondary w-100 ${activeTab === 'suivi' ? 'active' : ''}`}
-                                        onClick={() => setActiveTab('suivi')}
-                                        style={{backgroundColor:'white',color:'gray',padding:'8px'}}
+                                <li className="nav -item">
 
+                                    <button
+                                        className={`btn btn-outline-secondary w-100 mb-2 ${activeTab === 'suivi' ? 'active' : ''}`}
+                                        onClick={() => setActiveTab('suivi')}
+                                        style={{backgroundColor:'#20247b',color:'white',padding:'6px'}}
                                     >
-                                        Suivi carte consulaire
+                                        suivi de carte consulaire
                                     </button>
+
                                 </li>
                             </ul>
                         </div>
@@ -93,9 +108,8 @@ const Profile = () => {
                             <div className="row">
                                 <div className="col-xl-12">
                                     <div className="container mt-5">
-                                        {/* Affichage conditionnel selon l'onglet actif */}
                                         {activeTab === 'demande' && (
-                                            <form>
+                                            <form onSubmit={(e) => { e.preventDefault(); /* Handle form submission */ }}>
                                                 <div className="mb-3">
                                                     <label htmlFor="nom" className="form-label" style={{ fontSize: "16px" }}>Nom complet</label>
                                                     <input type="text" className="form-control" id="nom" placeholder="Entrez votre nom complet" required style={{ fontSize: "16px" }} />
@@ -130,7 +144,7 @@ const Profile = () => {
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="date_expiration_piece" className="form-label" style={{ fontSize: "16px" }}>Date d'expiration de la pièce d'identité</label>
-                                                    <input type="date" className="form-control" id="date_expiration_piece" required style={{ fontSize: "16px" }} min={new Date().toISOString().split("T")[0]} />
+                                                    <input type="date" className="form-control" id="date_expiration_piece" required style={{ fontSize: "16px" }} min={new Date(). toISOString().split("T")[0]} />
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="photo_identite" className="form-label" style={{ fontSize: "16px" }}>Photo d'identité (format JPG ou PNG)</label>
@@ -143,7 +157,7 @@ const Profile = () => {
                                                 <button
                                                     type="submit"
                                                     className="btn btn-primary w-100"
-                                                    style={{ fontSize: "15px", backgroundColor: "#20247b",}}
+                                                    style={{ fontSize: "15px", backgroundColor:'#20247b' }}
                                                     aria-label="Soumettre la demande"
                                                 >
                                                     Soumettre la demande
@@ -153,15 +167,57 @@ const Profile = () => {
 
                                         {activeTab === 'suivi' && (
                                             <div className="container">
-                                                <h5 style={{ fontSize: "20px", marginBottom: "20px" }}>Suivi de votre carte consulaire</h5>
+                                                <h5 style={{ fontSize: "20px", marginBottom: "20px" }}></h5>
+                                                <div className="mb-3">
+                                                    <label htmlFor="numero_suivi" className="form-label" style={{ fontSize: "16px" }}>Numéro de suivi</label>
+                                                    <input
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="numero_suivi"
+                                                        placeholder="Entrez votre numéro de suivi"
+                                                        value={trackingNumber}
+                                                        onChange={(e) => setTrackingNumber(e.target.value)}
+                                                        required
+                                                        style={{ fontSize: "16px" }}
+                                                    />
+                                                </div>
                                                 <button
-                                                    className={`btn w-100 ${activeTab === 'suivi' ? 'btn-outline-secondary' : 'btn-outline-primary'}`}
-                                                    style={{ fontSize: "17px", padding: "10px 20px" }}
-                                                    onClick={() => setActiveTab('suivi')}
+                                                    className="btn btn-primary w-100"
+                                                    style={{ fontSize: "15px", backgroundColor:'#20247b' }}
                                                     aria-label="Vérifier le suivi"
+                                                    onClick={handleCheckTracking}
                                                 >
                                                     Vérifier le suivi
                                                 </button>
+
+                                                {showDetails && (
+                                                    <div className="mt-4">
+                                                        <h6 style={{ fontSize: "18px" }}>Statut de votre demande :</h6>
+                                                        <p style={{ fontSize: "16px", color: "green" }}>{status}</p>
+
+                                                        <h6 style={{ fontSize: "18px" }}>Historique des demandes :</h6>
+                                                        <ul>
+                                                            {history.map((item) => (
+                                                                <li key={item.id} style={{ fontSize: "16px" }}>
+                                                                    Demande #{item.id} - Soumise le {item.date} - Statut : {item.status}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+
+                                                        <h6 style={{ fontSize: "18px" }}>Timeline des étapes :</h6>
+                                                        <ul>
+                                                            <li style={{ fontSize: "16px" }}>Soumission de la demande - 01/11/2024</li>
+                                                            <li style={{ fontSize: "16px" }}>Traitement en cours - 05/11/2024</li>
+                                                            <li style={{ fontSize: "16px" }}>Prête à être récupérée - 10/11/2024</li>
+                                                        </ul>
+
+                                                        <h6 style={{ fontSize: "18px" }}>Détails de la demande :</h6>
+                                                        <ul>
+                                                            <li style={{ fontSize: "16px" }}>Type de carte : Carte consulaire</li>
+                                                            <li style={{ fontSize: "16px" }}>Date de soumission : 01/11/2024</li>
+                                                        </ul>
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
                                     </div>
@@ -171,7 +227,7 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <Footer /> {/* Footer présent ici */}
+            <Footer />
         </div>
     );
 };
