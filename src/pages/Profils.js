@@ -241,7 +241,7 @@ const Profile = () => {
                                                 <h5 className="mb-4" style={{ color: '#20247b' }}>Suivi de carte consulaire</h5>
                                                 <div className="mb-3">
                                                     <label htmlFor="tracking_number">Numéro de suivi</label>
-                                                    <input type="text" className="form-control" id="tracking_number" placeholder="Entrez votre numéro de suivi" required style={{ fontSize: "16px" }} onChange={(e) => setTrackingNumber(e.target.value)} />
+                                                    <input type="text" className="form-control" id="tracking_number" placeholder="" required style={{ fontSize: "16px" }} onChange={(e) => setTrackingNumber(e.target.value)} />
                                                 </div>
                                                 <button
                                                     type="button"
