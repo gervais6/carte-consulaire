@@ -183,7 +183,7 @@ const Profile = () => {
                                                 <h5 className="mb-4" style={{ color: '#20247b' }}>Demande de carte consulaire</h5>
                                                 <div className="mb-3">
                                                     <label htmlFor="nom">Nom Complet</label>
-                                                    <input type="text" className="form-control" id="nom" placeholder="Entrez votre nom complet" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                    <input type="text" className="form-control" id="nom" placeholder="" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="date_naissance">Date de Naissance</label>
@@ -191,27 +191,27 @@ const Profile = () => {
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="lieu_naissance">Lieu de Naissance</label>
-                                                    <input type="text" className="form-control" id="lieu_naissance" placeholder="Entrez votre lieu de naissance" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                    <input type="text" className="form-control" id="lieu_naissance" placeholder="" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="nationalite">Nationalité</label>
-                                                    <input type="text" className="form-control" id="nationalite" placeholder="Entrez votre nationalité" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                    <input type="text" className="form-control" id="nationalite" placeholder="" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="adresse">Adresse</label>
-                                                    <input type="text" className="form-control" id="adresse" placeholder="Entrez votre adresse actuelle" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                    <input type="text" className="form-control" id="adresse" placeholder="" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="email">E-mail</label>
-                                                    <input type="email" className="form-control" id="email" placeholder="Entrez votre e-mail" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                    <input type="email" className="form-control" id="email" placeholder="" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="telephone">Numéro de Téléphone</label>
-                                                    <input type="tel" className="form-control" id="telephone" placeholder="Entrez votre numéro de téléphone" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                    <input type="tel" className="form-control" id="telephone" placeholder="" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="numero_piece_identite">Numéro de Pièce d'Identité</label>
-                                                    <input type="text" className="form-control" id="numero_piece_identite" placeholder="Entrez le numéro de votre pièce d'identité" required style={{ fontSize: "16px" }} onChange={handleChange} />
+                                                    <input type="text" className="form-control" id="numero_piece_identite" placeholder="" required style={{ fontSize: "16px" }} onChange={handleChange} />
                                                 </div>
                                                 <div className="mb-3">
                                                     <label htmlFor="date_expiration_piece">Date d'Expiration de la Pièce</label>
