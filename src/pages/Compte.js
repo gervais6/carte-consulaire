@@ -68,7 +68,7 @@ const Compte = () => {
     // Redirect to the Navbar page after 5 seconds
     setTimeout(() => {
       navigate('/'); // Redirect to the Navbar page after 5 seconds
-    }, 10000);
+    }, 3000);
   };
 
   return (
