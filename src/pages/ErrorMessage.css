@@ -1,8 +1,13 @@
 /* ErrorMessage.css */
 .error-message {
     text-align: center;
+    background-color: #ffffff;
     padding: 100px;
     border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    margin-top: 30px;
+  
   }
   
   .error-message .icon {
@@ -30,7 +35,6 @@
     color: #666;
     font-size: 16px;
   }
-
 
 
 
