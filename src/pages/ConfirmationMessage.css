@@ -1,0 +1,32 @@
+/* ConfirmationMessage.css */
+.confirmation {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 100px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .confirmation .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background-color: #4caf50; /* Couleur verte */
+    border-radius: 50%;
+    color: white;
+    font-size: 40px;
+  }
+  
+  .confirmation h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .confirmation p {
+    color: #666;
+    font-size: 16px;
+  }

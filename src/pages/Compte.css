@@ -147,53 +147,5 @@ body{
         text-align: center!important;
     }    
 
-    .modal {
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        animation: fadeIn 0.3s; /* Animation d'apparition */
-      }
-      
-      .modal-content {
-        background-color: white;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        width: 90%;
-        max-width: 500px;
-        position: relative;
-      }
-      
-      .modal-success {
-        border-left: 5px solid green; /* Bordure verte pour succès */
-      }
-      
-      .modal-error {
-        border-left: 5px solid red; /* Bordure rouge pour erreur */
-      }
-      
-      .close {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-        cursor: pointer;
-        font-size: 20px;
-        color: #aaa;
-      }
-      
-      .close:hover {
-        color: black;
-      }
-      
-      @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
+
+    
