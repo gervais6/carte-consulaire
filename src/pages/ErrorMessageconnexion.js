@@ -6,8 +6,7 @@ const ErrorMessageconnexion = ({ ErrorMessageconnexion }) => {
   return (
     <div className="error-message" >
       <div className="icon"style={{fontSize:10}} >❌</div>
-      <h3>Echoué</h3>
-      <p>Votre connexion  n'a pas reussi.</p>
+      <p>Votre connexion  a échoué.</p>
       
     </div>
   );

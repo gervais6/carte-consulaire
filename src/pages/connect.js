@@ -56,7 +56,7 @@ const Connect = () => {
   const showErrorMessage = () => {
     setTimeout(() => {
       setErrorMessageconnexion(''); // Masquer le message après 5 secondes
-    }, 5000);
+    }, 2000);
   };
 
   return (
