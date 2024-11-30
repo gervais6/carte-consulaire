@@ -3,10 +3,10 @@ import '../pages/Compte.css';
 import Header from "../pages/Header";
 import Footer from "../pages/Footer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faEnvelope, faUser  } from '@fortawesome/free-solid-svg-icons'; // Import des icônes
+import { faEye, faEyeSlash, faEnvelope, faUser  } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import ConfirmationMessage from '../pages/ConfirmationMessage'; // Import the new component
-import ErrorMessage from '../pages/ErrorMessage'; // Import the error message component
+import { ToastContainer, toast } from 'react-toastify'; // Importer ToastContainer et toast
+import 'react-toastify/dist/ReactToastify.css'; // Importer les styles
 
 const Compte = () => {
   const [formData, setFormData] = useState({
@@ -19,8 +19,7 @@ const Compte = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -33,30 +32,23 @@ const Compte = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     // Validation logic
     if (!formData.name || !formData.prenom || !formData.email || !formData.password || !formData.passwordConfirmation) {
-      setErrorMessage("Tous les champs sont requis.");
-      setIsSubmitted(false);
-      setTimeout(() => {
-        setErrorMessage(''); // Efface le message d'erreur après 5 secondes
-      }, 5000);
+      toast.error("Tous les champs sont requis."); // Afficher le message d'erreur
+      setIsLoading(false);
       return;
     }
 
     if (formData.password !== formData.passwordConfirmation) {
-      setErrorMessage("Les mots de passe ne correspondent pas.");
-      setIsSubmitted(false);
-      setTimeout(() => {
-        setErrorMessage(''); // Efface le message d'erreur après 5 secondes
-      }, 2000);
+      toast.error("L'inscription a échoué"); // Afficher le message d'erreur
+      setIsLoading(false);
       return;
     }
 
     // If validation passes
-    setIsSubmitted(true);
-    setErrorMessage('');
-    // Optionnel : Réinitialiser le formulaire après soumission réussie
+    toast.success("Merci, l'inscription a été réussie."); // Afficher le message de succès
     setFormData({
       name: '',
       prenom: '',
@@ -64,7 +56,10 @@ const Compte = () => {
       password: '',
       passwordConfirmation: ''
     });
+
+    // Simuler un délai pour la soumission
     setTimeout(() => {
+      setIsLoading(false);
       navigate('/connect');
     }, 2000);
   };
@@ -75,13 +70,11 @@ const Compte = () => {
       <div className="container-fluid">
         <div id="contact" className="contact-area section-padding">
           <div className="container mt-5">
-            <div className="row justify-content-center"> {/* Center the row */}
+            <div className="row justify-content-center">
               <div className="col-lg-7">
                 <div className="contact">
-                  {errorMessage && <ErrorMessage message={errorMessage} />}
-                  {isSubmitted && !errorMessage && <ConfirmationMessage message="Merci, l'inscription a été réussie." />}
                   <form className="form mt-5 mb-5" onSubmit={handleSubmit}>
-                    <h1 className="text-center mb-5">Créer un Compte</h1> {/* Titre ajouté */}
+                    <h1 className="text-center mb-5">Créer un Compte</h1>
 
                     <div className="row">
                       <div className="form-group col-md-6 mb-3 position-relative">
@@ -92,7 +85,7 @@ const Compte = () => {
                         <FontAwesomeIcon icon={faUser } className="position-absolute" style={{ right: '10px', top: '10px', cursor: 'pointer', marginRight: "10px", marginTop: "10px" }} />
                         <input type="text" name="prenom" className="form-control" placeholder="Prénom" required value={formData.prenom} onChange={handleChange} />
                       </div>
-                      <div className=" form-group col-md-12 mb-3 position-relative">
+                      <div className="form-group col-md-12 mb-3 position-relative">
                         <FontAwesomeIcon icon={faEnvelope} className="position-absolute" style={{ right: '10px', top: '10px', cursor: 'pointer', marginRight: "10px", marginTop: "10px" }} />
                         <input type="email" name="email" className="form-control" placeholder="Email" required value={formData.email} onChange={handleChange} />
                       </div>
@@ -117,11 +110,12 @@ const Compte = () => {
                           fontSize: 15,
                           color: "white"
                         }}>
-                          Inscrivez Vous
+                          {isLoading ? 'Chargement...' : 'Inscrivez Vous'}
                         </button>
                       </div>
                     </div>
                   </form>
+                  <ToastContainer style={{ marginTop: '5rem' }} /> {/* Ajuster la position ici */}
                 </div>
               </div>
             </div>
