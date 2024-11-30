@@ -6,7 +6,6 @@ const ConfirmationMessage = () => {
   return (
     <div className="confirmation">
       <div className="icon">✔</div>
-      <h2>Effectué</h2>
       <p>Votre inscrption à bien été enregister.</p>
     </div>
   );
