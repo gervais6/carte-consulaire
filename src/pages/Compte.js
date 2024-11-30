@@ -44,7 +44,7 @@ const Compte = () => {
       // Redirect to the Compte page after 5 seconds
       setTimeout(() => {
         navigate('/'); // Redirect to the Compte page after 5 seconds
-      }, 2000);
+      }, 3000);
       return; // Stop the submission
     }
 
@@ -68,7 +68,7 @@ const Compte = () => {
     // Redirect to the Navbar page after 5 seconds
     setTimeout(() => {
       navigate('/'); // Redirect to the Navbar page after 5 seconds
-    }, 3000);
+    }, 10000);
   };
 
   return (
