@@ -44,7 +44,7 @@ const Compte = () => {
       // Redirect to the Compte page after 5 seconds
       setTimeout(() => {
         navigate('/'); // Redirect to the Compte page after 5 seconds
-      }, 3000);
+      }, 5000);
       return; // Stop the submission
     }
 
@@ -56,7 +56,7 @@ const Compte = () => {
       // Redirect to the Compte page after 5 seconds
       setTimeout(() => {
         navigate('/'); // Redirect to the Compte page after 5 seconds
-      }, 3000);
+      }, 5000);
       return; // Stop the submission
     }
 
@@ -68,7 +68,7 @@ const Compte = () => {
     // Redirect to the Navbar page after 5 seconds
     setTimeout(() => {
       navigate('/'); // Redirect to the Navbar page after 5 seconds
-    }, 3000);
+    }, 5000);
   };
 
   return (
