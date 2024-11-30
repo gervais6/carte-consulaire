@@ -73,7 +73,7 @@ const MotsDePasseOublier
       <div className="container-fluid">
         <div id="contact" className="contact-area section-padding">
           <div className="container mt-5 ">
-            <div className="row justify-content-center" style={{marginBottom:"100px"}}>  {/* Center the row */}
+            <div className="row justify-content-center" style={{marginBottom:"100px",marginTop:"90px"}}>  {/* Center the row */}
               <div className="col-lg-7">
                 <div className="contact">
                   {errorMessage && <ErrorMessage message={errorMessage} />}
