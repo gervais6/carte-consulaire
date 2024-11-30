@@ -15,16 +15,6 @@ const Header = () => {
                         E-AFEP
                     </Link>
                     <div className="d-flex me-3 position-relative">
-                        <Link to="/notifications" className="nav-link">
-                            <MdNotifications style={{ fontSize: '24px', color: 'white', marginRight: '0px' }} />
-                            {/* Badge pour les notifications */}
-                            {notificationCount > 0 && (
-                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                    {notificationCount}
-                                    <span className="visually-hidden">notifications non lues</span>
-                                </span>
-                            )}
-                        </Link>
                     </div>
                 </div>
             </nav>

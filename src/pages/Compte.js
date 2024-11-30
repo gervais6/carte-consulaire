@@ -2,24 +2,24 @@ import React, { useState } from "react";
 import '../pages/Compte.css';
 import Header from "../pages/Header";
 import Footer from "../pages/Footer";
-import { FaCamera } from "react-icons/fa6";
-import axios from "axios"; // Import Axios
-import { useNavigate } from "react-router-dom"; // Importer useNavigate
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom'; // Importer useNavigate
 
 const Compte = () => {
   const [formData, setFormData] = useState({
     name: '',
     prenom: '',
     email: '',
-    numero: '',
-    genre: '',
     password: '',
-    confirmPassword: '',
-    photo: null
+    passwordConfirmation: ''
   });
 
-  const navigate = useNavigate(); // Initialiser useNavigate
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
+  const navigate = useNavigate(); // Utiliser useNavigate pour la redirection ```javascript
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -28,81 +28,41 @@ const Compte = () => {
     });
   };
 
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      photo: e.target.files[0]
-    });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     // Vérifiez si tous les champs sont remplis
-    if (!formData.name || !formData.prenom || !formData.email || !formData.numero || !formData.genre || !formData.password || !formData.confirmPassword) {
-        alert("Tous les champs sont requis.");
-        return;
+    if (!formData.name || !formData.prenom || !formData.email || !formData.password || !formData.passwordConfirmation) {
+      toast.error("Tous les champs sont requis.");
+      return;
     }
 
     // Vérifiez si l'email est valide
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(formData.email)) {
-        alert("L'adresse e-mail est invalide.");
-        return;
-    }
-
-    // Vérifiez si le numéro est numérique
-    const numero = Number(formData.numero);
-    if (isNaN(numero)) {
-        alert("Le numéro doit être numérique.");
-        return;
-    }
-
-    // Vérifiez si le genre est rempli
-    if (!formData.genre) {
-        alert("Le genre est requis.");
-        return;
+      toast.error("L'adresse e-mail est invalide.");
+      return;
     }
 
     // Vérifiez si le mot de passe contient au moins 6 caractères
     if (formData.password.length < 6) {
-        alert("Le mot de passe doit contenir au moins 6 caractères.");
-        return;
+      toast.error("Le mot de passe doit contenir au moins 6 caractères.");
+      return;
     }
 
     // Vérifiez si les mots de passe correspondent
-    if (formData.password !== formData.confirmPassword) {
-        alert("Les mots de passe ne correspondent pas.");
-        return;
+    if (formData.password !== formData.passwordConfirmation) {
+      toast.error("Les mots de passe ne correspondent pas.");
+      return;
     }
 
-    // Create a FormData object to send the file
-    const data = new FormData();
-    for (const key in formData) {
-        data.append(key, formData[key]);
-    }
+    // Afficher un message de succès
+    toast.success("Inscription réussie !");
 
-    console.log("Données envoyées :", formData); // Log des données pour débogage
-
-    try {
-        const response = await axios.post('http://localhost:4000/api/auth/register', data, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
-        console.log(response.data);
-        // Rediriger vers la page Navbar.js après une inscription réussie
-        navigate('/navbar'); // Remplacez '/navbar' par le chemin de votre page Navbar
-    } catch (error) {
-        console.error('Error submitting form:', error);
-        // Afficher les erreurs de validation
-        if (error.response && error.response.data.errors) {
-            const errorMessages = error.response.data.errors.map(err => err.msg).join(', ');
-            alert(`Erreur de validation : ${errorMessages}`);
-        } else {
-            alert("Une erreur s'est produite lors de l'inscription.");
-        }
-    }
+    // Rediriger après 2 secondes
+    setTimeout(() => {
+      navigate('/'); // Remplacez '/nabar' par le chemin de votre page
+    }, 2000);
   };
 
   return (
@@ -127,58 +87,20 @@ const Compte = () => {
                       <div className="form-group col-md-12 mb-3">
                         <input type="email" name="email" className="form-control" placeholder="Email" required onChange={handleChange} />
                       </div>
-                      <div className="form-group col-md-12 mb-3">
-                        <input type="number" name="numero" className="form-control" placeholder="Numéro" required onChange={handleChange} />
+                      <div className="form-group col-md-12 mb-3 position-relative">
+                        <input type={showPassword ? "text" : "password"} name="password" className="form-control" placeholder="Mot de passe" required onChange={handleChange} />
+                        <span className="position-absolute" style={{ right: '10px', top: '10px', cursor: 'pointer', marginRight: '10px', marginTop: '10px' }} onClick={() => setShowPassword(!showPassword)}>
+                          <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                        </span>
                       </div>
-                      <div className="form-group col-md-12 mb-3">
-                        <input type="text" name="genre" className="form-control" placeholder="Genre" required onChange={handleChange} />
-                      </div>
-                      <div className="form-group col-md-12 mb-3 ">
-                        <input type="password" name="password" className="form-control" placeholder="Mots de passe" required onChange={handleChange} />
-                      </div>
-                      <div className="form-group col-md-12 mb-3">
-                        <input type="password" name="confirmPassword" className="form-control" placeholder="Confirmer votre mots de passe" required onChange={handleChange} />
-                      </div>
-                      <div className="row gutters mt-4">
-                        <div className="col-12 mb-3">
-                          <div
-                            className="photo-upload-container d-flex flex-column justify-content-center align-items-center"
-                            style={{
-                              border: "2px dashed gray",
-                              height: 150,
-                              borderRadius: 10,
-                              cursor: "pointer",
-                              position: "relative",
-                              transition: "border-color 0.3s",
-                              backgroundColor: "#f9f9f9",
-                              width : "102%",
-                            }}
-                            onMouseEnter={(e) => (e.currentTarget.style.borderColor = "#20247b")}
-                            onMouseLeave={(e) => (e.currentTarget.style.borderColor = "gray")}
-                          >
-                            <input
-                              type="file"
-                              className="form-control-file"
-                              id="photo"
-                              name="photo"
-                              style={{
-                                position: "absolute",
-                                opacity: 0,
-                                width: "100%",
-                                height: "100%",
-                                cursor: "pointer"
-                              }}
-                              onChange={handleFileChange}
-                            />
-                            <FaCamera size={40} style={{ color: "#20247b", marginBottom: 5 }} />
-                            <span style={{ color: "gray", textAlign: "center" }}>
-                              Afin de vérifier les informations saisies ainsi que votre nationalité ,Veuillez charger une copie de la page 02 de votre Passport
-                            </span>
-                          </div>
-                        </div>
+                      <div className="form-group col-md-12 mb-3 position-relative">
+                        <input type={showPasswordConfirmation ? "text" : "password"} name="passwordConfirmation" className="form-control" placeholder="Confirmer le mot de passe" required onChange={handleChange} />
+                        <span className="position-absolute" style={{ right: '10px', top: '10px', cursor: 'pointer', marginRight: '10px', marginTop: '10px' }} onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}>
+                          <FontAwesomeIcon icon={showPasswordConfirmation ? faEyeSlash : faEye} />
+                        </span>
                       </div>
                       <div className="col-md-12 text-center mt-5 mb-5">
-                        <button type="submit" value="Send message" name="submit" id="submitButton" className="btn btn-contact-bg " title="Submit Your Message!" style={{
+                        <button type="submit" value="Send message" name="submit" id="submitButton" className="btn btn-contact-bg" title="Submit Your Message!" style={{
                           backgroundColor: '#20247b',
                           borderRadius: 5,
                           padding: "15px 27px",
@@ -193,7 +115,7 @@ const Compte = () => {
                   </form>
                 </div>
               </div>
-              <div className="col-lg-5 d-none d-lg-block">
+ <div className="col-lg-5 d-none d-lg-block">
                 <div className="single_address">
                   <i className="fa fa-map-marker"></i>
                   <h4>Notre adresse</h4>
@@ -212,7 +134,7 @@ const Compte = () => {
                 <div className="single_address">
                   <i className="fa fa-clock-o"></i>
                   <h4>Temps de travail</h4>
-                  <p>Du lundi au vendredi : de 8h00 à 16h00 . <br />Samedi : 10h00 - 14h00</p>
+                  <p>Du lundi au vendredi : de 8h00 à 16h00. <br />Samedi : 10h00 - 14h00</p>
                 </div>
               </div>
             </div>
@@ -220,6 +142,7 @@ const Compte = () => {
         </div>
       </div>
       <Footer />
+      <ToastContainer position="top-center" style={{ marginTop: '50px' }} />
     </div>
   );
 };
