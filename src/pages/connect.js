@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import '../pages/Compte.css';
+import '../pages/Compte.css'; // Assurez-vous que le chemin est correct
 import Header from "../pages/Header";
 import Footer from "../pages/Footer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
-import ConfirmationMessage from '../pages/ConfirmationMessage'; // Import the new component
-import ErrorMessage from '../pages/ErrorMessage'; // Import the error message component
-import { Link } from "react-router-dom";
+import { faEye, faEyeSlash, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate, Link } from 'react-router-dom';
+import ConfirmationMessage from '../pages/ConfirmationMessage';
+import ErrorMessage from '../pages/ErrorMessage';
+
 const Connect = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -18,7 +18,6 @@ const Connect = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [showForm, setShowForm] = useState(true);
@@ -71,23 +70,28 @@ const Connect = () => {
       <div className="container-fluid">
         <div id="contact" className="contact-area section-padding">
           <div className="container mt-5">
-            <div className="row justify-content-center"> {/* Center the row */}
+            <div className="row justify-content-center">
               <div className="col-lg-7">
                 <div className="contact">
+                  <h1 className="text-center mb-4">Connexion</h1>
                   {errorMessage && <ErrorMessage message={errorMessage} />}
                   {isSubmitted && !errorMessage && <ConfirmationMessage message="Merci, l'inscription a été réussie." />}
                   {showForm && (
                     <form className="form mt-5 mb-5" onSubmit={handleSubmit}>
                       <div className="row">
-                        <div className="form-group col-md-12 mb-3">
-                          <input type="email" name="email" className="form-control" placeholder="Email" required onChange={handleChange} />
-                        </div>
                         <div className="form-group col-md-12 mb-3 position-relative">
+                          <span className="position-absolute" style={{ right: '10px', top: '10px', cursor: 'pointer', marginRight: "10px", marginTop: "10px" }} >
+                            <FontAwesomeIcon icon={faEnvelope} />
+                          </span>
+                          <input type="email" name="email" className="form-control" placeholder="Email" required onChange={handleChange} style={{ paddingLeft: '40px' }} />
+                        </div>
+                        <div className="form-group col-md-12 mb-5 position-relative">
                           <input type={showPassword ? "text" : "password"} name="password" className="form-control" placeholder="Mot de passe" required onChange={handleChange} />
-                          <span className="position-absolute" style={{ right: '10px', top: '10px', cursor: 'pointer',marginRight:"10px" ,marginTop:"10px"}} onClick={() => setShowPassword(!showPassword)}>
+                          <span className="position-absolute" style={{ right: '10px', top: '10px', cursor: 'pointer', marginRight: "10px", marginTop: "10px" }} onClick={() => setShowPassword(!showPassword)}>
                             <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                          </span ></div>
-                        <div className="col-md-12 text-center  mb-5">
+                          </span>
+                        </div>
+                        <div className="col-md-12 text-center mb-1">
                           <button type="submit" className="btn btn-contact-bg" style={{
                             backgroundColor: '#20247b',
                             borderRadius: 5,
@@ -96,12 +100,12 @@ const Connect = () => {
                             fontSize: 15,
                             color: "white"
                           }}>
-                            connexion
+                            Connexion
                           </button>
                         </div>
-                        <div className="" style={{ float: "right" }}>
-                    <Link to="/mdp" style={{ color: "black", fontSize: 12 }}>Mots de passe oublié</Link>
-                  </div>
+                      </div>
+                      <div className="mb-5" style={{ float: "right" }}>
+                        <Link to="/mdp" style={{ color: "black", fontSize: 12 }}>Mots de passe oublié</Link>
                       </div>
                     </form>
                   )}
