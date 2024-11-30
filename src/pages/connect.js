@@ -68,11 +68,13 @@ const Connect = () => {
             <div className="row justify-content-center">
               <div className="col-lg-7">
                 <div className="contact">
-                  <h1 className="text-center mb-4">Connexion</h1>
                   {errorMessageconnexion && <ErrorMessageconnexion ErrorMessageconnexion={errorMessageconnexion} />}
                   {isSubmitted && <Confirmationconnexion message="Connexion réussie." />}
                   {showForm && (
+                    
                     <form className="form mt-5 mb-5" onSubmit={handleSubmit}>
+                                        <h1 className="text-center mb-4">Connexion</h1>
+
                       <div className="row">
                         <div className="form-group col-md-12 mb-3 position-relative">
                           <span className="position-absolute" style={{ right: '10px', top: '10px', cursor: 'pointer', marginRight: "10px", marginTop: "10px" }}>
