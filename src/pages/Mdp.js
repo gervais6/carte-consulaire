@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import '../pages/Compte.css';
-import Header from "../pages/Header";
-import Footer from "../pages/Footer";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, Link } from 'react-router-dom';
-import ConfirmationMessage from '../pages/ConfirmationMessage'; // Import the new component
-import ErrorMessage from '../pages/ErrorMessage'; // Import the error message component
 import { ToastContainer, toast } from 'react-toastify';
-
 
 const MotsDePasseOublier = () => {
   const [formData, setFormData] = useState({
@@ -59,7 +52,7 @@ const MotsDePasseOublier = () => {
 
   return (
     <div id="root">
-            <div className="container" style={{ marginTop: '10rem' }}>
+      <div className="container" style={{ marginTop: '10rem' }}>
         <h2 className="text-center mb-4">Réinitialiser le mot de passe</h2>
         <div className="row">
           <div className="col-md-6 offset-md-3">
@@ -77,6 +70,9 @@ const MotsDePasseOublier = () => {
               </div>
               <button type="submit" className="btn btn-primary btn-block w-100 mb-5" style={{ fontSize: 18 }}>Envoyer votre adresse e-mail</button>
             </form>
+            <p className="text-center">
+              Revenir à la <Link to="/connect" className="text-primary" style={{textDecoration:'none'}}>connexion</Link>
+            </p>
             <ToastContainer />
           </div>
         </div>
