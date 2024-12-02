@@ -50,11 +50,8 @@ const Compte = () => {
   return (
     <div id="root">
       <ToastContainer /> {/* Ajoutez le ToastContainer ici */}
-          <div className="container ">
-            <div className="illustration text-center mb-1"style={{marginTop:40}}>
-              <FontAwesomeIcon icon={faLock} fontSize="25px" className="icon-color" />
-            </div>
-            <h3 className="text-center mb-4">S'inscrire</h3>
+          <div className="container "style={{marginTop:'50px'}}>
+            <h2 className="text-center mb-4">S'inscrire</h2>
             <div className="row">
               <div className="col-md-6 offset-md-3">
                 <form className="login-form" onSubmit={handleSubmit}>
