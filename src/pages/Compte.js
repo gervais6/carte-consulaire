@@ -53,8 +53,8 @@ const Compte = () => {
       <div className="container-fluid">
         <div className="container mt-5">
           <div className="container">
-            <div className="illustration text-center mb-2">
-              <FontAwesomeIcon icon={faLock} fontSize="27px" className="icon-color" />
+            <div className="illustration text-center mb-3">
+              <FontAwesomeIcon icon={faLock} size="2x" className="icon-color" />
             </div>
             <h2 className="text-center">S'inscrire</h2>
             <div className="row">

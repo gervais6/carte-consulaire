@@ -14,7 +14,7 @@ const Profile = () => {
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
 
         <div class="bg-light">
-            <div class="container">
+            <div class="container py-5">
                 <div class="row">
                     <div class="col-12 mb-4">
                         <div class="profile-header position-relative mb-4">

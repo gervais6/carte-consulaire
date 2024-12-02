@@ -58,10 +58,10 @@ const Connect = () => {
   return (
     <div>
       <div className="container" style={{ marginTop: '7rem' }}>
-        <div className="illustration text-center mb-">
-          <FontAwesomeIcon icon={faLock} fontSize="27px" className="icon-color" />
+        <div className="illustration text-center mb-3">
+          <FontAwesomeIcon icon={faLock} size="2x" className="icon-color" />
         </div>
-        <h2 className="text-center mb-4">Connexion</h2>
+        <h3 className="text-center mb-4">Connexion</h3>
         <div className="row">
           <div className="col-md-6 offset-md-3">
             <form className="login-form" onSubmit={handleSubmit}>
