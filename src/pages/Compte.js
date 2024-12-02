@@ -50,13 +50,11 @@ const Compte = () => {
   return (
     <div id="root">
       <ToastContainer /> {/* Ajoutez le ToastContainer ici */}
-      <div className="container-fluid">
-        <div className="container mt-5">
-          <div className="container">
-            <div className="illustration text-center mb-3">
+          <div className="container ">
+            <div className="illustration text-center mb-3"style={{marginTop:40}}>
               <FontAwesomeIcon icon={faLock} size="2x" className="icon-color" />
             </div>
-            <h2 className="text-center">S'inscrire</h2>
+            <h2 className="text-center mb-4">S'inscrire</h2>
             <div className="row">
               <div className="col-md-6 offset-md-3">
                 <form className="login-form" onSubmit={handleSubmit}>
@@ -89,8 +87,6 @@ const Compte = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 
