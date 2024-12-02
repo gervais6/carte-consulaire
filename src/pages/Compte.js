@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css'; // Import des styles de react-toastify
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock } from '@fortawesome/free-solid-svg-icons'; // Import de l'icône de cadenas
 
 const Compte = () => {
   // State to hold form data
@@ -48,44 +50,47 @@ const Compte = () => {
   return (
     <div id="root">
       <ToastContainer /> {/* Ajoutez le ToastContainer ici */}
-      <div className="container-fluid"  >
-          <div className="container mt-5">
-            <div className="container">
-              <h2 className="text-center">S'inscrire</h2>
-              <div className="row">
-                <div className="col-md-6 offset-md-3">
-                  <form className="login-form" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                      <label htmlFor="username">Nom</label>
-                      <input type="text" id="username" name="username" value={name} onChange={(e) => setName(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="prenom">Prénom</label>
-                      <input type="text" id="prenom" name="prenom" value={prenom} onChange={(e) => setPrenom(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="email">Email</label>
-                      <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="password">Mot de passe</label>
-                      <input type={showPassword ? "text" : "password"} id ="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="passwordConfirmation">Confirmer le mot de passe</label>
-                      <input type={showPasswordConfirmation ? "text" : "password"} id="passwordConfirmation" name="passwordConfirmation" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} required className="form-control" style={{ fontSize : '18px' }} />
-                    </div>
-                    <button type="submit" className="btn btn-primary btn-block w-100 mb-4">S'inscrire</button>
-                  </form>
-                  <p className="text-center mt-3">
-                    Vous avez déjà un compte? <Link to="/connect" style={{textDecoration:"none"}}>Se connecter</Link>
-                  </p>
-                </div>
+      <div className="container-fluid">
+        <div className="container mt-5">
+          <div className="container">
+            <div className="illustration text-center mb-2">
+              <FontAwesomeIcon icon={faLock} fontSize="27px" className="icon-color" />
+            </div>
+            <h2 className="text-center">S'inscrire</h2>
+            <div className="row">
+              <div className="col-md-6 offset-md-3">
+                <form className="login-form" onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="username">Nom</label>
+                    <input type="text" id="username" name="username" value={name} onChange={(e) => setName(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="prenom">Prénom</label>
+                    <input type="text" id="prenom" name="prenom" value={prenom} onChange={(e) => setPrenom(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="password">Mot de passe</label>
+                    <input type={showPassword ? "text" : "password"} id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="passwordConfirmation">Confirmer le mot de passe</label>
+                    <input type={showPasswordConfirmation ? "text" : "password"} id ="passwordConfirmation" name="passwordConfirmation" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
+                  </div>
+                  <button type="submit" className="btn btn-primary btn-block w-100 mb-4">S'inscrire</button>
+                </form>
+                <p className="text-center mt-3">
+                  Vous avez déjà un compte? <Link to="/connect" style={{textDecoration:"none"}}>Se connecter</Link>
+                </p>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
   );
 };
 

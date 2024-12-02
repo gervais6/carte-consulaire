@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import '../pages/connect.css'; 
-import Header from "../pages/Header";
-import Footer from "../pages/Footer";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from './AuthContext'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash, faLock } from '@fortawesome/free-solid-svg-icons';
 
 const Connect = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -52,15 +50,18 @@ const Connect = () => {
             const errorMessage = error.response.data.message || "Erreur lors de la connexion. Veuillez réessayer.";
             toast.error(errorMessage);
         } else {
- toast.error("Erreur lors de la connexion. Veuillez réessayer.");
+            toast.error("Erreur lors de la connexion. Veuillez réessayer.");
         }
     }
 };
 
   return (
     <div>
-      <div className="container" style={{ marginTop: '5rem' }}>
-        <h2 className="text-center" >connexion</h2>
+      <div className="container" style={{ marginTop: '7rem' }}>
+        <div className="illustration text-center mb-">
+          <FontAwesomeIcon icon={faLock} fontSize="27px" className="icon-color" />
+        </div>
+        <h2 className="text-center mb-4">Connexion</h2>
         <div className="row">
           <div className="col-md-6 offset-md-3">
             <form className="login-form" onSubmit={handleSubmit}>
@@ -76,7 +77,7 @@ const Connect = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Mot de passe</label>
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
@@ -86,7 +87,7 @@ const Connect = () => {
                   required
                 />
               </div>
-              <button type="submit" className="btn btn-primary btn-block w-100 mb-5" style={{ fontSize: 18 }}>connexion</button>
+              <button type="submit" className="btn btn-primary btn-block w-100 mb-5" style={{ fontSize: 18 }}>Connexion</button>
             </form>
             <p className="text-center">
               <Link to="/forgot-password" style={{textDecoration:"none"}}>Mot de passe oublié?</Link>
@@ -98,7 +99,6 @@ const Connect = () => {
           </div>
         </div>
       </div>
-
     </div>
   );
 };
