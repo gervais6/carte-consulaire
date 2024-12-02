@@ -58,8 +58,8 @@ const Connect = () => {
   return (
     <div>
       <div className="container" style={{ marginTop: '7rem' }}>
-        <div className="illustration text-center mb-3">
-          <FontAwesomeIcon icon={faLock} size="2x" className="icon-color" />
+        <div className="illustration text-center mb-1">
+          <FontAwesomeIcon icon={faLock} fontSize="25px" className="icon-color" />
         </div>
         <h3 className="text-center mb-4">Connexion</h3>
         <div className="row">
