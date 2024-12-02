@@ -10,8 +10,7 @@ const Header = () => {
         <header className="bg-dark text-white">
             <nav className="navbar navbar-expand-lg navbar-dark">
                 <div className="container">
-                    <Link to="/" className="navbar-brand">
-                        <IoMdArrowRoundBack style={{ marginRight: 8 }} />
+                    <Link to="#" className="navbar-brand">
                         E-AFEP
                     </Link>
                     <div className="d-flex me-3 position-relative">

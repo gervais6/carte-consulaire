@@ -7,195 +7,133 @@ import { Link } from 'react-router-dom';
 import Footer from '../pages/Footer';
 
 const Navbar = () => {
-  const [isFixed, setIsFixed] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [navVisible, setNavVisible] = useState(false);
-  const myRef = useRef(null);
+      return(
+        <div>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
-  const handleScroll = useCallback(() => {
-    setIsFixed(window.scrollY >= 200);
-  }, []);
-
-  const handleResize = useCallback(() => {
-    setWindowWidth(window.innerWidth);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [handleScroll, handleResize]);
-
-  const handleMouseEnter = () => {
-    if (windowWidth >= 768) {
-      setDropdownVisible(true);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (windowWidth >= 768) {
-      setDropdownVisible(false);
-    }
-  };
-
-  const handleNavToggle = () => {
-    setNavVisible(prevState => !prevState);
-  };
-
-  const handleDropdownToggle = () => {
-    setDropdownVisible(prevState => !prevState);
-  };
-
-  return (
-    <>
-      <header className="header-area overlay">
-        <nav ref={myRef} className={`navbar navbar-expand-md navbar-dark ${isFixed ? 'fixed-top' : ''}`}>
-          <div className="container">
-            <a href="/" className="navbar-brand">E-AFEP</a>
-
-            {/* Bouton pour ouvrir l'offcanvas sur mobile avec icône de menu */}
-            {windowWidth < 768 && (
-              <button
-                className="btn"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasRight"
-                aria-controls="offcanvasRight"
-                style={{ backgroundColor: 'black', color: 'white' }} // Couleur de fond et couleur du texte
-              >
-                <FaBars style={{ fontSize: '24px' }} />
-              </button>
-            )}
-
-            {/* Offcanvas menu uniquement visible sur mobile */}
-            {windowWidth < 768 && (
-  <div className="offcanvas offcanvas-end" tabIndex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style={{backgroundColor:"#20247b"}}>
-    <div className="offcanvas-header">
-      <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div className="offcanvas-body  "  >
-      <ul className="navbar-nav flex-column" style={{backgroundColor:"#20247b"}}> {/* Menu vertical */}
-        <li className={`nav-item dropdown ${dropdownVisible ? 'show' : ''}`} >
-          <a
-            href="#"
-            className="nav-link dropdown-toggle"
-            onClick={handleDropdownToggle}
-            aria-haspopup="true"
-            aria-expanded={dropdownVisible}
-
-          >
-            <FaUserCircle style={{ marginRight: 5 }} /> Mon espace E-AFEP
-          </a>
-          <div className={`dropdown-menu ${dropdownVisible ? 'show' : ''}`}>
-            <Link to="/profils" className="dropdown-item" style={{backgroundColor:"#20247b"}}>Mon compte</Link>
-            <a href="#" className="dropdown-item" style={{backgroundColor:"#20247b"}}>Déconnexion</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-)}
-            {/* Menu classique pour les écrans plus larges */}
-            <div id="main-nav" className={`collapse navbar-collapse ${navVisible ? 'show' : ''}`}>
-              <ul className="navbar-nav ms-auto">
-                {windowWidth >= 768 && (
-                  <li className="nav-item">
-                    <Link to="/guide" className="nav-link">Guide utilisateur</Link>
-                  </li>
-                )}
-                <li className={`nav-item dropdown ${dropdownVisible ? 'show' : '' }`}>
-                  <a
-                    href="#"
-                    className="nav-link dropdown-toggle"
-                    onClick={handleDropdownToggle}
-                    aria-haspopup="true"
-                    aria-expanded ={dropdownVisible}
-                  >
-                    <FaUserCircle style={{ marginRight: 5 }} /> Mon espace E-AFEP
-                  </a>
-                  <div className={`dropdown-menu ${dropdownVisible ? 'show' : ''}`}>
-                    <Link to="/profils" className="dropdown-item">Mon compte</Link>
-                    <a href="#" className="dropdown-item">Déconnexion</a>
-                  </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">Awesome App</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">Features</a>
                 </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-
-        <div className="banner">
-          <div className="container">
-            <h1>Bienvenue sur votre plateforme E-AFEP</h1>
-            <p>Une solution pensée et conçue pour simplifier vos démarches administratives</p>
-
-            <Link to="/connect" className="button button-primary me-3">
-              <GiPadlock /> Accéder à votre espace
-            </Link>
-
-            <Link to="/compte" className="button button-danger">
-              <IoPersonAddSharp /> Créer un compte
-            </Link>
-          </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+            </ul>
         </div>
-      </header>
+    </div>
+</nav>
 
-      <main className="">
-        <section className="section services-section" id="services">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-6">
-                <div className="section-title">
-                  <h2>Pourquoi E-AFEP ?</h2>
-                </div>
-              </div>
+<header class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-3">Experience the Future of Mobile Apps</h1>
+                <p class="lead mb-4">Download our revolutionary app today and transform the way you interact with your
+                    mobile device.</p>
+                <a href="#" class="btn btn-light btn-lg me-2">
+                    <i class="fab fa-apple me-2"></i>App Store
+                </a>
+                <a href="#" class="btn btn-outline-light btn-lg">
+                    <i class="fab fa-google-play me-2"></i>Google Play
+                </a>
             </div>
-            <div className="row">
-              <div className="col-sm-6 col-lg-4">
-                <div className="feature-box-1">
-                  <div className="icon">
-                    <i className="fa fa-user"></i>
-                  </div>
-                  <div className="feature-content">
-                    <h5>Simplicité</h5>
-                    <p>Un seul espace personnel pour tout faire et tout suivre en temps réel.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-6 col-lg-4">
-                <div className="feature-box-1">
-                  <div className="icon">
-                    <i className="fa fa-key"></i>
-                  </div>
-                  <div className="feature-content">
-                    <h5>Sécurité</h5>
-                    <p>Nous sécurisons et fiabilisons vos informations.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-6 col-lg-4">
-                <div className="feature-box-1">
-                  <div className="icon">
-                    <i className="fa fa-hourglass"></i>
-                  </div>
-                  <div className="feature-content">
-                    <h5>Gain De Temps</h5>
-                    <p>Plus besoin de se déplacer : faites vos démarches quand vous voulez.</p>
-                  </div>
-                </div>
-              </div>
+            <div class="col-lg-6 py-4">
+                <img src="https://images.unsplash.com/photo-1592323360850-e317605f0526?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMXx8YXBwJTIwc2NyZWVuc2hvdHxlbnwwfDB8fHwxNzI3NzgzMDE1fDA&ixlib=rb-4.0.3&q=80&w=1080" alt="App Screenshot" class="img-fluid app-screenshot"/>
             </div>
-          </div>
-        </section>
-      </main>
+        </div>
+    </div>
+</header>
 
-      <Footer className="" />
-    </>
-  );
+<section id="features" class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Key Features</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="fas fa-bolt feature-icon"></i>
+                    <h3>Lightning Fast</h3>
+                    <p>Experience unparalleled speed and performance.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="fas fa-lock feature-icon"></i>
+                    <h3>Secure</h3>
+                    <p>Your data is protected with state-of-the-art encryption.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="fas fa-sync feature-icon"></i>
+                    <h3>Easy Sync</h3>
+                    <p>Seamlessly sync across all your devices.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="bg-light py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-lg-2">
+                <h2 class="mb-4">About Our App</h2>
+                <p>Our app is designed to simplify your life and boost your productivity. With intuitive features and a
+                    user-friendly interface, you'll wonder how you ever lived without it.</p>
+                <p>Join thousands of satisfied users who have already discovered the power of our app.</p>
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <img src="https://images.unsplash.com/photo-1592323360850-e317605f0526?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMXx8YXBwJTIwc2NyZWVuc2hvdHxlbnwwfDB8fHwxNzI3NzgzMDE1fDA&ixlib=rb-4.0.3&q=80&w=1080" alt="About Our App" class="img-fluid rounded"/>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta py-5">
+    <div class="container text-center">
+        <h2 class="mb-4">Ready to Get Started?</h2>
+        <p class="lead mb-4">Download our app now and start your journey to a more efficient life!</p>
+        <div>
+
+<Link to="/connect" className="btn btn-primary btn-lg me-2">Se connecter</Link>
+
+<Link to="/compte" className="btn btn-outline-primary btn-lg">Créer un compte</Link>
+
+</div>    </div>
+</section>
+
+<footer class="bg-dark text-light py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Awesome App</h5>
+                <p>Transforming the way you use your mobile device.</p>
+            </div>
+            <div class="col-md-6">
+                <h5>Contact Us</h5>
+                <p>Email: info@awesomeapp.com</p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="text-center">
+            <p>&copy; 2023 Awesome App. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+</div>
+      )   
+  
 };
 
 export default Navbar;

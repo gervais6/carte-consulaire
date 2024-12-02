@@ -1,97 +1,104 @@
 import React, { useState } from "react";
-import '../pages/Compte.css'; // Assurez-vous que le chemin est correct
+import '../pages/connect.css'; 
 import Header from "../pages/Header";
 import Footer from "../pages/Footer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify'; // Importer ToastContainer et toast
-import 'react-toastify/dist/ReactToastify.css'; // Importer les styles
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from './AuthContext'; 
 
 const Connect = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
-
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation logic
+    // Validation basique
     if (!formData.email || !formData.password) {
-      toast.error("Tous les champs sont requis."); // Afficher le message d'erreur
-      return;
+        toast.error("Tous les champs sont requis.");
+        return;
     }
 
-    // Simulate a successful login (replace this with actual login logic)
-    if (formData.email === "test@example.com" && formData.password === "password") {
-      toast.success("Connexion réussie."); // Afficher le message de succès
-      setTimeout(() => {
-        navigate('/'); // Rediriger après une connexion réussie
-      }, 2000);
-    } else {
-      toast.error("Identifiants incorrects."); // Afficher le message d'erreur
+    try {
+        const response = await axios.post("http://localhost:8000/api/login", formData);
+        console.log(response.data);
+
+        // Vérifiez si la connexion a réussi
+        if (response.data.success) {
+          localStorage.setItem('token', response.data.token); 
+          login(); 
+          toast.success("Connexion réussie.");
+          setTimeout(() => {
+              navigate('/profils'); 
+          }, 2000);
+        } else {
+            toast.error(response.data.message || "Identifiants incorrects.");
+        }
+    } catch (error) {
+        console.error("Erreur lors de la connexion:", error);
+        // Gérer les erreurs de manière appropriée
+        if (error.response) {
+            const errorMessage = error.response.data.message || "Erreur lors de la connexion. Veuillez réessayer.";
+            toast.error(errorMessage);
+        } else {
+ toast.error("Erreur lors de la connexion. Veuillez réessayer.");
+        }
     }
-  };
+};
 
   return (
-    <div id="root">
-      <Header />
-      <div className="container-fluid">
-        <div id="contact" className="contact-area section-padding">
-          <div className="container mt-5">
-            <div className="row justify-content-center">
-              <div className="col-lg-7">
-                <div className="contact">
-                  <form className="form mt-5 mb-5" onSubmit={handleSubmit}>
-                    <h1 className="text-center mb-4">Connexion</h1>
-
-                    <div className="row">
-                      <div className="form-group col-md-12 mb-3 position-relative">
-                        <span className="position-absolute" style={{ right: '10px', top: '10px', cursor: 'pointer', marginRight: "10px", marginTop: "10px" }}>
-                          <FontAwesomeIcon icon={faEnvelope} />
-                        </span>
-                        <input type="email" name="email" className="form-control" placeholder="Email" required onChange={handleChange} style={{ paddingLeft: '40px' }} />
-                      </div>
-                      <div className="form-group col-md-12 mb-5 position-relative">
-                        <input type={showPassword ? "text" : "password"} name="password" className="form-control" placeholder="Mot de passe" required onChange={handleChange} />
-                        <span className="position-absolute" style={{ right: '10px', top: '10px', cursor: 'pointer', marginRight: "10px", marginTop: "10px" }} onClick={() => setShowPassword(!showPassword)}>
-                          <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                        </span>
-                      </div>
-                      <div className="col-md-12 text-center mb-1">
-                        <button type="submit" className="btn btn-contact-bg" style={{
-                          backgroundColor: '#20247b',
-                          borderRadius: 5,
-                          padding: "15px 30px",
-                          color: '#fff',
-                          border: 'none',
-                          cursor: 'pointer'
-                        }}>
-                          Se connecter
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                  <ToastContainer style={{ marginTop: '5rem' }} /> {/* Ajouter le conteneur de toast ici */}
-                </div>
+    <div>
+      <div className="container" style={{ marginTop: '5rem' }}>
+        <h2 className="text-center" >connexion</h2>
+        <div className="row">
+          <div className="col-md-6 offset-md-3">
+            <form className="login-form" onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
               </div>
-            </div>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <button type="submit" className="btn btn-primary btn-block w-100 mb-5" style={{ fontSize: 18 }}>connexion</button>
+            </form>
+            <p className="text-center">
+              <Link to="/forgot-password" style={{textDecoration:"none"}}>Mot de passe oublié?</Link>
+            </p>
+            <p className="text-center">
+              Vous n'avez pas de compte? <Link to="/compte" style={{textDecoration:"none"}}>S'inscrire</Link>
+            </p>
+            <ToastContainer />
           </div>
         </div>
       </div>
-      <Footer />
+
     </div>
   );
 };

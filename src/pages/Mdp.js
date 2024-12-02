@@ -4,7 +4,7 @@ import Header from "../pages/Header";
 import Footer from "../pages/Footer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import ConfirmationMessage from '../pages/ConfirmationMessage'; // Import the new component
 import ErrorMessage from '../pages/ErrorMessage'; // Import the error message component
 
@@ -36,18 +36,8 @@ const MotsDePasseOublier = () => {
     e.preventDefault();
 
     // Validation logic
-    if (!formData.name || !formData.prenom || !formData.email || !formData.password || !formData.passwordConfirmation) {
+    if (!formData.email) {
       setErrorMessage("Tous les champs sont requis.");
-      setIsSubmitted(false);
-      setShowForm(false);
-      setTimeout(() => {
-        navigate('/');
-      }, 5000);
-      return;
-    }
-
-    if (formData.password !== formData.passwordConfirmation) {
-      setErrorMessage("Les mots de passe ne correspondent pas.");
       setIsSubmitted(false);
       setShowForm(false);
       setTimeout(() => {
@@ -81,9 +71,6 @@ const MotsDePasseOublier = () => {
                     <form className="form mt-5 mb-5" onSubmit={handleSubmit}>
                       <div className="row">
                         <div className="form-group col-md-12 mb-3 position-relative">
-                          <span className="position-absolute" style={{ right: '10px', top: '10px', cursor: 'pointer', marginRight: "10px", marginTop: "10px" }}>
-                            <FontAwesomeIcon icon={faEnvelope} />
-                          </span>
                           <input
                             type="email"
                             name="email"
@@ -112,6 +99,11 @@ const MotsDePasseOublier = () => {
                       </div>
                     </form>
                   )}
+                  <div className="text-center mt-3">
+                    <Link to="/connect" style={{ color: '#20247b', textDecoration: 'none',fontSize:17 }}>
+                      Revenir à la connexion
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
