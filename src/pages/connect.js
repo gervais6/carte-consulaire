@@ -57,7 +57,7 @@ const Connect = () => {
 
   return (
     <div>
-      <div className="container" style={{ marginTop: '7rem' }}>
+      <div className="container" style={{ marginTop: '9rem' }}>
         <h2 className="text-center mb-4">Connexion</h2>
         <div className="row">
           <div className="col-md-6 offset-md-3">
@@ -87,7 +87,7 @@ const Connect = () => {
               <button type="submit" className="btn btn-primary btn-block w-100 mb-5" style={{ fontSize: 18 }}>Connexion</button>
             </form>
             <p className="text-center">
-              <Link to="/forgot-password" style={{textDecoration:"none"}}>Mot de passe oublié?</Link>
+              <Link to="/mdp" style={{textDecoration:"none"}}>Mot de passe oublié?</Link>
             </p>
             <p className="text-center">
               Vous n'avez pas de compte? <Link to="/compte" style={{textDecoration:"none"}}>S'inscrire</Link>
