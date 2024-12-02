@@ -86,30 +86,78 @@ const Navbar = () => {
 <section id="about" class="bg-light py-5">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6 order-lg-2">
-                <h2 class="mb-4">About Our App</h2>
-                <p>Our app is designed to simplify your life and boost your productivity. With intuitive features and a
-                    user-friendly interface, you'll wonder how you ever lived without it.</p>
-                <p>Join thousands of satisfied users who have already discovered the power of our app.</p>
+            <div class="col-md-12">
+            <h2 class="mb-4">Frequently Asked Questions</h2>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+                                What is your return policy?
+                            </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            We offer a 30-day return policy for all unused items in their original packaging.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                                How long does shipping take?
+                            </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Shipping typically takes 3-5 business days for domestic orders and 7-14 days for
+                            international orders.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                                Do you offer international shipping?
+                            </button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Yes, we ship to most countries worldwide. Shipping costs and delivery times may vary
+                            depending on the destination.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+                                How can I track my order?
+                            </button>
+                    </h2>
+                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            Once your order ships, you'll receive a tracking number via email. You can use this
+                            number to track your package on our website or the carrier's site.
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-lg-6 order-lg-1">
-                <img src="https://images.unsplash.com/photo-1592323360850-e317605f0526?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMXx8YXBwJTIwc2NyZWVuc2hvdHxlbnwwfDB8fHwxNzI3NzgzMDE1fDA&ixlib=rb-4.0.3&q=80&w=1080" alt="About Our App" class="img-fluid rounded"/>
-            </div>
-        </div>
+        </div>       
+         </div>
     </div>
 </section>
 
-<section class="cta py-5">
+<section class="cta py-5 mb-5">
     <div class="container text-center">
-        <h2 class="mb-4">Ready to Get Started?</h2>
-        <p class="lead mb-4">Download our app now and start your journey to a more efficient life!</p>
+        <h2 class="mb-5">Ready to Get Started?</h2>
+        <p class="lead mb-5">Download our app now and start your journey to a more efficient life!</p>
         <div>
 
 <Link to="/connect" className="btn btn-primary btn-lg me-2">Se connecter</Link>
 
 <Link to="/compte" className="btn btn-outline-primary btn-lg">Créer un compte</Link>
 
-</div>    </div>
+</div>   
+ </div>
 </section>
 
 <footer class="bg-dark text-light py-4">
