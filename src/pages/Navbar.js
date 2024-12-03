@@ -170,7 +170,7 @@ const Navbar = () => {
         </div>
         <hr/>
         <div class="text-center">
-            <p>&copy; 2023 E-AFEP. Tous droits réservés.</p>
+            <p>&copy; 2023 E-AFEP. Tous droits réservés.  </p>
         </div>
     </div>
 </footer>
