@@ -160,7 +160,7 @@ const Navbar = () => {
         <div class="row">
             <div class="col-md-6">
                 <h5>E-afep</h5>
-                <p> Une solution pensée et conçue pour vous simplifier vos démarches administratives .</p>
+                <p> Une solution  pensée et conçue pour vous simplifier vos démarches administratives .</p>
             </div>
             <div class="col-md-6">
                 <h5>Contactez-nous</h5>
