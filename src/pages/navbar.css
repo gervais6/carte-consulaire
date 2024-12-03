@@ -55,3 +55,16 @@
 .accordion-body {
   padding: 0 0 20px 0;
 }
+
+
+
+/* styles.css */
+.btn {
+  font-size: 1rem; /* Taille par défaut */
+}
+
+@media (max-width: 576px) {
+  .btn {
+      font-size: 0.875rem; /* Taille de police pour les petits écrans */
+  }
+}

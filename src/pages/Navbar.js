@@ -5,6 +5,7 @@ import { GiPadlock } from "react-icons/gi";
 import { FaUserCircle, FaBars } from "react-icons/fa"; // Importation de l'icône de menu
 import { Link } from 'react-router-dom';
 import Footer from '../pages/Footer';
+import 'font-awesome/css/font-awesome.min.css'; // Assurez-vous d'importer Font Awesome
 
 const Navbar = () => {
       return(
@@ -37,19 +38,22 @@ const Navbar = () => {
             <div class="col-lg-6">
                 <h1 class="display-4 fw-bold mb-3">Bienvenue sur votre plateforme E-AFEP</h1>
                 <h3 class="lead mb-4"> Une solution conçue pour vous simplifier vos démarches administratives </h3>
-                <Link to="/connect" className="btn btn-light btn-lg me-2">
+                <div className="d-flex justify-content-start flex-column flex-md-row">
 
-<i className="fa fa-sign-in me-2"></i>Se connecter
+<Link to="/connect" className="btn btn-light btn-lg me-2 mb-2 mb-md-0">
+
+    <i className="fa fa-sign-in me-2"></i>Se connecter
 
 </Link>
 
 
 <Link to="/compte" className="btn btn-outline-light btn-lg">
 
-<i className="fa fa-user-plus me-2"></i>Créer un compte
+    <i className="fa fa-user-plus me-2"></i>Créer un compte
 
-</Link>            </div>
-            <div class="col-lg-6 py-4">
+</Link>
+
+</div></div>        <div class="col-lg-6 py-4">
                 <img src="https://images.unsplash.com/photo-1592323360850-e317605f0526?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMXx8YXBwJTIwc2NyZWVuc2hvdHxlbnwwfDB8fHwxNzI3NzgzMDE1fDA&ixlib=rb-4.0.3&q=80&w=1080" alt="App Screenshot" class="img-fluid app-screenshot"/>
             </div>
         </div>
@@ -160,7 +164,7 @@ const Navbar = () => {
         <div class="row">
             <div class="col-md-6">
                 <h5>E-afep</h5>
-                <p> Une solution  pensée et conçue pour vous simplifier vos démarches administratives .</p>
+                <p> Une solution conçue pour vous simplifier vos démarches administratives .</p>
             </div>
             <div class="col-md-6">
                 <h5>Contactez-nous</h5>
