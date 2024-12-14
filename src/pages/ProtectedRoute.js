@@ -6,9 +6,11 @@ const ProtectedRoute = ({ element }) => {
   const { isAuthenticated } = useAuth(); // Supposons que vous ayez un contexte d'authentification
 
   return isAuthenticated ? element : <Navigate to="/connect" />;
+
 };
 
 export default ProtectedRoute;
+
 
 
 

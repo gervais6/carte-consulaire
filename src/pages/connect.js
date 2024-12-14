@@ -5,8 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from './AuthContext'; 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faLock } from '@fortawesome/free-solid-svg-icons';
+import LoginIcon from '@mui/icons-material/Login'; // Importer l'icône de connexion
 
 const Connect = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -58,13 +57,17 @@ const Connect = () => {
   return (
     <div>
       <div className="container" style={{ marginTop: '9rem' }}>
+        <div className="text-center mb-4">
+          <LoginIcon style={{ fontSize: 40, color: '#3f51b5' }} /> {/* Icône de connexion avec couleur */}
+        </div>
         <h2 className="text-center mb-4">Connexion</h2>
         <div className="row">
           <div className="col-md-6 offset-md-3">
             <form className="login-form" onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email"></label>
                 <input
+                  placeholder="Email"
                   type="email"
                   id="email"
                   name="email"
@@ -74,9 +77,10 @@ const Connect = () => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="password">Mot de passe</label>
+                <label htmlFor="password"></label>
                 <input
                   type={showPassword ? "text" : "password"}
+                  placeholder="Mot de passe"
                   id="password"
                   name="password"
                   value={formData.password}
@@ -87,10 +91,10 @@ const Connect = () => {
               <button type="submit" className="btn btn-primary btn-block w-100 mb-5" style={{ fontSize: 18 }}>Connexion</button>
             </form>
             <p className="text-center">
-              <Link to="/mdp" style={{textDecoration:"none"}}>Mot de passe oublié?</Link>
+              <Link to="/mdp" style={{ textDecoration: "none" }}>Mot de passe oublié ?</Link>
             </p>
             <p className="text-center">
-              Vous n'avez pas de compte? <Link to="/compte" style={{textDecoration:"none"}}>S'inscrire</Link>
+              Vous n'avez pas de compte ? <Link to="/compte" style={{ textDecoration: "none" }}> S'inscrire</Link>
             </p>
             <ToastContainer />
           </div>

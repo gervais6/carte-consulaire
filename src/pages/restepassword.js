@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import '../pages/Compte.css';
 import { useNavigate, Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import LockResetIcon from '@mui/icons-material/LockReset'; // Import de l'icône de réinitialisation
+import { ToastContainer } from 'react-toastify';
+import KeyIcon from '@mui/icons-material/Key'; // Importer l'icône de clé
+import { Typography } from '@mui/material'; // Importer Typography pour le style
 
-const MotsDePasseOublier = () => {
+const Resetpassword = () => {
   const [formData, setFormData] = useState({
     name: '',
     prenom: '',
@@ -13,11 +14,8 @@ const MotsDePasseOublier = () => {
     passwordConfirmation: ''
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [showForm, setShowForm] = useState(true);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -35,7 +33,6 @@ const MotsDePasseOublier = () => {
     if (!formData.email) {
       setErrorMessage("Tous les champs sont requis.");
       setIsSubmitted(false);
-      setShowForm(false);
       setTimeout(() => {
         navigate('/');
       }, 5000);
@@ -45,7 +42,6 @@ const MotsDePasseOublier = () => {
     // If validation passes
     setIsSubmitted(true);
     setErrorMessage('');
-    setShowForm(false);
     setTimeout(() => {
       navigate('/');
     }, 5000);
@@ -55,25 +51,25 @@ const MotsDePasseOublier = () => {
     <div id="root">
       <div className="container" style={{ marginTop: '10rem' }}>
         <div className="text-center mb-4">
-          <LockResetIcon style={{ fontSize: 50, color: '#3f51b5' }} /> {/* Icône de réinitialisation */}
+          <KeyIcon style={{ fontSize: 50, color: '#3f51b5' }} /> {/* Icône de clé avec couleur */}
         </div>
-        <h3 className="text-center mb-4" >Réinitialiser le mot de passe</h3> {/* Masquer le texte */}
+        <Typography variant="h5" className="text-center mb-4">Nouveau mot de passe</Typography>
         <div className="row">
           <div className="col-md-6 offset-md-3">
             <form className="login-form" onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="email"></label>
+                <label htmlFor="password"></label>
                 <input
-                  placeholder="Email"
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
+                  placeholder="Nouveau mot de passe"
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
                   onChange={handleChange}
                   required
                 />
               </div>
-              <button type="submit" className="btn btn-primary btn-block w-100 mb-5" style={{ fontSize: 18 }}>Envoyer votre adresse e-mail</button>
+              <button type="submit" className="btn btn-primary btn-block w-100 mb-5" style={{ fontSize: 18 }}>Confirmer</button>
             </form>
             <p className="text-center">
               Revenir à la <Link to="/connect" className="text-primary" style={{ textDecoration: 'none' }}>connexion</Link>
@@ -86,4 +82,4 @@ const MotsDePasseOublier = () => {
   );
 };
 
-export default MotsDePasseOublier;
+export default Resetpassword;

@@ -9,6 +9,7 @@ import Mdp from './pages/Mdp';
 import Profils from './pages/Profils';
 import ProtectedRoute from './pages/ProtectedRoute';
 import { AuthProvider } from './pages/AuthContext'; // Importer le provider
+import Resetpassword from './pages/restepassword';
 
 const App = () => {
   return (
@@ -18,10 +19,16 @@ const App = () => {
           <Route path="/connect" element={<Connect />} />
           <Route path="/compte" element={<Compte />} />
           <Route path="/mdp" element={<Mdp />} />
+          <Route path="/resetpassword" element={<Resetpassword />} />
+
           <Route path="/profils" element={
               <ProtectedRoute element={<Profils />} />
+              
+              
             } 
           />
+
+          
           <Route path="/" element={<Navbar />} /> {/* Assurez-vous d'avoir un composant Home */}
         </Routes>
       </AuthProvider>
