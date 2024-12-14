@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from './AuthContext'; 
-import LoginIcon from '@mui/icons-material/Login'; // Importer l'icône de connexion
+import LockIcon from '@mui/icons-material/Lock'; // Importer l'icône de cadenas
 
 const Connect = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -58,7 +58,7 @@ const Connect = () => {
     <div>
       <div className="container" style={{ marginTop: '9rem' }}>
         <div className="text-center mb-4">
-          <LoginIcon style={{ fontSize: 40, color: '#3f51b5' }} /> {/* Icône de connexion avec couleur */}
+          <LockIcon style={{ fontSize: 40, color: '#3f51b5' }} /> {/* Icône de cadenas avec couleur */}
         </div>
         <h2 className="text-center mb-4">Connexion</h2>
         <div className="row">
