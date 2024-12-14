@@ -35,3 +35,7 @@
 }
 
 
+body {
+    background-color: #fff; /* Couleur de fond correspondant à la couleur de thème */
+    color: white; /* Couleur du texte pour un meilleur contraste */
+}
