@@ -57,7 +57,7 @@ const Connect = () => {
 };
 
   return (
-    <div >
+    <div>
       <div className="container" style={{ marginTop: '9rem' }}>
         <div className="text-center mb-4">
           <LockIcon style={{ fontSize: 40, color: '#3f51b5' }} /> {/* Icône de cadenas avec couleur */}
