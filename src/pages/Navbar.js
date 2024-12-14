@@ -17,14 +17,13 @@ const Navbar = () => {
               <h1 className="display-4 fw-bold mb-3">Bienvenue sur votre plateforme E-AFEP</h1>
               <h3 className="lead mb-4">Une solution conçue pour vous simplifier vos démarches administratives</h3>
               <div className="d-flex justify-content-start flex-column flex-md-row">
-                <Link to="/connect" className="btn btn-light btn-lg me-2 mb-2 mb-md-0">
-                  <i className="fa fa-sign-in me-2"></i>Se connecter
-                </Link>
-                <Link to="/compte" className="btn btn-outline-light btn-lg">
-                  <i className="fa fa-user-plus me-2"></i>Créer un compte
-                </Link>
-              </div>
-            </div>
+  <Link to="/connect" className="btn btn-light btn-lg me-2 mb-2 mb-md-0 btn-full-width">
+    <i className="fa fa-sign-in me-2"></i>Se connecter
+  </Link>
+  <Link to="/compte" className="btn btn-outline-light btn-lg btn-full-width">
+    <i className="fa fa-user-plus me-2"></i>Créer un compte
+  </Link>
+</div>            </div>
             <div className="col-lg-6 py-4">
               <img src="https://images.unsplash.com/photo-1592323360850-e317605f0526?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMXx8YXBwJTIwc2NyZWVuc2hvdHxlbnwwfDB8fHwxNzI3NzgzMDE1fDA&ixlib=rb-4.0.3&q=80&w=1080" alt="App Screenshot" className="img-fluid app-screenshot" />
             </div>
