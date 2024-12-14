@@ -35,7 +35,13 @@
 }
 
 
-body {
-    background-color: #fff; /* Couleur de fond correspondant à la couleur de thème */
+.connect-page {
+
+    background-color: #fff; /* Couleur de fond spécifique à la page de connexion */
+
     color: white; /* Couleur du texte pour un meilleur contraste */
+
+    min-height: 100vh; /* Assurez-vous que la page prend toute la hauteur de la fenêtre */
+
 }
+
