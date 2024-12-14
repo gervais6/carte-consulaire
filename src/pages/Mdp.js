@@ -3,21 +3,15 @@ import '../pages/Compte.css';
 import { useNavigate, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import LockResetIcon from '@mui/icons-material/LockReset'; // Import de l'icône de réinitialisation
+import axios from 'axios'; // Importer axios
 
 const MotsDePasseOublier = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    prenom: '',
-    email: '',
-    password: '',
-    passwordConfirmation: ''
+    email: ''
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [showForm, setShowForm] = useState(true);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -28,27 +22,40 @@ const MotsDePasseOublier = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validation logic
     if (!formData.email) {
       setErrorMessage("Tous les champs sont requis.");
-      setIsSubmitted(false);
-      setShowForm(false);
-      setTimeout(() => {
-        navigate('/');
-      }, 5000);
       return;
     }
 
-    // If validation passes
-    setIsSubmitted(true);
-    setErrorMessage('');
-    setShowForm(false);
-    setTimeout(() => {
-      navigate('/');
-    }, 5000);
+    try {
+      // Envoyer la requête POST à l'API pour demander la réinitialisation du mot de passe
+      const response = await axios.post('http://localhost:8000/api/password/email', {
+        email: formData.email
+      });
+
+      // Si la requête réussit, afficher un message de succès
+      toast.success(response.data.message);
+      setIsSubmitted(true);
+      setErrorMessage('');
+      setTimeout(() => {
+        navigate('/connect'); // Rediriger vers la page d'accueil ou une autre page
+      }, 5000);
+    } catch (error) {
+      // Gérer les erreurs
+      if (error.response) {
+        // Si le serveur a répondu avec un code d'erreur
+        setErrorMessage(error.response.data.message);
+        toast.error(error.response.data.message);
+      } else {
+        // Erreur réseau ou autre
+        setErrorMessage("Une erreur s'est produite. Veuillez réessayer.");
+        toast.error("Une erreur s'est produite. Veuillez réessayer.");
+      }
+    }
   };
 
   return (
@@ -57,7 +64,7 @@ const MotsDePasseOublier = () => {
         <div className="text-center mb-4">
           <LockResetIcon style={{ fontSize: 50, color: '#3f51b5' }} /> {/* Icône de réinitialisation */}
         </div>
-        <h3 className="text-center mb-4" >Réinitialiser le mot de passe</h3> {/* Masquer le texte */}
+        <h3 className="text-center mb-4">Réinitialiser le mot de passe</h3>
         <div className="row">
           <div className="col-md-6 offset-md-3">
             <form className="login-form" onSubmit={handleSubmit}>
