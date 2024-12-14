@@ -6,6 +6,8 @@ import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from './AuthContext'; 
 import LockIcon from '@mui/icons-material/Lock'; // Importer l'icône de cadenas
+import Visibility from '@mui/icons-material/Visibility'; // Importer l'icône pour voir le mot de passe
+import VisibilityOff from '@mui/icons-material/VisibilityOff'; // Importer l'icône pour masquer le mot de passe
 
 const Connect = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -76,7 +78,7 @@ const Connect = () => {
                   required
                 />
               </div>
-              <div className="form-group">
+              <div className="form-group position-relative" style={{marginTop:"-10px"}}>
                 <label htmlFor="password"></label>
                 <input
                   type={showPassword ? "text" : "password"}
@@ -86,10 +88,17 @@ const Connect = () => {
                   value={formData.password}
                   onChange={handleChange}
                   required
+                  className="form-control"
                 />
+                <span 
+                  onClick={() => setShowPassword(!showPassword)} 
+                  style={{ position: 'absolute', right: '10px', top: '35px', cursor: 'pointer' }}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </span>
               </div>
               <button type="submit" className="btn btn-primary btn-block w-100 mb-5" style={{ fontSize: 18 }}>Connexion</button>
-            </form>
+ </form>
             <p className="text-center">
               <Link to="/mdp" style={{ textDecoration: "none" }}>Mot de passe oublié ?</Link>
             </p>

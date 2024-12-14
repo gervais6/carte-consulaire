@@ -3,6 +3,8 @@ import '../pages/Compte.css';
 import { useNavigate, Link } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import KeyIcon from '@mui/icons-material/Key'; // Importer l'icône de clé
+import Visibility from '@mui/icons-material/Visibility'; // Importer l'icône pour voir le mot de passe
+import VisibilityOff from '@mui/icons-material/VisibilityOff'; // Importer l'icône pour masquer le mot de passe
 import { Typography } from '@mui/material'; // Importer Typography pour le style
 
 const Resetpassword = () => {
@@ -16,6 +18,7 @@ const Resetpassword = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // État pour gérer la visibilité du mot de passe
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -57,17 +60,24 @@ const Resetpassword = () => {
         <div className="row">
           <div className="col-md-6 offset-md-3">
             <form className="login-form" onSubmit={handleSubmit}>
-              <div className="form-group">
+              <div className="form-group position-relative">
                 <label htmlFor="password"></label>
                 <input
                   placeholder="Nouveau mot de passe"
-                  type="password"
+                  type={showPassword ? "text" : "password"} // Changer le type en fonction de l'état
                   id="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
                   required
+                  className="form-control"
                 />
+                <span 
+                  onClick={() => setShowPassword(!showPassword)} 
+                  style={{ position: 'absolute', right: '10px', top: '35px', cursor: 'pointer' }}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </span>
               </div>
               <button type="submit" className="btn btn-primary btn-block w-100 mb-5" style={{ fontSize: 18 }}>Confirmer</button>
             </form>

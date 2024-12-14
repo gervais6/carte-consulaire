@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css'; // Import des styles de react-toastify
 import PersonAddIcon from '@mui/icons-material/PersonAdd'; // Import de l'icône d'ajout d'utilisateur
+import Visibility from '@mui/icons-material/Visibility'; // Import de l'icône pour voir le mot de passe
+import VisibilityOff from '@mui/icons-material/VisibilityOff'; // Import de l'icône pour masquer le mot de passe
 
 const Compte = () => {
   // State to hold form data
@@ -53,7 +55,7 @@ const Compte = () => {
         <div className="text-center mb-4">
           <PersonAddIcon style={{ fontSize: 50, color: '#3f51b5' }} /> {/* Icône d'ajout d'utilisateur */}
         </div>
-        <h2 className="text-center mb-4">S'inscrire</h2> {/* Masquer le texte */}
+        <h2 className="text-center mb-4">S'inscrire</h2>
         <div className="row">
           <div className="col-md-6 offset-md-3">
             <form className="login-form" onSubmit={handleSubmit}>
@@ -63,19 +65,25 @@ const Compte = () => {
               </div>
               <div className="form-group">
                 <label htmlFor="prenom"></label>
-                <input  placeholder="Prénom"  type="text" id="prenom" name="prenom" value={prenom} onChange={(e) => setPrenom(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
+                <input placeholder="Prénom" type="text" id="prenom" name="prenom" value={prenom} onChange={(e) => setPrenom(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
               </div>
               <div className="form-group">
                 <label htmlFor="email"></label>
                 <input type="email" placeholder="Email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
               </div>
-              <div className="form-group">
+              <div className="form-group position-relative">
                 <label htmlFor="password"></label>
                 <input placeholder="Mot de passe" type={showPassword ? "text" : "password"} id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
+                <span onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '10px', top: '35px', cursor: 'pointer' }}>
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </span>
               </div>
-              <div className ="form-group">
+              <div className="form-group position-relative">
                 <label htmlFor="passwordConfirmation"></label>
                 <input placeholder="Confirmer le mot de passe" type={showPasswordConfirmation ? "text" : "password"} id="passwordConfirmation" name="passwordConfirmation" value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} required className="form-control" style={{ fontSize: '18px' }} />
+                <span onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)} style={{ position: 'absolute', right: '10px', top: '35px', cursor: 'pointer' }}>
+                  {showPasswordConfirmation ? <VisibilityOff /> : <Visibility />}
+                </span>
               </div>
               <button type="submit" className="btn btn-primary btn-block w-100 mb-4">S'inscrire</button>
             </form>
