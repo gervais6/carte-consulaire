@@ -86,7 +86,7 @@ const Connect = () => {
                   id="password"
                   name="password"
                   value={formData.password}
-                  onChange={handleChange}
+                  onChange={handleChange }
                   required
                   className="form-control"
                 />
