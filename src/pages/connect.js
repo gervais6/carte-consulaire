@@ -60,7 +60,7 @@ const Connect = () => {
 
     
     <div>
-            <Helmet>
+   <Helmet>
 
 <meta name="theme-color" content="#fff" />
 

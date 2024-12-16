@@ -6,6 +6,13 @@ import LockResetIcon from '@mui/icons-material/LockReset'; // Import de l'icône
 const Navbar = () => {
   return (
     <div>
+         <Helmet>
+
+<meta name="theme-color" content="black" />
+
+
+</Helmet>
+
       <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
 
