@@ -9,6 +9,8 @@ import LockIcon from '@mui/icons-material/Lock'; // Importer l'icône de cadenas
 import Visibility from '@mui/icons-material/Visibility'; // Importer l'icône pour voir le mot de passe
 import VisibilityOff from '@mui/icons-material/VisibilityOff'; // Importer l'icône pour masquer le mot de passe
 import { Helmet } from 'react-helmet';
+
+
 const Connect = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
@@ -57,13 +59,16 @@ const Connect = () => {
 };
 
   return (
-
-    
     <div>
-   <Helmet>
+            <Helmet>
 
-<meta name="theme-color" content="#fff" />
+<meta name="theme-color" content="#FFFF" />
 
+<title>Mon Application - Ma Page</title>
+
+<meta name="description" content="Ceci est une description de ma page." />
+
+{/* Vous pouvez ajouter d'autres balises meta ici */}
 
 </Helmet>
       <div className="container" style={{ marginTop: '9rem' }}>
