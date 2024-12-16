@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '../pages/Profils.css';
+import '../pages/VisualiserCart.css'; // Assurez-vous d'importer le fichier CSS pour le style de la carte
+import Visualiser from '../pages/Visualisercarte'; // Assurez-vous d'importer le composant Visualiser
 
 const Profile = () => {
-    const [activeTab, setActiveTab] = useState('personalInfo'); // 'personalInfo' par défaut
-    const [twoFactorAuthEnabled, setTwoFactorAuthEnabled] = useState(false); // Ajout de l'état pour l'authentification à deux facteurs
+    const [activeTab, setActiveTab] = useState('personalInfo');
+    const [twoFactorAuthEnabled, setTwoFactorAuthEnabled] = useState(false);
     const [emailNotificationsEnabled, setEmailNotificationsEnabled] = useState(true);
     const [showConsularCardForm, setShowConsularCardForm] = useState(false);
-    const [showTrackingInfo, setShowTrackingInfo] = useState(false); // État pour afficher les informations de suivi
-    const [showNotifications, setShowNotifications] = useState(false); // État pour afficher les notifications
+    const [showTrackingInfo, setShowTrackingInfo] = useState(false);
+    const [showNotifications, setShowNotifications] = useState(false);
+    const [showViewConsularCard, setShowViewConsularCard] = useState(false);
     const [personalInfo, setPersonalInfo] = useState({
         firstName: '',
         lastName: '',
@@ -73,33 +76,45 @@ const Profile = () => {
 
     const handleSecurityClick = () => {
         setShowConsularCardForm(true);
-        setShowTrackingInfo(false); // Masquer le suivi de la carte consulaire
-        setShowNotifications(false); // Masquer les notifications
-        setActiveTab('consularCard'); // Met à jour l'onglet actif
+        setShowTrackingInfo(false);
+        setShowNotifications(false);
+        setShowViewConsularCard(false);
+        setActiveTab('consularCard');
     };
 
     const handleTrackingClick = () => {
-        setShowTrackingInfo(true); // Afficher les informations de suivi
-        setShowConsularCardForm(false); // Masquer le formulaire de demande de carte consulaire
-        setShowNotifications(false); // Masquer les notifications
-        setActiveTab('tracking'); // Met à jour l'onglet actif
+        setShowTrackingInfo(true);
+        setShowConsularCardForm(false);
+        setShowNotifications(false);
+        setShowViewConsularCard(false);
+        setActiveTab('tracking');
     };
 
     const handleNotificationsClick = () => {
-        setShowNotifications(true); // Afficher les notifications
-        setShowConsularCardForm(false); // Masquer le formulaire de demande de carte consulaire
-        setShowTrackingInfo(false); // Masquer le suivi de la carte consulaire
-        setActiveTab('notifications'); // Met à jour l'onglet actif
+        setShowNotifications(true);
+        setShowConsularCardForm(false);
+        setShowTrackingInfo(false);
+        setShowViewConsularCard(false);
+        setActiveTab('notifications');
     };
 
     const handlePersonalInfoClick = () => {
         setShowConsularCardForm(false);
-        setShowTrackingInfo(false); // Masquer le suivi de la carte consulaire
-        setShowNotifications(false); // Masquer les notifications
-        setActiveTab('personalInfo'); // Met à jour l'onglet actif
+        setShowTrackingInfo(false);
+        setShowNotifications(false);
+        setShowViewConsularCard(false);
+        setActiveTab('personalInfo');
     };
 
-    const handleInputChange = ( e) => {
+    const handleViewConsularCardClick = () => {
+        setShowConsularCardForm(false);
+        setShowTrackingInfo(false);
+        setShowNotifications(false )
+        setShowViewConsularCard(true);
+        setActiveTab('viewConsularCard');
+    };
+
+    const handleInputChange = (e) => {
         const { name, value } = e.target;
         setPersonalInfo({
             ...personalInfo,
@@ -122,6 +137,11 @@ const Profile = () => {
         });
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("Demande de carte consulaire soumise", consularCardInfo);
+    };
+
     useEffect(() => {
         window.history.pushState(null, '', window.location.href);
         const handlePopState = (event) => {
@@ -137,7 +157,7 @@ const Profile = () => {
         <div className="full-height">
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
             <div className="bg-light flex-grow-1">
-                <div className="container-fluid">
+                <div className="container">
                     <div className="row">
                         <div className="col-12 mb-4">
                             <div className="profile-header position-relative mb-4">
@@ -146,7 +166,6 @@ const Profile = () => {
                                 </div>
                             </div>
 
-                            {/* Profile Header */}
                             <div className="text-center">
                                 <div className="position-relative d-inline-block">
                                     <img src="https://randomuser.me/api/portraits/men/40.jpg" className="rounded-circle profile-pic" alt="Profile Picture" />
@@ -180,7 +199,10 @@ const Profile = () => {
                                                         <i className="fas fa-truck me-2"></i>Suivi carte consulaire
                                                     </a>
                                                     <a className={`nav-link ${activeTab === 'notifications' ? 'active' : ''}`} href="#" style={{ fontSize: '18px' }} onClick={handleNotificationsClick}>
-                                                        <i className="fas fa-bell me-2"></i>Notifications
+                                                        <i  className="fas fa-bell me-2"></i>Notifications
+                                                    </a>
+                                                    <a className={`nav-link ${activeTab === 'viewConsularCard' ? 'active' : ''}`} href="#" style={{ fontSize: '18px' }} onClick={handleViewConsularCardClick}>
+                                                        <i className="fas fa-eye me-2"></i>Visualiser carte consulaire
                                                     </a>
                                                 </div>
                                             </div>
@@ -191,7 +213,7 @@ const Profile = () => {
                                                 {showConsularCardForm ? (
                                                     <div>
                                                         <h5 className="mb-4" style={{ fontSize: '18px' }}>Demande de carte consulaire</h5>
-                                                        <form>
+                                                        <form onSubmit={handleSubmit}>
                                                             <div className="mb-3">
                                                                 <label className="form-label">Nom</label>
                                                                 <input type="text" className="form-control" name="lastName" value={consularCardInfo.lastName} onChange={handleConsularCardInputChange} />
@@ -246,14 +268,16 @@ const Profile = () => {
                                                         <h5 className="mb-4" style={{ fontSize: '18px' }}>Notifications</h5>
                                                         {notifications.map(notification => (
                                                             <div key={notification.id} className="activity-item mb-3">
-                                                                <h6 className="mb-1" style={{ fontSize: '18px' }}>{notification.message}</h6>
+ <h6 className="mb-1" style={{ fontSize: '18px' }}>{notification.message}</h6>
                                                                 <p className="text-muted small mb-0" style={{ fontSize: '18px' }}>{notification.date}</p>
                                                             </div>
                                                         ))}
                                                     </div>
+                                                ) : showViewConsularCard ? (
+                                                    <Visualiser />
                                                 ) : (
                                                     <div className="mb-4">
-                                                        <h5 className="mb-4" style={{ fontSize: '18px '}}>Informations personnelles</h5>
+                                                        <h5 className="mb-4" style={{ fontSize: '18px' }}>Informations personnelles</h5>
                                                         <div className="row g-3">
                                                             <div className="col-md-6">
                                                                 <label className="form-label" style={{ fontSize: '18px' }}>Noms</label>
@@ -310,23 +334,6 @@ const Profile = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-
-                                                <div>
-                                                    <h5 className="mb-4" style={{ fontSize: '18px' }}>Activité récente</h5>
-                                                    <div className="activity-item mb-3">
-                                                        <h6 className="mb-1" style={{ fontSize: '18px' }}>Photo de profil mise à jour</h6>
-                                                        <p className="text-muted small mb-0" style={{ fontSize: '18px' }}>il y a 2 heures</p>
-                                                    </div>
-                                                    <div className="activity-item mb-3">
-                                                        <h6 className="mb-1" style={{ fontSize: '18px' }}>Mot de passe modifié</h6>
-                                                        <p className="text-muted small mb-0" style={{ fontSize: '18px' }}>Hier</p>
-                                                    </div>
-                                                    <div className="activity-item">
-                                                        <h6 
-                                                        className="mb-1" style={{ fontSize: '18px' }}>Informations de facturation mises à jour</h6>
-                                                        <p className="text-muted small mb-0" style={{ fontSize: '18px' }}>il y a 3 jours</p>
                                                     </div>
                                                 </div>
                                             </div>

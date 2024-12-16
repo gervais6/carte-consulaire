@@ -10,6 +10,8 @@ import Profils from './pages/Profils';
 import ProtectedRoute from './pages/ProtectedRoute';
 import { AuthProvider } from './pages/AuthContext'; // Importer le provider
 import Resetpassword from './pages/restepassword';
+import Visualisercarte from './pages/Visualisercarte';
+
 
 const App = () => {
   return (
@@ -20,6 +22,8 @@ const App = () => {
           <Route path="/compte" element={<Compte />} />
           <Route path="/mdp" element={<Mdp />} />
           <Route path="/resetpassword" element={<Resetpassword />} />
+          <Route path="/visualiserCarte" element={<Visualisercarte/>} />
+
 
           <Route path="/profils" element={
               <ProtectedRoute element={<Profils />} />
