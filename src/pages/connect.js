@@ -60,15 +60,11 @@ const Connect = () => {
 
   return (
     <div>
-            <Helmet>
+<Helmet>
 
-<meta name="theme-color" content="#FFFF" />
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
 
-<title>Mon Application - Ma Page</title>
-
-<meta name="description" content="Ceci est une description de ma page." />
-
-{/* Vous pouvez ajouter d'autres balises meta ici */}
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
 
 </Helmet>
       <div className="container" style={{ marginTop: '9rem' }}>
