@@ -8,7 +8,6 @@ import { useAuth } from './AuthContext';
 import LockIcon from '@mui/icons-material/Lock'; // Importer l'icône de cadenas
 import Visibility from '@mui/icons-material/Visibility'; // Importer l'icône pour voir le mot de passe
 import VisibilityOff from '@mui/icons-material/VisibilityOff'; // Importer l'icône pour masquer le mot de passe
-import { Helmet } from 'react-helmet';
 const Connect = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
@@ -58,16 +57,6 @@ const Connect = () => {
 
   return (
     <div>
-
-<Helmet>
-
-<meta name="theme-color" content="#2C3E50" />
-
-<title>Mon Application - Connexion</title>
-
-<meta name="description" content="Page de connexion de l'application." />
-
-</Helmet>
       <div className="container" style={{ marginTop: '9rem' }}>
         <div className="text-center mb-4">
           <LockIcon style={{ fontSize: 40, color: '#3f51b5' }} /> {/* Icône de cadenas avec couleur */}
