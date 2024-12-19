@@ -5,55 +5,72 @@ import LockResetIcon from '@mui/icons-material/LockReset'; // Import de l'icône
 
 const Navbar = () => {
   return (
-    <div>
+    <>
       <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+      
+      <header class="masthead">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="mb-5 mb-lg-0 text-start text-lg-start">
+                        <h1 className="display-4 fw-bold mb-3 ">Bienvenue sur votre plateforme E-AFEP</h1>
+                        <p class="lead fw-normal text-muted mb-5">Une solution conçue pour simplifier vos démarches administratives</p>
+                        <div className="d-flex justify-content-start flex-column flex-md-row">
+    <Link to="/connect" className="btn btn-light btn-lg me-2 mb-2" aria-label="Se connecter">
+      <i className="fa fa-sign-in me-2"></i>Se connecter
+    </Link>
 
+  </div>
 
-
-      <header className="hero">
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-lg-6">
-              <h1 className="display-4 fw-bold mb-3">Bienvenue sur votre plateforme E-AFEP</h1>
-              <h3 className="lead mb-4">Une solution conçue pour vous simplifier vos démarches administratives</h3>
-              <div className="d-flex justify-content-start flex-column flex-md-row">
-  <Link to="/connect" className="btn btn-light btn-lg me-2 mb-2 mb-md-0 btn-full-width">
-    <i className="fa fa-sign-in me-2"></i>Se connecter
-  </Link>
-  <Link to="/compte" className="btn btn-outline-light btn-lg btn-full-width">
-    <i className="fa fa-user-plus me-2"></i>Créer un compte
-  </Link>
-</div>            </div>
-            <div className="col-lg-6 py-4">
-              <img src="https://images.unsplash.com/photo-1592323360850-e317605f0526?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMXx8YXBwJTIwc2NyZWVuc2hvdHxlbnwwfDB8fHwxNzI3NzgzMDE1fDA&ixlib=rb-4.0.3&q=80&w=1080" alt="App Screenshot" className="img-fluid app-screenshot" />
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="masthead-device-mockup">
+                            <svg class="circle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="circleGradient" gradientTransform="rotate(45)">
+                                        <stop class="gradient-start-color" offset="0%"></stop>
+                                        <stop class="gradient-end-color" offset="100%"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <circle cx="50" cy="50" r="50"></circle></svg
+                            ><svg class="shape-1 d-none d-sm-block" viewBox="0 0 240.83 240.83" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(120.42 -49.88) rotate(45)"></rect>
+                                <rect x="-32.54" y="78.39" width="305.92" height="84.05" rx="42.03" transform="translate(-49.88 120.42) rotate(-45)"></rect></svg
+                            ><svg class="shape-2 d-none d-sm-block" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"></circle></svg>
+                            <div class="device-wrapper">
+                                <div class="device" data-device="iPhoneX" data-orientation="portrait" data-color="black">
+                                    <div class="screen bg-black">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </header>
+        </header>
 
-
-      {/* Le reste de votre code... */}
       <section id="features" className="py-5">
         <div className="container">
-          <h2 className="text-center mb-5">Pourquoi E-AFEP ?</h2>
+          <h2 className="text-center mb -5">Pourquoi E-AFEP ?</h2>
           <div className="row">
             <div className="col-md-4 mb-4">
               <div className="text-center">
-                <i className="fas fa-bolt feature-icon"></i>
+                <i className="fas fa-clock feature-icon"></i>
                 <h3>Gain de temps</h3>
-                <p>Plus besoin de se déplacer : vos démarches quand vous voulez , où vous voulez</p>
+                <p>Plus besoin de se déplacer : vos démarches quand vous voulez, où vous voulez</p>
               </div>
             </div>
             <div className="col-md-4 mb-4">
               <div className="text-center">
-                <i className="fas fa-lock feature-icon"></i>
+                <i className="fas fa-shield-alt feature-icon"></i>
                 <h3>Sécurité</h3>
                 <p>Nous sécurisons et fiabilisons vos informations</p>
               </div>
             </div>
             <div className="col-md-4 mb-4">
               <div className="text-center">
-                <i className="fas fa-sync feature-icon"></i>
+                <i className="fas fa-thumbs-up feature-icon"></i>
                 <h3>Simplicité</h3>
                 <p>Un seul espace personnel pour tout faire et tout suivre en temps réel</p>
               </div>
@@ -61,6 +78,7 @@ const Navbar = () => {
           </div>
         </div>
       </section>
+      
 
       <section id="about" className="bg-light py-5">
         <div className="container">
@@ -126,10 +144,24 @@ const Navbar = () => {
         </div>
       </section>
 
-      <footer className="bg-dark text-light py-4">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
+      <section class="cta">
+            <div class="cta-content">
+                <div class="container px-5">
+                    <h2 class="text-white display-1 lh-1 mb-4">
+                        
+                        Arrêtez d'attendre.
+                        <br />
+                        Inscrivez-vous .
+                    </h2>
+                   <Link to="/compte" class="btn btn-outline-light py-3 px-4 rounded-pill" >Inscrivez-vous</Link>  
+                </div>
+            </div>
+        </section>
+
+      <footer class Name="bg-dark text-light py-4">
+        <div className="container mt-3 ">
+          <div className="row ">
+            <div className="col-md-6 ">
               <h5>E-afep</h5>
               <p>Une solution conçue pour vous simplifier vos démarches administratives.</p>
             </div>
@@ -145,7 +177,7 @@ const Navbar = () => {
           </div>
         </div>
       </footer>
-    </div>
+    </>
   );
 };
 
