@@ -146,8 +146,8 @@ const Navbar = () => {
 
       <section class="cta">
             <div class="cta-content">
-                <div class="container px-5">
-                    <h2 class="text-white display-1 lh-1 mb-4">
+                <div class="container text-center px-5">
+                    <h2 class="text-white  display-1 lh-1 mb-4">
                         
                         Arrêtez d'attendre.
                         <br />
