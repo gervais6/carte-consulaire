@@ -149,7 +149,8 @@ const Navbar = () => {
                 <div class="container text-center px-5">
                     <h2 class="text-white  display-1 lh-1 mb-4">
                         
-                      
+                        Arrêtez n'attendez plus
+                        <br />
                         Inscrivez-vous 
                     </h2>
                    <Link to="/compte" class="btn btn-outline-light py-3 px-4 rounded-pill" >Inscrivez-vous</Link>  
