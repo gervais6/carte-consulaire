@@ -12,7 +12,7 @@ const Navbar = () => {
             <div class="container px-5">
                 <div class="row gx-5 align-items-center">
                     <div class="col-lg-6">
-                        <div class="mb-5 mb-lg-0 text-start text-lg-start">
+                        <div class="mb-5 mb-lg-0 text-center text-lg-start">
                         <h1 className="display-4 fw-bold mb-3 ">Bienvenue sur votre plateforme E-AFEP</h1>
                         <p class="lead fw-normal text-muted mb-5">Une solution conçue pour simplifier vos démarches administratives</p>
                         <div className="d-flex justify-content-start flex-column flex-md-row">
@@ -50,7 +50,7 @@ const Navbar = () => {
             </div>
         </header>
 
-      <section id="features" className="py-5">
+      <section id="features " className="py-5">
         <div className="container">
           <h2 className="text-center mb -5">Pourquoi E-AFEP ?</h2>
           <div className="row">
@@ -160,7 +160,7 @@ const Navbar = () => {
 
       <footer class Name="bg-dark text-light py-4">
         <div className="container mt-3 ">
-          <div className="row ">
+          <div className="row text-center ">
             <div className="col-md-6 ">
               <h5>E-afep</h5>
               <p>Une solution conçue pour vous simplifier vos démarches administratives.</p>
