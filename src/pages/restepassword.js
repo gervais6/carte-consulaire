@@ -2,10 +2,20 @@ import React, { useState } from "react";
 import '../pages/Compte.css';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'; // Importer toast pour les notifications
-import KeyIcon from '@mui/icons-material/Key'; // Importer l'icône de clé
 import Visibility from '@mui/icons-material/Visibility'; // Importer l'icône pour voir le mot de passe
 import VisibilityOff from '@mui/icons-material/VisibilityOff'; // Importer l'icône pour masquer le mot de passe
-import { Typography } from '@mui/material'; // Importer Typography pour le style
+import LockResetIcon from '@mui/icons-material/LockReset'; // Importer l'icône de réinitialisation
+import KeyIcon from '@mui/icons-material/Key'; // Importer l'icône de clé
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card'; 
+import CardContent from '@mui/material/CardContent'; 
+import TextField from '@mui/material/TextField'; 
+import FormControl from '@mui/material/FormControl'; 
+import InputLabel from '@mui/material/InputLabel'; 
+import OutlinedInput from '@mui/material/OutlinedInput'; 
+import InputAdornment from '@mui/material/InputAdornment'; 
+import IconButton from '@mui/material/IconButton'; 
+import Grid from '@mui/material/Grid'; // Importer le composant Grid
 import axios from 'axios'; // Importer axios
 
 const Resetpassword = () => {
@@ -81,90 +91,101 @@ const Resetpassword = () => {
   return (
     <section className="" style={{ backgroundColor: '#eee' }}>
       <ToastContainer /> {/* Ajoutez le ToastContainer ici */}
-      <div className="container h-100">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col-lg-12 col-xl-11">
-            <div className="card text-black" style={{ borderRadius: '25px' }}>
-              <div className="card-body p-md-5">
-                <div className="row justify-content-center">
-                  <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                    <p className="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">Nouveau mot de passe</p>
-                    <form className="mx-1 mx-md-4" onSubmit={handleSubmit}>
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        < i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                        <div className="form-outline flex-fill mb-0">
-                          <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            className="form-control"
-                            placeholder="Email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                      </div>
+      <div className="px-4 py-5 px-md-5 text-center text-lg-start">
+        <div className="container">
+          <Grid container spacing={4} alignItems="center">
+            < Grid item lg={6} md={12}>
+              <h1 className="my-5 display-3 fw-bold ls-tight">
+                Réinitialiser votre mot de passe <br />
+                <span className="text-primary">pour vos démarches administratives</span>
+              </h1>
+              <p style={{ color: 'hsl(217, 10%, 50.8%)' }}>
+                Entrez votre adresse e-mail et votre nouveau mot de passe pour réinitialiser votre mot de passe. 
+                Assurez-vous d'utiliser l'adresse e-mail associée à votre compte.
+              </p>
+            </Grid>
 
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
-                        <div className="form-outline flex-fill mb-0 position-relative">
-                          <input
-                            placeholder="Nouveau mot de passe"
-                            type={showPassword ? "text" : "password"}
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            className="form-control"
-                          />
-                          <span 
-                            onClick={() => setShowPassword(!showPassword)} 
-                            style={{ position: 'absolute', right: '10px', top: '5px', cursor: 'pointer' }}
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="d-flex flex-row align-items-center mb-4">
-                        <i className="fas fa-key fa-lg me-3 fa-fw"></i>
-                        <div className="form-outline flex-fill mb-0 position-relative">
-                          <input
-                            placeholder="Confirmer le mot de passe"
-                            type={showPasswordConfirmation ? "text" : "password"}
-                            id="passwordConfirmation"
-                            name="passwordConfirmation"
-                            value={formData.passwordConfirmation}
-                            onChange={handleChange}
-                            required
-                            className="form-control"
-                          />
-                          <span 
-                            onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)} 
-                            style={{ position: 'absolute', right: '10px', top: '5px', cursor: 'pointer' }}
-                          >
-                            {showPasswordConfirmation ? <VisibilityOff /> : <Visibility />}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                        <button type="submit" className="btn btn-primary btn-lg">Confirmez</button>
-                      </div>
-                    </form>
-                    <p className="text-center">
-                      Revenir à la <Link to="/connect" className="text-primary" style={{ textDecoration: 'none' }}>connexion</Link>
-                    </p>
-                  </div>
-                  <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" className="img-fluid" alt="Sample image" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            <Grid item lg={6} md={12}>
+              <Card elevation={3} style={{ borderRadius: '15px' }}>
+                <CardContent>
+                  <h2 className="text-center">Nouveau mot de passe</h2>
+                  <form onSubmit={handleSubmit}>
+                    <TextField
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      label="Email"
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
+                    <FormControl variant="outlined" fullWidth margin="normal">
+                      <InputLabel htmlFor="password">Nouveau mot de passe</InputLabel>
+                      <OutlinedInput
+                        id="password"
+                        type={showPassword ? 'text' : 'password'}
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => setShowPassword(!showPassword)}
+                              edge="end"
+                            >
+                              {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        label="Nouveau mot de passe"
+                      />
+                    </FormControl>
+                    <FormControl variant="outlined" fullWidth margin="normal">
+                      <InputLabel htmlFor="passwordConfirmation">Confirmer le mot de passe</InputLabel>
+                      <OutlinedInput
+                        id="passwordConfirmation"
+                        type={showPasswordConfirmation ? 'text' : 'password'}
+                        name="passwordConfirmation"
+                        value={formData.passwordConfirmation}
+                        onChange={handleChange}
+                        required
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password confirmation visibility"
+                              onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
+                              edge="end"
+                            >
+                              {showPasswordConfirmation ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        }
+                        label="Confirmer le mot de passe"
+                      />
+                    </FormControl>
+                    <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        type="submit"
+                        startIcon={<KeyIcon />}
+                      >
+                        Confirmez
+                      </Button>
+                    </div>
+                  </form>
+                  <p className="text-center">
+                    Revenir à la <Link to="/connect" className="text-primary" style={{ textDecoration: 'none' }}>connexion</Link>
+                  </p>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
         </div>
       </div>
     </section>
