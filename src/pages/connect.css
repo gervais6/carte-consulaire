@@ -3,10 +3,11 @@
     margin: 0 auto;
 }
 
-.login-form input[type="email"],
+.login-form input[type="text"],
 .login-form input[type="password"] {
     width: 100%;
     padding: 10px;
+    border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
 }
@@ -27,12 +28,3 @@
 .login-form .form-group {
     margin-bottom: 20px;
 }
-
-
-.icon-color {
-    color: #007bff
-}
-
-
-
-

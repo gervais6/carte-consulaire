@@ -56,7 +56,7 @@ const Profile = () => {
                   <a href="#" className="active" onClick={() => setCurrentSection('home')}>Details</a>
 
                   <a href="#"   onClick={() => setCurrentSection('profile')}>Profile</a>
-              <a href="#" onClick={() => setCurrentSection('demandes')}>Demandes</a>
+              <a href="#" onClick={() => setCurrentSection('demandes')}>Demande carte consulaire</a>
 
 
                 </div>
@@ -191,7 +191,7 @@ const Profile = () => {
                 <a href="#"  onClick={() => setCurrentSection('home')}>Details</a>
 
 <a href="#" className="active"  onClick={() => setCurrentSection('profile')}>Profile</a>
-<a href="#" onClick={() => setCurrentSection('demandes')}>Demandes</a>
+<a href="#" onClick={() => setCurrentSection('demandes')}>Demande  carte consulaire</a>
 
 
                 </div>
@@ -339,7 +339,7 @@ const Profile = () => {
                 <a href="#"  onClick={() => setCurrentSection('home')}>Details</a>
 
 <a href="#"   onClick={() => setCurrentSection('profile')}>Profile</a>
-<a href="#" className="active" onClick={() => setCurrentSection('demandes')}>Demandes</a>
+<a href="#" className="active" onClick={() => setCurrentSection('demandes')}>Demande carte consulaire</a>
 </div>
 
                 <div className="content-header">
@@ -362,111 +362,103 @@ const Profile = () => {
                 <div className="content">
                   <div className="content-panel">
                     <div className="vertical-tabs">
-                      <a href="#" className="active">Toutes les demandes</a>
-                      <a href="#">En attente</a>
-                      <a href="#">Approuvées</a>
-                      <a href="#">Rejetées</a>
+                      <a href="#" className="active">Demande carte consulaire</a>
+
                       
                     </div>
                   </div>
 
-                  <div className="content-main">
-                    <div className="tasks-wrapper">
-                      <div className="task">
-                        <input className="task-item" name="task" type="checkbox" id="item-1" checked />
-                        <label htmlFor="item-1">
-                          <span className="label-text">Dashboard Design Implementation</span>
-                        </label>
-                        <span className="tag approved">Approuvé</span>
-                      </div>
-                      <div className="task">
-                        <input className="task-item" name="task" type="checkbox" id="item-2" checked />
-                        <label htmlFor="item-2">
-                          <span className="label-text">Create a userflow</span>
-                        </label>
-                        <span className="tag progress">En cours</span>
-                      </div>
-                      <div className="task">
-                        <input className="task-item" name="task" type="checkbox" id="item-3" />
-                        <label htmlFor="item-3">
-                          <span className="label-text">Application Implementation</span>
-                        </label>
-                        <span className="tag review">En révision</span>
-                      </div>
-                      <div className="task">
-                        <input className="task-item" name="task" type="checkbox" id="item-4" />
-                        <label htmlFor="item-4">
-                          <span className="label-text">Create a Dashboard Design</span>
-                        </label>
-                        <span className="tag progress">En cours</span>
-                      </div>
-                      <div className="task">
-                        <input className="task-item" name="task" type="checkbox" id="item-5" />
-                        <label htmlFor="item-5">
-                          <span className="label-text">Create a Web Application Design</span>
-                        </label>
-                        <span className="tag approved">Approuvé</span>
-                      </div>
-                      <div className="task">
-                        <input className="task-item" name="task" type="checkbox" id="item-6" />
-                        <label htmlFor="item-6">
-                          <span className="label-text">Interactive Design</span>
-                        </label>
-                        <span className="tag review">En révision</span>
-                      </div>
-                      <div className="header upcoming">Tâches à venir</div>
-                      <div className="task">
-                        <input className="task-item" name="task" type="checkbox" id="item-7" />
-                        <label htmlFor="item-7">
-                          <span className="label-text">Dashboard Design Implementation</span>
-                        </label>
-                        <span className="tag waiting">En attente</span>
-                      </div>
-                      <div className="task">
-                        <input className="task-item" name="task" type="checkbox" id="item-8" />
-                        <label htmlFor="item-8">
-                          <span className="label-text">Create a userflow</span>
-                        </label>
-                        <span className="tag waiting">En attente</span>
-                      </div>
-                      <div className="task">
-                        <input className="task-item" name="task" type="checkbox" id="item-9" />
-                        <label htmlFor 
-="item-9">
-                          <span className="label-text">Application Implementation</span>
-                        </label>
-                        <span className="tag waiting">En attente</span>
-                      </div>
-                      <div className="task">
-                        <input className="task-item" name="task" type="checkbox" id="item-10" />
-                        <label htmlFor="item-10">
-                          <span className="label-text">Create a Dashboard Design</span>
-                        </label>
-                        <span className="tag waiting">En attente</span>
-                      </div>
-                    </div>
-                  </div>
+
+<form>
+
+  <div className="row mb-4">
+
+    <div className="col-md-6">
+
+      <h4>Informations personnelles</h4>
+
+      <div className="mb-3">
+
+        <label htmlFor="fullName" className="form-label">Nom complet</label>
+
+        <input type="text" className="form-control" id="fullName" placeholder="Entrez votre nom complet" required />
+
+      </div>
+
+      <div className="mb-3">
+
+        <label htmlFor="email" className="form-label">Adresse e-mail</label>
+
+        <input type="email" className="form-control" id="email" placeholder="Entrez votre email" required />
+
+      </div>
+
+      <div className="mb-3">
+
+        <label htmlFor="phone" className="form-label">Numéro de téléphone</label>
+
+        <input type="tel" className="form-control" id="phone" placeholder="Entrez votre numéro de téléphone" required />
+
+      </div>
+
+    </div>
+
+    <div className="col-md-6">
+
+      <h4>Photo de profil</h4>
+
+      <div className="mb-3">
+
+        <img src="/api/placeholder/150/150" alt="Profile Picture" className="img-thumbnail mb-2" />
+
+        <input className="form-control" type="file" id="profilePicture" accept="image/*" />
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <hr />
+
+
+  <div className="row mb-4">
+
+    <div className="col-md-12">
+
+      <h4>Motif de la demande</h4>
+
+      <div className="mb-3">
+
+        <textarea className="form-control" rows="3" placeholder="Décrivez le motif de votre demande" required></textarea>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <hr />
+
+
+  <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+
+    <button type="button" className="btn btn-secondary me-md-2">Annuler</button>
+
+    <button type="submit" className="btn btn-primary">Soumettre la demande</button>
+
+  </div>
+
+</form>
                 </div>
               </div>
             </main>
           </div>
         );
-      case 'notifications':
-        return (
-          <div>
-            <h2>Notifications</h2>
-            <p>Voici vos notifications récentes.</p>
-          </div>
-        );
-      case 'facturation':
-        return (
-          <div>
-            <h2>Facturation</h2>
-            <p>Voici vos informations de facturation.</p>
-          </div>
-        );
-      default:
-        return <h1>Bienvenue sur la page d'accueil</h1>;
+        
+
     }
   };
 
@@ -487,7 +479,6 @@ const Profile = () => {
               <a href="#" onClick={() => setCurrentSection('home')}>Accueil</a>
               <a href="#" onClick={() => setCurrentSection('profile')}>Profile</a>
               <a href="#" onClick={() => setCurrentSection('demandes')}>Demandes</a>
-              <a href="#" onClick={() => setCurrentSection('facturation')}>Facturation</a>
             </nav>
             <div className="header-navigation-actions">
               <a href="#" className="button" style={{ backgroundColor: '#007bff', color: '#fff' }}>
