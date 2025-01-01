@@ -75,32 +75,12 @@ const Navbar = () => {
       </div>
       <div className="col-md-4 mb-4">
         <div className="text-center">
-          <i className="fas fa-headset feature-icon"></i> {/* Headset icon for support */}
-          <h3>Support Client</h3>
-          <p>Une équipe dédiée pour vous accompagner à chaque étape.</p>
-        </div>
-      </div>
-      <div className="col-md-4 mb-4">
-        <div className="text-center">
-          <i className="fas fa-mobile-alt feature-icon"></i> {/* Mobile icon for accessibility */}
-          <h3>Accessibilité</h3>
-          <p>Accédez à vos demandes depuis n'importe quel appareil.</p>
-        </div>
-      </div>
-      <div className="col-md-4 mb-4">
-        <div className="text-center">
-          <i className="fas fa-clock feature-icon"></i> {/* Clock icon for speed */}
-          <h3>Rapidité</h3>
-          <p>Soumettez vos demandes en un temps record.</p>
-        </div>
-      </div>
-      <div className="col-md-4 mb-4">
-        <div className="text-center">
           <i className="fas fa-sync feature-icon"></i> {/* Sync icon for easy sync */}
           <h3>Synchronisation Facile</h3>
           <p>Suivez l'avancement de vos demandes en temps réel.</p>
         </div>
       </div>
+
     </div>
   </div>
 </section>

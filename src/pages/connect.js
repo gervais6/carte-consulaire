@@ -10,7 +10,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const Connect = () => {
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({ email: '', password: '' }); // Change 'name' to 'email'
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth(); 
@@ -24,7 +24,7 @@ const Connect = () => {
     e.preventDefault();
 
     // Basic validation
-    if (!formData.username || !formData.password) {
+    if (!formData.email || !formData.password) { // Change 'username' to 'email'
         toast.error("Tous les champs sont requis.");
         return;
     }
@@ -65,55 +65,51 @@ const Connect = () => {
             <div className="form-group ">
               <input 
                 type="text" 
-                id="username" 
-                name="username" 
+                id="email" // Change id to 'email'
+                name="email" // Change name to 'email'
                 required 
-                value={formData.username} 
+                value={formData.email} // Change 'username' to 'email'
                 onChange={handleChange} 
-                placeholder="Entrez votre email" // Placeholder added
-                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} // Basic styling
+                placeholder="Entrez votre email" 
+                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} 
               />
             </div>
             <div className="form-group" style={{ position: 'relative' }}>
               <input 
-                type={showPassword ? 'text' : 'password'} // Toggle between text and password
+                type={showPassword ? 'text' : 'password'} 
                 id="password"
                 name="password"
                 required
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Entrez votre mot de passe"
-                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} // Basic styling
+                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} 
               />
               <InputAdornment position="end" style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}>
                 <IconButton
                   onClick={() => setShowPassword(!showPassword)}
                   edge="end"
-                  style={{ background: 'transparent' }} // Remove background
+                  style={{ background: 'transparent' }} 
                 >
                   <span style={{ color: 'black' }}>
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </span>
                 </IconButton>
               </InputAdornment>
+            
             </div>
             <button type="submit" className="btn btn-primary btn-block" style={{ width: '100%' }}>Se connecter</button>
           </form>
           <div className="form-check d-flex justify-content-center mb-5" style={{marginTop:20}}>
               <label className="form-check-label" htmlFor="form2Example3">
-                Vous  n'avez  pas un compte <Link to="/compte" style={{ textDecoration: "none" }}>Inscrivez-vous</Link>
+                Vous n'avez pas un compte <Link to="/compte" style={{ textDecoration: "none" }}>Inscrivez-vous</Link>
               </label>
             </div>
-
-
             <div className="form-check d-flex justify-content-center mb-5" style={{marginTop:-30}}>
               <label className="form-check-label" htmlFor="form2Example3">
-                Vous avez oublier votre  <Link to="/mdp" style={{ textDecoration: "none" }}>mot de passe</Link>
+                Vous avez oublié votre <Link to="/mdp" style={{ textDecoration: "none" }}>mot de passe</Link>
               </label>
             </div>
-
-            
-
         </div>
       </div>
       <ToastContainer />
@@ -121,4 +117,4 @@ const Connect = () => {
   );
 };
 
-export default Connect
+export default Connect;
