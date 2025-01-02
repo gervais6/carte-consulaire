@@ -101,54 +101,51 @@ const Navbar = () => {
     </section>
 
     <section className="cta py-5">
-    <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="accordion" id="modernAccordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Accordion Item #1
+    <div className="container">
+        <div className="row justify-content-center">
+            <div className="col-md-12">
+                <div className="accordion" id="modernAccordion">
+                    <div className="accordion-item">
+                        <h2 className="accordion-header">
+                            <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Comment créer une demande ?
                             </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#modernAccordion">
-                        <div class="accordion-body">
-                            This is the first item's accordion body. It is shown by default, until the collapse plugin
-                            adds the appropriate classes that we use to style each element.
+                        </h2>
+                        <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#modernAccordion">
+                            <div className="accordion-body">
+                                Pour créer une demande, connectez-vous à votre compte, sélectionnez le type de document que vous souhaitez demander, remplissez le formulaire en ligne avec les informations requises, puis soumettez votre demande.
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Accordion Item #2
+                    <div className="accordion-item">
+                        <h2 className="accordion-header">
+                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Comment suivre l'état de ma demande  en ligne?
                             </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#modernAccordion">
-                        <div class="accordion-body">
-                            This is the second item's accordion body. It is hidden by default, until the collapse plugin
-                            adds the appropriate classes that we use to style each element.
+                        </h2>
+                        <div id="collapseTwo" className="accordion-collapse collapse" data-bs-parent="#modernAccordion">
+                            <div className="accordion-body">
+                                Vous pouvez suivre l'état de votre demande en vous rendant dans la section "suivi de la carte consulaire" de votre compte. Vous y trouverez des mises à jour sur le statut de votre demande et des notifications par e-mail.
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Accordion Item #3
+                    <div className="accordion-item">
+                        <h2 className="accordion-header">
+                            <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Que faire si j'ai des problèmes avec ma demande ?
                             </button>
-                    </h2>
-                    <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#modernAccordion">
-                        <div class="accordion-body">
-                            This is the third item's accordion body. It is hidden by default, until the collapse plugin
-                            adds the appropriate classes that we use to style each element.
+                        </h2>
+                        <div id="collapseThree" className="accordion-collapse collapse" data-bs-parent="#modernAccordion">
+                            <div className="accordion-body">
+                                Si vous rencontrez des problèmes avec votre demande, vous pouvez consulter notre section d'aide ou contacter notre support client via le formulaire de contact disponible dans l'application.
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-    </section>
+</section>
 
     <footer className="bg-dark text-light py-4">
         <div className="container">
