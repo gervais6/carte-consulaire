@@ -2,7 +2,6 @@ import React from 'react';
 import '../pages/navbar.css';
 import { Link } from 'react-router-dom';
 import LockResetIcon from '@mui/icons-material/LockReset'; // Import de l'icône de réinitialisation
-
 const Navbar = () => {
   return (
     <>

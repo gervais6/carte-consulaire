@@ -39,49 +39,9 @@ const Profile = () => {
         { id: 3, message: "Vous avez reçu un nouveau message.", date: "il y a 3 jours" },
     ];
 
-    // Enregistrer une activité
-    const recordActivity = async (message) => {
-        try {
-            const response = await fetch('http://localhost:8000/api/activities', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({ message }),
-            });
 
-            if (response.ok) {
-                console.log("Activité enregistrée avec succès");
-            } else {
-                console.error("Erreur lors de l'enregistrement de l'activité");
-            }
-        } catch (error) {
-            console.error("Erreur réseau :", error);
-        }
-    };
 
-    // Récupérer les activités récentes
-    const fetchRecentActivities = async () => {
-        try {
-            const response = await fetch('http://localhost:8000/api/activities', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-            });
 
-            if (response.ok) {
-                const data = await response.json();
-                setRecentActivities(data);
-            } else {
-                console.error("Erreur lors de la récupération des activités");
-            }
-        } catch (error) {
-            console.error("Erreur réseau :", error);
-        }
-    };
 
     // Récupérer les demandes de carte consulaire
     const fetchConsularCardRequests = async () => {
@@ -169,7 +129,6 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        fetchRecentActivities();
         fetchConsularCardRequests();
     }, []);
 
@@ -181,7 +140,6 @@ const Profile = () => {
             <div className="tabs">
                 <button onClick={() => setActiveTab('personalInfo')}>Informations Personnelles</button>
                 <button onClick={() => setActiveTab('consularCard')}>Carte Consulaire</button>
-                <button onClick={() => setActiveTab('activities')}>Activités Récentes</button>
             </div>
             {/* Render active tab content */}
             {activeTab === 'personalInfo' && (
@@ -203,18 +161,7 @@ const Profile = () => {
                     </form>
                 </div>
             )}
-            {activeTab === 'activities' && (
-                <div>
-                    <h2>Activités Récentes</h2>
-                    {/* List recent activities */}
-                    <ul>
-                        {recentActivities.slice(0, visibleActivitiesCount).map(activity => (
-                            <li key={activity.id}>{activity.message} - {activity.date}</li>
-                        ))}
-                    </ul>
-                    <button onClick={() => setVisibleActivitiesCount(visibleActivitiesCount + 3)}>Voir Plus</button>
-                </div>
-            )}
+
             <button onClick={handleLogout}>Déconnexion</button>
         </div>
     );

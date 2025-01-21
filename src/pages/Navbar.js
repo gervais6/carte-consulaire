@@ -3,7 +3,8 @@ import '../pages/navbar.css';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-
+import myImage from '../pages/cover_app.png'; // Importez l'image
+import logo from '../pages/LOGO.png'; // Importez l'image de votre logo
 const Navbar = () => {
   const StyledButton = styled(Button)({
     margin: '0.5rem', // Adds spacing around the button
@@ -15,7 +16,7 @@ const Navbar = () => {
 
       <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div className="container">
-          <a className="navbar-brand" href="#">E-AFEP</a>
+          <img src={logo} alt=" Logo" style={{ width: '200px', height: '30px' }} /> {/* Ajoutez l'image ici */}
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -49,7 +50,7 @@ const Navbar = () => {
               </Link>
             </div>
             <div className="col-lg-6 py-4">
-              <img src="https://images.unsplash.com/photo-1592323360850-e317605f0526?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMXx8YXBwJTIwc2NyZWVuc2hvdHxlbnwwfDB8fHwxNzI3NzgzMDE1fDA&ixlib=rb-4.0.3&q=80&w=1080" alt="App Screenshot" className="img-fluid app-screenshot" />
+              <img src={myImage} alt="App Screenshot" className="img-fluid app-screenshot" />
             </div>
           </div>
         </div>
@@ -94,7 +95,7 @@ const Navbar = () => {
                     <p>Rejoignez des milliers d'utilisateurs satisfaits qui ont déjà découvert la puissance de notre application.</p>
                 </div>
                 <div className="col-lg-6 order-lg-1">
-                    <img src="https://images.unsplash.com/photo-1592323360850-e317605f0526?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMXx8YXBwJTIwc2NyZWVuc2hvdHxlbnwwfDB8fHwxNzI3NzgzMDE1fDA&ixlib=rb-4.0.3&q=80&w=1080" alt="À propos de notre application" className="img-fluid rounded" />
+                <img src={myImage} alt="App Screenshot" className="img-fluid app-screenshot" />
                 </div>
             </div>
         </div>
@@ -151,8 +152,8 @@ const Navbar = () => {
         <div className="container">
             <div className="row">
                 <div className="col-md-6">
-                    <h5>E-AFEP</h5>
-                    <p>Transformez la façon dont vous gérez vos démarches administratives.</p>
+                <img src={logo} alt=" Logo" style={{ width: '200px', height: '30px' }} /> {/* Ajoutez l'image ici */}
+                <p className='mt-2'>Transformez la façon dont vous gérez vos démarches administratives.</p>
                 </div>
                 <div className="col-md-6">
                     <h5>Contactez-nous</h5>
