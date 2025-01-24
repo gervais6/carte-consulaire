@@ -152,7 +152,7 @@ const Navbar = () => {
         <div className="container">
             <div className="row">
                 <div className="col-md-6">
-                <img src={logo} alt=" Logo" style={{ width: '200px', height: '30px' }} /> {/* Ajoutez l'image ici */}
+                <img src={logo} alt=" Logo" style={{ width: '120px', height: '30px' }} /> {/* Ajoutez l'image ici */}
                 <p className='mt-2'>Transformez la façon dont vous gérez vos démarches administratives.</p>
                 </div>
                 <div className="col-md-6">
