@@ -244,6 +244,18 @@ const Profile = () => {
         fetchPersonalInfo();
     }, []);
 
+    useEffect(() => {
+        window.history.pushState(null, '', window.location.href);
+        const handlePopState = (event) => {
+            window.history.pushState(null, '', window.location.href);
+        };
+        window.addEventListener('popstate', handlePopState);
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, []);
+ 
+
     return (
         <div className="full-height">
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />

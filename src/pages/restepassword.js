@@ -76,8 +76,10 @@ const Resetpassword = () => {
   };
 
   return (
-    <div className="container" style={{ marginTop: '100px' }}>
-      <h2 className="text-center" style={{marginBottom:30}}>Réinitialiser votre mot de passe</h2>
+    <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", background: "black",fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>  
+
+    <div className="container">
+      <h2 className="text-center" style={{marginBottom:30,color:"white"}}>Réinitialiser votre mot de passe</h2>
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <form className="login-form" onSubmit={handleSubmit}>
@@ -137,6 +139,7 @@ const Resetpassword = () => {
         </div>
       </div>
       <ToastContainer />
+    </div>
     </div>
   );
 };

@@ -55,10 +55,9 @@ const Connect = () => {
         }
     }
   };
-
   return (
-    <div className="container" style={{marginTop:'100px'}}>
-      <h2 className="text-center" style={{marginBottom:30}}>Connexion</h2>
+<div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", background: "black",fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>    <div className="container" style={{}}>
+      <h2 className="text-center" style={{marginBottom:30,color:"white"}}>Connexion</h2>
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <form className="login-form" onSubmit={handleSubmit}>
@@ -98,14 +97,14 @@ const Connect = () => {
               </InputAdornment>
             
             </div>
-            <button type="submit" className="btn btn-primary btn-block" style={{ width: '100%' }}>Se connecter</button>
+            <button type="submit" className="btn btn-primary btn-block " style={{ width: '100%' }}>Se connecter</button>
           </form>
-          <div className="form-check d-flex justify-content-center mb-5" style={{marginTop:20}}>
-              <label className="form-check-label" htmlFor="form2Example3">
+          <div className="form-check d-flex justify-content-center mb-5" style={{marginTop:20,color:"white"}}>
+              <label className="form-check-label " htmlFor="form2Example3">
                 Vous n'avez pas un compte <Link to="/compte" style={{ textDecoration: "none" }}>Inscrivez-vous</Link>
               </label>
             </div>
-            <div className="form-check d-flex justify-content-center mb-5" style={{marginTop:-30}}>
+            <div className="form-check d-flex justify-content-center mb-5" style={{marginTop:-30,color:"white"}}>
               <label className="form-check-label" htmlFor="form2Example3">
                 Vous avez oublié votre <Link to="/mdp" style={{ textDecoration: "none" }}>mot de passe</Link>
               </label>
@@ -113,6 +112,7 @@ const Connect = () => {
         </div>
       </div>
       <ToastContainer />
+    </div>
     </div>
   );
 };

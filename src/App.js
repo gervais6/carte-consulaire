@@ -8,6 +8,7 @@ import Profils from './pages/Profils';
 import ProtectedRoute from './pages/ProtectedRoute';
 import { AuthProvider } from './pages/AuthContext';
 import Resetpassword from './pages/restepassword';
+import Admin from'./pages/Admin'
 import './index.css';
 
 const App = () => {
@@ -19,6 +20,8 @@ const App = () => {
                     <Route path="/compte" element={<Compte />} />
                     <Route path="/mdp" element={<Mdp />} />
                     <Route path="/resetpassword" element={<Resetpassword />} />
+                    <Route path="/admin" element={<Admin />} />
+                
 
                               <Route path="/profils" element={
               <ProtectedRoute element={<Profils />} />

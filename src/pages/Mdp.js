@@ -57,8 +57,9 @@ const MotsDePasseOublier = () => {
   };
 
   return (
-    <div className="container" style={{marginTop:100}}>
-      <h3 className="text-center" style={{marginBottom:30}}>Réinitialiser votre mot de passe</h3>
+<div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", background: "black",fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>   
+<div className="container">
+      <h3 className="text-center" style={{marginBottom:30,color:"white"}}>Réinitialiser votre mot de passe</h3>
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <form className="login-form" onSubmit={handleSubmit}>
@@ -76,12 +77,13 @@ const MotsDePasseOublier = () => {
             </div>
             <button type="submit" className="btn btn-primary btn-block" style={{ width: '100%' }}>Envoyer votre e-mail</button>
           </form>
-          <p className="text-center" style={{ marginTop: '20px' }}>
+          <p className="text-center" style={{ marginTop: '20px',color:"white" }}>
             Revenir à la <Link to="/connect" style={{ textDecoration: 'none' }}>connexion</Link>
           </p>
         </div>
       </div>
       <ToastContainer />
+    </div>
     </div>
   );
 };

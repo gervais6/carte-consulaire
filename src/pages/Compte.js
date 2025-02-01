@@ -42,8 +42,10 @@ const Compte = () => {
   };
 
   return (
+    <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", background: "black",fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>    
+
     <div className="container" style={{marginTop:100}}>
-      <h2 className="text-center" style={{marginBottom:30}}>S'inscrire</h2>
+      <h2 className="text-center" style={{marginBottom:30,color:"white",fontFamily: 'Poppins, sans-serif',fontWeight: 500}}>S'inscrire</h2>
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <form className="login-form" onSubmit={handleSubmit}>
@@ -121,15 +123,17 @@ const Compte = () => {
             </div>
             <button type="submit" className="btn btn-primary btn-block" style={{ width: '100%' }}>S'inscrire</button>
           </form>
-          <div className="form-check d-flex justify-content-center mb-5" style={{marginTop:20}}>
+          <div className="form-check d-flex justify-content-center mb-5" style={{marginTop:20,color:"white"}}>
               <label className="form-check-label" htmlFor="form2Example3">
                 Vous avez un compte <Link to="/connect" style={{ textDecoration: "none" }}>Connectez-vous</Link>
               </label>
             </div>
 
         </div>
+        
       </div>
       <ToastContainer />
+    </div>
     </div>
   );
 };

@@ -154,7 +154,7 @@ const Navbar = () => {
         </div>
       </section>
 
-      <footer className="bg-dark text-light py-4">
+      <footer className="bg-light text-light py-4">
         <div className="container mt-3">
           <div className="row text-center">
             <div className="col-md-6">
