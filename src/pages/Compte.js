@@ -42,7 +42,7 @@ const Compte = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", background: "black",fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>    
+    <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", background: "#212529",fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>    
 
     <div className="container" style={{marginTop:100}}>
       <h2 className="text-center" style={{marginBottom:30,color:"white",fontFamily: 'Poppins, sans-serif',fontWeight: 500}}>S'inscrire</h2>

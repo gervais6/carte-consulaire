@@ -56,7 +56,7 @@ const Connect = () => {
     }
   };
   return (
-<div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", background: "black",fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>    <div className="container" style={{}}>
+<div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", background: "#212529",fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>    <div className="container" style={{}}>
       <h2 className="text-center" style={{marginBottom:30,color:"white"}}>Connexion</h2>
       <div className="row">
         <div className="col-md-6 offset-md-3">
@@ -101,7 +101,7 @@ const Connect = () => {
           </form>
           <div className="form-check d-flex justify-content-center mb-5" style={{marginTop:20,color:"white"}}>
               <label className="form-check-label " htmlFor="form2Example3">
-                Vous n'avez pas un compte <Link to="/compte" style={{ textDecoration: "none" }}>Inscrivez-vous</Link>
+                Vous n'avez pas un compte <Link to="/compte" style={{ textDecoration: "none" ,fontSize:14 }}>Inscrivez-vous</Link>
               </label>
             </div>
             <div className="form-check d-flex justify-content-center mb-5" style={{marginTop:-30,color:"white"}}>

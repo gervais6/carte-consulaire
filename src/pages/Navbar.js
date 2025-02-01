@@ -42,7 +42,7 @@ const Navbar = ({ value }) => {
 
       <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
-      <nav className="navbar navbar-expand-lg navbar-light bg-dark fixed-top">
+      <nav className="navbar navbar-expand-lg bg-dark fixed-top">
         <div className="container">
           <img src={logo} alt=" Logo" style={{ width: '120px', height: '30px' }} /> {/* Ajoutez l'image ici */}
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,19 +65,19 @@ const Navbar = ({ value }) => {
         </div>
       </nav>
 
-      <header className="hero" id="compte" style={{  minHeight: '100vh' ,fontFamily: 'Poppins, sans-serif', fontWeight: 200}}>
+      <header className="hero" id="compte" style={{  minHeight: '100vh' ,fontFamily: 'Poppins, sans-serif', fontWeight: 800}}>
     <div className="container h-100">
         <div className="row align-items-center h-100">
             <div className="col-lg-12 text-center mt-5">
-                <h1 className="display-4 fw-bold mb-5 mt-5 text-dark " style={{ fontSize: 70 }}>
-                    Simplifiez l'envoi de<br /> vos colis en un clic
-                </h1>
-                <div className='col-lg-12 bg-dark rounded-4  d-flex justify-content-center  ' style={{paddingBottom:60,paddingTop:40,paddingRight:80,paddingLeft:80}}>
-    <Link to="/connect" className="btn btn-light btn-lg me-3 w-50 p-3 " style={{fontFamily: 'Poppins, sans-serif', fontWeight: 500}}>
-        <i className="fas fa-sign-in me-2 " aria-hidden="true" ></i>Se connecter
+            <h1 className="display-4 fw-bold mb-5 mt-5 text-dark text-center" style={{ fontSize: '4rem', lineHeight: '1.2',fontFamily: 'Poppins, sans-serif', fontWeight: 800 }}>
+    Simplifiez l'envoi de<br /> vos colis en un clic
+</h1>
+<div className='col-lg-12 bg-dark rounded-4 d-flex flex-column flex-md-row justify-content-center' style={{ padding: '40px 80px 60px' }}>
+    <Link to="/connect" className="btn btn-light btn-lg mb-3 mb-md-0 me-md-3 w-100 w-md-50 p-3" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, whiteSpace: 'nowrap' }}>
+        <i className="fas fa-sign-in me-2" aria-hidden="true"></i>Se connecter
     </Link>
-    <Link to="/compte" className="btn btn-light btn-lg w-50 p-3" style={{fontFamily: 'Poppins, sans-serif', fontWeight: 500}}>
-        <i className="fas fa-user-plus me-2 " aria-hidden="true"></i>S'inscrire
+    <Link to="/compte" className="btn btn-light btn-lg w-100 w-md-50 p-3" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, whiteSpace: 'nowrap' }}>
+        <i className="fas fa-user-plus me-2" aria-hidden="true"></i>S'inscrire
     </Link>
 </div>
 
@@ -121,42 +121,43 @@ const Navbar = ({ value }) => {
   </div>
 </section>
 
-      <section id="about" className=" py-5" style={{ background: '#2575fc' }}>
-        <div className="container">
-        <div className='col-lg-12 bg-dark rounded-4  ' style={{paddingBottom:60,paddingTop:40,paddingRight:80,paddingLeft:80,color:'white',background: 'rgba(37, 117, 252, 0.8)'}}>
+<section id="about" className="py-5" style={{ background: '#2575fc' }}>
+    <div className="container">
+        <div className='col-lg-12 bg-dark rounded-4' style={{ paddingBottom: 60, paddingTop: 40, paddingRight: 20, paddingLeft: 20, color: 'white', background: 'rgba(37, 117, 252, 0.8)' }}>
+            <div className="row align-items-center">
+                <div className="col-lg-6 order-lg-2" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>
+                    <h1 className="mb-4 ">Yóbbal, c’est quoi ?</h1>
+                    <p>
+                        Yóbbal est une plateforme dédiée à l'envoi de colis. Nous gérons entièrement le processus d'expédition en utilisant nos propres GPs. Les clients souhaitant envoyer un colis, nous contactent directement pour organiser l'envoi, et nous leur permettons de suivre leur colis en temps réel via notre application ou notre site web.
+                    </p>
+                    <p>Rejoignez des milliers d'utilisateurs satisfaits qui ont déjà découvert la rapidité et la fiabilité de notre service d'envoi de colis.</p>
 
-        <div className="row align-items-center">
-    <div className="col-lg-6 order-lg-2"style={{fontFamily: 'Poppins, sans-serif', fontWeight: 500}}>
-        <h1 className="mb-4">Yóbbal, c’est quoi ?</h1>
-        <p>
-        Yóbbal est une plateforme dédiée à l'envoi de colis. Nous gérons entièrement le processus d'expédition en utilisant nos propres GPs. Les clients souhaitant envoyer un colis, nous contactent directement pour organiser l'envoi, et nous leur permettons de suivre leur colis en temps réel via notre application ou notre site web.
-        </p>
-        <p>Rejoignez des milliers d'utilisateurs satisfaits qui ont déjà découvert la rapidité et la fiabilité de notre service d'envoi de colis.</p>
-
-        <br/>
-        <p>Yóbbal offre une interface fluide et facilite au mieux le processus qui compte 5 étapes :
-          <br/>  <br/>
-
-          01. Je renseigne l’adresse de départ et l’adresse de destination        
-            <br/> <br/>
-
-
-          02. Je choisis une date de départ
-         <br/> <br/>
-        03. Je consulte les départs disponibles
-        <br/> <br/>
-        04. Je réserve et je me fais contacter par un conseiller de Yóbbal pour organiser l’envoi
-       <br/> <br/>
-          05. Je reçois mon numéro de suivi après paiement pour suivre mon colis en temps réel depuis l’application ou sur le site de Yóbbal.
-        </p>
-    </div>
-    <div className="col-lg-6 order-lg-1 "style={{marginTop:-400}}>
-        <img src={myImage} alt="App Screenshot" className="img-fluid app-screenshot" />
-    </div>
+                    <br />
+                    <p>Yóbbal offre une interface fluide et facilite au mieux le processus qui compte 5 étapes :
+                        <br /><br />
+                        01. Je renseigne l’adresse de départ et l’adresse de destination
+                        <br /><br />
+                        02. Je choisis une date de départ
+                        <br /><br />
+                        03. Je consulte les départs disponibles
+                        <br /><br />
+                        04. Je réserve et je me fais contacter par un conseiller de Yóbbal pour organiser l’envoi
+                        <br /><br />
+                        05. Je reçois mon numéro de suivi après paiement pour suivre mon colis en temps réel depuis l’application ou sur le site de Yóbbal.
+                    </p>
+                </div>
+<div className="col-lg-6 order-lg-1 text-center">
+    <img 
+        src={myImage} 
+        alt="App Screenshot" 
+        className="img-fluid app-screenshot" 
+        style={{ maxWidth: '100%', height: 'auto', marginTop: '20px' }} 
+    />
 </div>
+            </div>
         </div>
-        </div>
-    </section>
+    </div>
+</section>
 
 
 
