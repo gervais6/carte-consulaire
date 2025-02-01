@@ -69,14 +69,57 @@ const Navbar = ({ value }) => {
     <div className="container h-100">
         <div className="row align-items-center h-100">
             <div className="col-lg-12 text-center mt-5">
-            <h1 className="display-4 fw-bold mb-5 mt-5 text-dark text-center" style={{ fontSize: '4rem', lineHeight: '1.2',fontFamily: 'Poppins, sans-serif', fontWeight: 800 }}>
-    Simplifiez l'envoi de<br /> vos colis en un clic
-</h1>
-<div className='col-lg-12 bg-dark rounded-4 d-flex flex-column flex-md-row justify-content-center' style={{ padding: '40px 80px 60px' }}>
-    <Link to="/connect" className="btn btn-light btn-lg mb-3 mb-md-0 me-md-3 w-100 w-md-50 p-3" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, whiteSpace: 'nowrap' }}>
+            <p className="display-4 fw-bold mb-5 mt-5 text-dark text-center responsive-text"  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800}}>
+    Simplifiez l'envoi de<br /> vos colis 
+</p>
+
+<style jsx>{`
+    .responsive-text {
+        font-size: 70px; /* Taille par défaut pour les écrans larges */
+        line-height: 1.2;
+        font-family: 'Poppins, sans-serif';
+        font-weight: 800;
+    }
+
+    @media (max-width: 1200px) {
+        .responsive-text {
+            font-size: 80px; /* Taille pour les écrans de taille moyenne */
+            font-family: 'Poppins, sans-serif';
+            font-weight: 800;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .responsive-text {
+            font-size: 70px; /* Taille pour les écrans plus petits */
+            font-family: 'Poppins, sans-serif';
+            font-weight: 800;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .responsive-text {
+            font-size: 60px; /* Taille pour les appareils mobiles */
+            font-family: 'Poppins, sans-serif';
+            font-weight: 800;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .responsive-text {
+            font-size: 45px; /* Taille pour les très petits écrans */
+            font-family: 'Poppins, sans-serif';
+            font-weight: 800;
+            
+            
+        }
+    }
+`}</style>
+<div className='col-lg-12 bg-dark rounded-4 d-flex flex-column flex-md-row justify-content-center' style={{ padding: '50px 50px 50px' }}>
+    <Link to="/connect" className="btn btn-light btn-lg mb-3 mb-md-0 me-md-3 w-100 w-md-50 p-3 " style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, whiteSpace: 'nowrap' }}>
         <i className="fas fa-sign-in me-2" aria-hidden="true"></i>Se connecter
     </Link>
-    <Link to="/compte" className="btn btn-light btn-lg w-100 w-md-50 p-3" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, whiteSpace: 'nowrap' }}>
+    <Link to="/compte" className="btn btn-light btn-lg w-100 w-md-50 p-3 " style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, whiteSpace: 'nowrap' }}>
         <i className="fas fa-user-plus me-2" aria-hidden="true"></i>S'inscrire
     </Link>
 </div>
