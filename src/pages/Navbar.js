@@ -68,7 +68,7 @@ const Navbar = ({ value }) => {
       <header className="hero" id="compte" style={{  minHeight: '100vh' ,fontFamily: 'Poppins, sans-serif', fontWeight: 800}}>
     <div className="container h-100">
         <div className="row align-items-center h-100">
-            <div className="col-lg-12 text-center mt-5">
+            <div className="col-lg-12 text-center mt-2">
             <p className="display-4 fw-bold mb-5 mt-5 text-dark text-center responsive-text"  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800}}>
     Simplifiez l'envoi de<br /> vos colis 
 </p>
