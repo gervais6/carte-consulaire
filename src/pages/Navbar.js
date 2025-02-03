@@ -134,7 +134,7 @@ const Navbar = ({ value }) => {
 </div>
 </div>
         <div className="row align-items-center h-100">
-            <div className="col-lg-12 text-left mt-5">
+            <div className="col-lg-12 text-justify mt-5">
             <p className="display-4 fw-bold mb-5 mt-5 text-dark text-justify responsive-text"  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800}}>
     Simplifiez l'envoi de vos colis en un clic
 </p>
@@ -199,7 +199,21 @@ const Navbar = ({ value }) => {
             <span class="tag">Machine Learning</span>
         </div>
 
-
+        <div class="recent-searches pt-3">
+            <p class="text-muted mb-3">Recent Searches</p>
+            <div class="recent-item d-flex align-items-center">
+                <i class="bi bi-clock-history me-2"></i>
+                <span>Modern Web Development</span>
+            </div>
+            <div class="recent-item d-flex align-items-center">
+                <i class="bi bi-clock-history me-2"></i>
+                <span>UI/UX Best Practices</span>
+            </div>
+            <div class="recent-item d-flex align-items-center">
+                <i class="bi bi-clock-history me-2"></i>
+                <span>Bootstrap 5 Tutorial</span>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -222,24 +236,54 @@ const Navbar = ({ value }) => {
   <div className='col-lg-12 bg-dark rounded-4  ' style={{paddingBottom:60,paddingTop:40,paddingRight:80,paddingLeft:80,color:'white'}}>
 
     {/* Section Chiffres Clés */}
-<h3 className="text-justify mb-5 mt-3" style={{fontFamily: 'Poppins, sans-serif', fontWeight: 100,color:'#2575fc'}}>    <BsGraphUp style={{marginRight:15,marginTop:-10}} />Les prochains départs</h3>
+<div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="section-heading display-4 mb-3">Discover Features</h1>
+            <p class="text-muted lead">Explore our powerful tools designed to enhance your workflow</p>
+        </div>
 
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card feature-card h-100 p-4">
+                    <div class="icon-wrapper bg-soft-primary">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                            class="text-primary">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Smart Analytics</h3>
+                    <p class="card-text text-muted">Get deep insights into your data with our advanced analytics tools.
+                    </p>
+                </div>
+            </div>
 
-    <div class="recent-searches pt-3">
-            <p class="text-muted mb-3">Recent Searches</p>
-            <div class="recent-item d-flex align-items-center">
-                <i class="bi bi-clock-history me-2"></i>
-                <span>Modern Web Development</span>
+            <div class="col-md-4">
+                <div class="card feature-card h-100 p-4">
+                    <div class="icon-wrapper bg-soft-success">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                            class="text-success">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Real-time Monitoring</h3>
+                    <p class="card-text text-muted">Monitor your systems in real-time with instant notifications.</p>
+                </div>
             </div>
-            <div class="recent-item d-flex align-items-center">
-                <i class="bi bi-clock-history me-2"></i>
-                <span>UI/UX Best Practices</span>
-            </div>
-            <div class="recent-item d-flex align-items-center">
-                <i class="bi bi-clock-history me-2"></i>
-                <span>Bootstrap 5 Tutorial</span>
+
+            <div class="col-md-4">
+                <div class="card feature-card h-100 p-4">
+                    <div class="icon-wrapper bg-soft-warning">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                            class="text-warning">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Advanced Security</h3>
+                    <p class="card-text text-muted">Enterprise-grade security to protect your valuable data.</p>
+                </div>
             </div>
         </div>
+    </div>
   </div>
   </div>
 </section>
