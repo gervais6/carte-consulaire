@@ -231,62 +231,7 @@ const Navbar = ({ value }) => {
     </div>
 </header>
 
-<section id="features" className="py-5" style={{ background: '#2575fc' }}>
-  <div className="container">
-  <div className='col-lg-12 bg-dark rounded-4  ' style={{paddingBottom:60,paddingTop:40,paddingRight:80,paddingLeft:80,color:'white'}}>
 
-    {/* Section Chiffres Clés */}
-<div class="container py-5">
-        <div class="text-center mb-5">
-            <h1 class="section-heading display-4 mb-3">Discover Features</h1>
-            <p class="text-muted lead">Explore our powerful tools designed to enhance your workflow</p>
-        </div>
-
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="card feature-card h-100 p-4">
-                    <div class="icon-wrapper bg-soft-primary">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-                            class="text-primary">
-                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                        </svg>
-                    </div>
-                    <h3 class="card-title">Smart Analytics</h3>
-                    <p class="card-text text-muted">Get deep insights into your data with our advanced analytics tools.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card feature-card h-100 p-4">
-                    <div class="icon-wrapper bg-soft-success">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-                            class="text-success">
-                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                        </svg>
-                    </div>
-                    <h3 class="card-title">Real-time Monitoring</h3>
-                    <p class="card-text text-muted">Monitor your systems in real-time with instant notifications.</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card feature-card h-100 p-4">
-                    <div class="icon-wrapper bg-soft-warning">
-                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-                            class="text-warning">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                        </svg>
-                    </div>
-                    <h3 class="card-title">Advanced Security</h3>
-                    <p class="card-text text-muted">Enterprise-grade security to protect your valuable data.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-  </div>
-  </div>
-</section>
 
 <section id="about" className="py-5" style={{ background: '#2575fc' }}>
     <div className="container">
