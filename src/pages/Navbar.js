@@ -36,6 +36,7 @@ const Navbar = ({ value }) => {
 
   return (
     <div>
+      
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"/>
@@ -51,7 +52,7 @@ const Navbar = ({ value }) => {
           <div className="collapse navbar-collapse p-3 " id="navbarNav">
             <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-                <a className="nav-link me-5" href="#compte" style={{color: '#2575fc',fontFamily: 'Poppins, sans-serif', fontWeight: 200}}>Mon compte</a>
+                <a className="nav-link me-5" href="#compte" data-bs-toggle="modal" data-bs-target="#loginModal" style={{color: '#2575fc',fontFamily: 'Poppins, sans-serif', fontWeight: 200}}>Se connecter</a>
               </li>
 
               <li className="nav-item">
@@ -66,11 +67,76 @@ const Navbar = ({ value }) => {
       </nav>
 
       <header className="hero" id="compte" style={{  minHeight: '100vh' ,fontFamily: 'Poppins, sans-serif', fontWeight: 800}}>
+        
     <div className="container h-100">
+    <div class="container ">
+
+
+<div class="modal fade" id="loginModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Welcome Back!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Email address</label>
+            <div class="input-group">
+              <input type="email" class="form-control" placeholder="name@example.com"/>
+              <span class="input-group-text">
+                  <i class="fas fa-envelope"></i>
+                </span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <div class="input-group">
+              <input type="password" class="form-control" placeholder="Enter your password"/>
+              <span class="input-group-text password-toggle">
+                  <i class="fas fa-eye"></i>
+                </span>
+            </div>
+          </div>
+
+          <div class="form-check">
+            <div>
+              <input type="checkbox" class="form-check-input" id="remember"/>
+              <label class="form-check-label" for="remember">Remember me</label>
+            </div>
+            <a href="#" class="text-decoration-none">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-login text-white">Sign In</button>
+
+          <div class="divider">
+            <span>or continue with</span>
+          </div>
+
+          <div class="social-login">
+            <button type="button" class="btn btn-social">
+                <i class="fab fa-google"></i>Google
+              </button>
+            <button type="button" class="btn btn-social">
+                <i class="fab fa-facebook-f"></i>Facebook
+              </button>
+          </div>
+
+          <div class="register-link">
+            Don't have an account? <a href="#" class="text-decoration-none">Register now</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
         <div className="row align-items-center h-100">
-            <div className="col-lg-12 text-center mt-2">
-            <p className="display-4 fw-bold mb-5 mt-5 text-dark text-center responsive-text"  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800}}>
-    Simplifiez l'envoi de<br /> vos colis 
+            <div className="col-lg-12 text-left mt-5">
+            <p className="display-4 fw-bold mb-5 mt-5 text-dark text-justify responsive-text"  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800}}>
+    Simplifiez l'envoi de vos colis en un clic
 </p>
 
 <style jsx>{`
@@ -107,7 +173,7 @@ const Navbar = ({ value }) => {
 
     @media (max-width: 576px) {
         .responsive-text {
-            font-size: 45px; /* Taille pour les très petits écrans */
+            font-size: 50px; /* Taille pour les très petits écrans */
             font-family: 'Poppins, sans-serif';
             font-weight: 800;
             
@@ -115,14 +181,31 @@ const Navbar = ({ value }) => {
         }
     }
 `}</style>
-<div className='col-lg-12 bg-dark rounded-4 d-flex flex-column flex-md-row justify-content-center' style={{ padding: '50px 50px 50px' }}>
-    <Link to="/connect" className="btn btn-light btn-lg mb-3 mb-md-0 me-md-3 w-100 w-md-50 p-3 " style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, whiteSpace: 'nowrap' }}>
-        <i className="fas fa-sign-in me-2" aria-hidden="true"></i>Se connecter
-    </Link>
-    <Link to="/compte" className="btn btn-light btn-lg w-100 w-md-50 p-3 " style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, whiteSpace: 'nowrap' }}>
-        <i className="fas fa-user-plus me-2" aria-hidden="true"></i>S'inscrire
-    </Link>
+<div className='col-lg-12 bg-dark rounded-4 d-flex flex-column flex-md-row justify-content-center' style={{ padding: '50px 30px 80px' }}>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+
+    <div class="container">
+
+        <div class="position-relative mb-4">
+            <input type="text" class="form-control search-input" placeholder="Type to search..."/>
+            <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3"></i>
+        </div>
+
+        <div class="search-tags d-flex flex-wrap mb-4">
+            <span class="tag">Technology</span>
+            <span class="tag">Design</span>
+            <span class="tag">Development</span>
+            <span class="tag">AI</span>
+            <span class="tag">Machine Learning</span>
+        </div>
+
+
+    </div>
 </div>
+
+
+
+
 
 <div className='col-lg-12 rounded-pill bg-dark p-3  mx-auto text-center' style={{ position: 'relative', zIndex: 1, marginTop: -30, border: '3px solid #2575fc' ,width:250,fontFamily: 'Poppins, sans-serif', fontWeight: 200}}>
  REJOIGNEZ NOUS 
@@ -139,27 +222,24 @@ const Navbar = ({ value }) => {
   <div className='col-lg-12 bg-dark rounded-4  ' style={{paddingBottom:60,paddingTop:40,paddingRight:80,paddingLeft:80,color:'white'}}>
 
     {/* Section Chiffres Clés */}
-<h3 className="text-justify mb-5 mt-3" style={{fontFamily: 'Poppins, sans-serif', fontWeight: 100,color:'#2575fc'}}>    <BsGraphUp style={{marginRight:15,marginTop:-10}} />Chiffres Clés</h3>
-    <div className="row">
-      <div className="col-md-4 mb-4"style={{fontFamily: 'Poppins, sans-serif'}}>
-        <div className="text-center animate__animated animate__bounceIn"  >
-          <h3 style={{fontFamily: 'Poppins, sans-serif', fontWeight: 800}} ><AnimatedNumber value={1000000 } /></h3>
-          <p>Colis Livrés</p>
+<h3 className="text-justify mb-5 mt-3" style={{fontFamily: 'Poppins, sans-serif', fontWeight: 100,color:'#2575fc'}}>    <BsGraphUp style={{marginRight:15,marginTop:-10}} />Les prochains départs</h3>
+
+
+    <div class="recent-searches pt-3">
+            <p class="text-muted mb-3">Recent Searches</p>
+            <div class="recent-item d-flex align-items-center">
+                <i class="bi bi-clock-history me-2"></i>
+                <span>Modern Web Development</span>
+            </div>
+            <div class="recent-item d-flex align-items-center">
+                <i class="bi bi-clock-history me-2"></i>
+                <span>UI/UX Best Practices</span>
+            </div>
+            <div class="recent-item d-flex align-items-center">
+                <i class="bi bi-clock-history me-2"></i>
+                <span>Bootstrap 5 Tutorial</span>
+            </div>
         </div>
-      </div>
-      <div className="col-md-4 mb-4"style={{fontFamily: 'Poppins, sans-serif'}}>
-        <div className="text-center animate__animated animate__bounceIn">
-          <h3 style={{fontFamily: 'Poppins, sans-serif', fontWeight: 800}}><AnimatedNumber value={500000 } /></h3>
-          <p>Utilisateurs Satisfaits</p>
-        </div>
-      </div>
-      <div className="col-md-4 mb-4"style={{fontFamily: 'Poppins, sans-serif'}}>
-        <div className="text-center animate__animated animate__bounceIn">
-          <h3 style={{fontFamily: 'Poppins, sans-serif', fontWeight: 800}}><AnimatedNumber value={130 } /></h3>
-          <p>GPs effectués</p>
-        </div>
-      </div>
-    </div>
   </div>
   </div>
 </section>
@@ -191,8 +271,8 @@ const Navbar = ({ value }) => {
                 </div>
 <div className="col-lg-6 order-lg-1 text-center">
     <img 
-        src={myImage} 
-        alt="App Screenshot" 
+        src={""} 
+        alt="" 
         className="img-fluid app-screenshot" 
         style={{ maxWidth: '100%', height: 'auto', marginTop: '20px' }} 
     />

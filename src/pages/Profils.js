@@ -6,6 +6,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import '../pages/Profils.css';
 
 const Profile = () => {
+    const toggleSidebar = () => {
+
+        const sidebar = document.querySelector('.sidebar');
+
+        sidebar.classList.toggle('collapsed');
+
+    };
+
+    
     const [activeTab, setActiveTab] = useState('personalInfo');
     const [twoFactorAuthEnabled, setTwoFactorAuthEnabled] = useState(false);
     const [emailNotificationsEnabled, setEmailNotificationsEnabled] = useState(true);
@@ -258,185 +267,110 @@ const Profile = () => {
 
     return (
         <div className="full-height">
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-            <div className="bg-light">
-                <div className="container py-3 ">
-                    <div className="row">
-                        <div className="col-12 mb-4">
-                            <div className="profile-header position-relative mb-4">
-                                <div className="position-absolute top-0 end-0 p-3">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet"/>
 
-                                </div>
-                            </div>
-                            <div className="text-center">
-                                <div className="position-relative d-inline-block">
-                                    <img src="https://randomuser.me/api/portraits/men/40.jpg" className="rounded-circle profile-pic" alt="Profile Picture" />
-                                    <button className="btn btn-primary btn-sm position-absolute bottom-0 end-0 rounded-circle">
-                                        <i className="fas fa-camera"></i>
-                                    </button>
-                                </div>
-                                <h3 className="mt-3 mb-1">{personalInfo.name} {personalInfo.prenom}</h3>
-                                <p className="text-muted mb-3">{personalInfo.bio}</p>
-                                <div className="d-flex justify-content-center gap-2 mb-4">
-                                    <button className="btn btn-outline-primary"><i className="fas fa-envelope me-2"></i>Message</button>
-                                    <button className="btn btn-danger" onClick={handleLogout}><i className="fas fa-sign-out-alt me-2"></i>Déconnexion</button>
-                                </div>
-                            </div>
-                        </div>
-                         
-                        <div className="col-12">
-                            <div className="card border-0 shadow-sm">
-                                <div className="card-body p-0">
-                                    <div className="row g-0">
-                                        <div className="col-lg-3 border-end">
-                                            <div className="p-2">
-                                                <div className="nav flex-column nav-pills">
-                                                    <a className={`nav-link ${activeTab === 'personalInfo' ? 'active' : ''}`} href="#" onClick={() => handleTabChange('personalInfo')}>
-                                                        <i className="fas fa-user me-2"></i>Info personnelles
-                                                    </a>
-                                                    <a className={`nav-link ${activeTab === 'consularCard' ? 'active' : ''}`} href="#" onClick={() => handleTabChange('consularCard')}>
-                                                        <i className="fas fa-id-card me-2"></i>Carte consulaire
-                                                    </a>
-                                                    <a className={`nav-link ${activeTab === 'tracking' ? 'active' : ''}`} href="#" onClick={() => handleTabChange('tracking')}>
-                                                        <i className="fas fa-truck me-2"></i>Suivi de la carte 
-                                                    </a>
-                                                    <div className="card-body mt-2">
-                                                        <div className="d-flex justify-content-between align-items-center">
-                                                            <div className="d-flex align-items-center">
-                                                                <i className="fas fa-bell me-2" style={{ fontSize: '1.5rem', color: '#6c757d' }}></i>
-                                                                <div>
-                                                                    <h6 className="mb-1" style={{ color: '#6c757d' }}>Notifications </h6>
-                                                                </div>
-                                                            </div>
-                                                            <div className="form-check form-switch">
-                                                                <input className="form-check-input" type="checkbox" checked={emailNotificationsEnabled} onChange={toggleEmailNotifications} />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-9">
-                                            <div className="p-4">
-                                                {activeTab === 'personalInfo' && (
-                                                    <div className="mb-4">
-                                                        <h5 className="mb-4">Informations personnelles</h5>
-                                                        <form onSubmit={handleSubmit}>
-                                                            <div className="row g-3">
-                                                                <div className="col-md-6">
-                                                                    <label className="form-label">Noms</label>
-                                                                    <input type="text" className="form-control" name="prenom" value={personalInfo.prenom} onChange={handleInputChange} />
-                                                                </div>
-                                                                <div className="col-md-6">
-                                                                    <label className="form-label">Prénoms</label>
-                                                                    <input type="text" className="form-control" name="name" value={personalInfo.name} onChange={handleInputChange} />
-                                                                </div>
-                                                                <div className="col-md-6">
-                                                                    <label className="form-label">Email</label>
-                                                                    <input type="email" className="form-control" name="email" value={personalInfo.email} onChange={handleInputChange} readOnly />
-                                                                </div>
-                                                                <div className="col-md-6">
-                                                                    <label className="form-label">Mot de passe</label>
-                                                                    <input type="password" className="form-control" name="password" value={personalInfo.password} onChange={handleInputChange} readOnly />
-                                                                </div>
-                                                                <div className="col-12">
-                                                                    <label className="form-label">Bio</label>
-                                                                    <textarea className="form-control" name="bio" rows="4" value={personalInfo.bio} onChange={handleInputChange}></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <button type=" submit" className="btn btn-primary mt-3">Mettre à jour</button>
-                                                        </form>
-                                                    </div>
-                                                )}
-                                                {activeTab === 'consularCard' && (
-                                                    <div className="mb-4">
-                                                        <h5 className="mb-4">Demande de carte consulaire</h5>
-                                                        <form onSubmit={handleConsularCardSubmit}>
-                                                            <div className="mb-3">
-                                                                <label className="form-label">Nom</label>
-                                                                <input type="text" className="form-control" name="lastName" value={consularCardInfo.lastName} onChange={handleConsularCardInputChange} required />
-                                                            </div>
-                                                            <div className="mb-3">
-                                                                <label className="form-label">Prénom</label>
-                                                                <input type="text" className="form-control" name="firstName" value={consularCardInfo.firstName} onChange={handleConsularCardInputChange} required />
-                                                            </div>
-                                                            <div className="mb-3">
-                                                                <label className="form-label">Date de naissance</label>
-                                                                <input type="date" className="form-control" name="dateOfBirth" value={consularCardInfo.dateOfBirth} onChange={handleConsularCardInputChange} required />
-                                                            </div>
-                                                            <div className="mb-3">
-                                                                <label className="form-label">Adresse</label>
-                                                                <input type="text" className="form-control" name="address" value={consularCardInfo.address} onChange={handleConsularCardInputChange} required />
-                                                            </div>
-                                                            <div className="mb-3">
-                                                                <label className="form-label">Numéro de passeport</label>
-                                                                <input type="text" className="form-control" name="passportNumber" value={consularCardInfo.passportNumber} onChange={handleConsularCardInputChange} required />
-                                                            </div>
-                                                            <div className="mb-3">
-                                                                <label className="form-label">Nationalité</label>
-                                                                <input type="text" className="form-control" name="nationality" value={consularCardInfo.nationality} onChange={handleConsularCardInputChange} required />
-                                                            </div>
-                                                            <div className="mb-3">
-                                                                <label className="form-label">Téléphone</label>
-                                                                <input type="tel" className="form-control" name="phone" value={consularCardInfo.phone} onChange={handleConsularCardInputChange} required />
-                                                            </div>
-                                                            <div className="mb-3">
-                                                                <label className="form-label">Email</label>
-                                                                <input type="email" className="form-control" name="email" value={consularCardInfo.email} onChange={handleConsularCardInputChange} required />
-                                                            </div>
-                                                            <div className="mb-3">
-                                                                <label className="form-label">Justificatif d'identité</label>
-                                                                <input type="file" className="form-control" onChange={handleFileChange} required />
-                                                            </div>
-                                                            <button type="submit" className="btn btn-primary mb-3">Soumettre</button>
-                                                        </form>
-                                                    </div>
-                                                )}
-                                                {activeTab === 'tracking' && (
-                                                    <div className='mb-5'>
-                                                        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-                                                        <div className="steps-vertical">
-                                                            <div className={`step-vertical ${currentStep >= 1 ? 'complete' : ''}`}>
-                                                                <div className="step-vertical-icon">
-                                                                    <i className="fas fa-paper-plane"></i>
-                                                                </div>
-                                                                <div className="step-vertical-content ">
-                                                                    <h4>Demande soumise</h4>
-                                                                    <p>Votre demande de carte consulaire a été soumise avec succès.</p>
-                                                                </div>
-                                                            </div>
-                                                            <div className={`step-vertical ${currentStep >= 2 ? 'complete' : ''}`}>
-                                                                <div className="step-vertical-icon">
-                                                                    <i className="fas fa-clock"></i>
-                                                                </div>
-                                                                <div className="step-vertical-content">
-                                                                    <h4>En cours de traitement</h4>
-                                                                    <p>Votre demande est actuellement en cours de traitement.</p>
-                                                                </div>
-                                                            </div>
-                                                            <div className={`step-vertical ${currentStep === 3 ? 'complete' : ''}`}>
-                                                                <div className="step-vertical-icon">
-                                                                
-                                                                    <i className="fas fa-check-circle"></i>
-                                                                </div>
-                                                                <div className="step-vertical-content">
-                                                                    <h4>Carte prête</h4>
-                                                                    <p>Votre carte consulaire est prête à être récupérée.</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div className="d-flex">
+
+<nav className="sidebar d-flex flex-column flex-shrink-0 position-fixed">
+
+    <button className="toggle-btn" onClick={toggleSidebar}>
+
+        <i className="fas fa-chevron-left"></i>
+
+    </button>
+
+
+    <div className="p-4">
+
+        <h4 className="logo-text fw-bold mb-0">NexusFlow</h4>
+
+        <p className="text-muted small hide-on-collapse">Dashboard</p>
+
+    </div>
+
+
+    <div className="nav flex-column">
+
+        <a href="#" className="sidebar-link active text-decoration-none p-3">
+
+            <i className="fas fa-home me-3"></i>
+
+            <span className="hide-on-collapse">Dashboard</span>
+
+        </a>
+
+        <a href="#" className="sidebar-link text-decoration-none p-3">
+
+            <i className="fas fa-chart-bar me-3"></i>
+
+            <span className="hide-on-collapse">Analytics</span>
+
+        </a>
+
+        <a href="#" className="sidebar-link text-decoration-none p-3">
+
+            <i className="fas fa-users me-3"></i>
+
+            <span className="hide-on-collapse">Customers</span>
+
+        </a>
+
+        <a href="#" className="sidebar-link text-decoration-none p-3">
+
+            <i className="fas fa-box me-3"></i>
+
+            <span className="hide-on-collapse">Products</span>
+
+        </a>
+
+        <a href="#" className="sidebar-link text-decoration-none p-3">
+
+            <i className="fas fa-gear me-3"></i>
+
+            <span className="hide-on-collapse">Settings</span>
+
+        </a>
+
+    </div>
+
+
+    <div className="profile-section mt-auto p-4">
+
+        <div className="d-flex align-items-center">
+
+            <img src="https://randomuser.me/api/portraits/women/70.jpg" style={{ height: '60px' }} className="rounded-circle" alt="Profile" />
+
+            <div className="ms-3 profile-info">
+
+                <h6 className="text-white mb-0">Alex Morgan</h6>
+
+                <small className="text-muted">Admin</small>
+
             </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main className="main-content">
+
+    <div className="container-fluid">
+
+        <h2>Welcome to NexusFlow</h2>
+
+        <p className="text-muted">Streamline your workflow with our intuitive dashboard.</p>
+
+    </div>
+
+</main>
+
+</div>
+
             <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+
         </div>
     );
 };
