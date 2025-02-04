@@ -134,9 +134,9 @@ const Navbar = ({ value }) => {
 </div>
 </div>
         <div className="row align-items-center h-100">
-            <div className="col-lg-12 text-center mt-5">
-            <p className="display-4 fw-bold mb-5 mt-5 text-dark text-center responsive-text"  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800}}>
-    Simplifiez l'envoi de vos<br></br> colis en un clic
+            <div className="col-lg-12 text-justify mt-5">
+            <p className="display-4 fw-bold mb-5 mt-5 text-dark text-justify responsive-text"  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800}}>
+    Simplifiez l'envoi de vos colis en un clic
 </p>
 
 <style jsx>{`
@@ -236,7 +236,7 @@ const Navbar = ({ value }) => {
 <section id="about" className="py-5 " style={{ background: '#2575fc' }}>
     <div className="container ">
         <div className='col-lg-12 bg-dark rounded-4' style={{ paddingBottom: 60, paddingTop: 40, paddingRight: 20, paddingLeft: 20, color: 'white', background: 'rgba(37, 117, 252, 0.8)' }}>
-            <div className="row align-items-center m-3">
+            <div className="row align-items-center m-2">
                 <div className="col-lg-6 order-lg-2" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>
                     <h1 className="mb-4 ">Yóbbal, c’est quoi ?</h1>
                     <p>
