@@ -233,10 +233,10 @@ const Navbar = ({ value }) => {
 
 
 
-<section id="about" className="py-5" style={{ background: '#2575fc' }}>
-    <div className="container">
+<section id="about" className="py-5 " style={{ background: '#2575fc' }}>
+    <div className="container ">
         <div className='col-lg-12 bg-dark rounded-4' style={{ paddingBottom: 60, paddingTop: 40, paddingRight: 20, paddingLeft: 20, color: 'white', background: 'rgba(37, 117, 252, 0.8)' }}>
-            <div className="row align-items-center">
+            <div className="row align-items-center m-3">
                 <div className="col-lg-6 order-lg-2" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>
                     <h1 className="mb-4 ">Yóbbal, c’est quoi ?</h1>
                     <p>
