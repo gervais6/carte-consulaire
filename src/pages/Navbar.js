@@ -134,9 +134,9 @@ const Navbar = ({ value }) => {
 </div>
 </div>
         <div className="row align-items-center h-100">
-            <div className="col-lg-12 text-justify mt-5">
-            <p className="display-4 fw-bold mb-5 mt-5 text-dark text-justify responsive-text"  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800}}>
-    Simplifiez l'envoi de vos colis en un clic
+            <div className="col-lg-12 text-center mt-5">
+            <p className="display-4 fw-bold mb-5 mt-5 text-dark text-center responsive-text"  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800}}>
+    Simplifiez l'envoi de vos<br></br> colis en un clic
 </p>
 
 <style jsx>{`
