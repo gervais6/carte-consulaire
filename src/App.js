@@ -9,6 +9,8 @@ import ProtectedRoute from './pages/ProtectedRoute';
 import { AuthProvider } from './pages/AuthContext';
 import Resetpassword from './pages/restepassword';
 import Admin from'./pages/Admin'
+import Suivi from'./pages/suivi'
+
 import './index.css';
 
 const App = () => {
@@ -21,6 +23,8 @@ const App = () => {
                     <Route path="/mdp" element={<Mdp />} />
                     <Route path="/resetpassword" element={<Resetpassword />} />
                     <Route path="/admin" element={<Admin />} />
+                    <Route path="/suivi" element={<Suivi/>} />
+
                 
 
                               <Route path="/profils" element={

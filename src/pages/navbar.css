@@ -279,7 +279,7 @@ search-bar {
 }
 
 .search-input:focus {
-  border-color: #6366f1;
+  border-color: #2575fc;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
@@ -297,7 +297,7 @@ search-bar {
 }
 
 .tag:hover {
-  background: #6366f1;
+  background: #2575fc;
   color: white;
   cursor: pointer;
 }
@@ -312,10 +312,14 @@ search-bar {
   transition: all 0.2s ease;
 }
 
-.recent-item:hover {
-  background: #f3f4f6;
-  cursor: pointer;
+.tag.active {
+
+  background-color: #007bff; /* Couleur de fond pour l'état actif */
+
+  color: white; /* Couleur du texte pour l'état actif */
+
 }
+
 
 .feature-card {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -353,4 +357,200 @@ search-bar {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.radio-container {
+  padding: 2rem;
+  border-radius: 12px;
+  background:#2575fc;
+  margin-bottom: 1rem;
+}
+
+/* Hide default radio button */
+.custom-radio input[type="radio"] {
+  display: none;
+}
+
+/* Style 1: Pulse Effect */
+.pulse-radio .radio-check {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #dee2e6;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  margin-right: 10px;
+  vertical-align: middle;
+  transition: all 0.3s ease;
+}
+
+.pulse-radio input[type="radio"]:checked+.radio-check {
+  border-color: #0d6efd;
+  animation: pulse 0.5s;
+}
+
+.pulse-radio input[type="radio"]:checked+.radio-check::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: #0d6efd;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: fadeIn 0.3s;
+}
+
+@keyframes pulse {
+  0% {
+      box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4);
+  }
+
+  70% {
+      box-shadow: 0 0 0 10px rgba(13, 110, 253, 0);
+  }
+
+  100% {
+      box-shadow: 0 0 0 0 rgba(13, 110, 253, 0);
+  }
+}
+
+/* Style 2: Slide Effect */
+.slide-radio .radio-check {
+  width: 40px;
+  height: 24px;
+  background: #dee2e6;
+  border-radius: 12px;
+  display: inline-block;
+  position: relative;
+  margin-right: 10px;
+  vertical-align: middle;
+  transition: all 0.3s ease;
+}
+
+.slide-radio .radio-check::after {
+  content: '';
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: all 0.3s ease;
+}
+
+.slide-radio input[type="radio"]:checked+.radio-check {
+  background: #0d6efd;
+}
+
+.slide-radio input[type="radio"]:checked+.radio-check::after {
+  transform: translateX(16px);
+}
+
+/* Style 3: Scale Effect */
+.scale-radio .radio-check {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #dee2e6;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  margin-right: 10px;
+  vertical-align: middle;
+  transition: all 0.3s ease;
+}
+
+.scale-radio input[type="radio"]:checked+.radio-check {
+  border-color: #0d6efd;
+  transform: scale(1.1);
+}
+
+.scale-radio input[type="radio"]:checked+.radio-check::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: #0d6efd;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: scaleIn 0.3s forwards;
+}
+
+@keyframes scaleIn {
+  from {
+      transform: translate(-50%, -50%) scale(0);
+  }
+
+  to {
+      transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+
+  to {
+      opacity: 1;
+  }
+}
+
+/* Style 4: Wave Effect */
+.wave-radio .radio-check {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #dee2e6;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  margin-right: 10px;
+  vertical-align: middle;
+  transition: all 0.3s ease;
+}
+
+.wave-radio input[type="radio"]:checked+.radio-check {
+  border-color: #0d6efd;
+}
+
+.wave-radio input[type="radio"]:checked+.radio-check::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(13, 110, 253, 0.2);
+  transform: translate(-50%, -50%) scale(0);
+  animation: wave 0.6s ease-out;
+}
+
+.wave-radio input[type="radio"]:checked+.radio-check::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: #0d6efd;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes wave {
+  0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 1;
+  }
+
+  100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+  }
+}
+
 
