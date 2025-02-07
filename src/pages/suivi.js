@@ -1,6 +1,6 @@
 import React from 'react';
 import '../pages/navbar.css';
-import logo from '../pages/Yonnee logo-3.png'; // Importez l'image de votre logo
+import logo from '../pages/Logo Yonnee.png'; // Importez l'image de votre logo
 
 const Suivi = () => {
     return ( 
@@ -8,6 +8,7 @@ const Suivi = () => {
             <nav className="navbar navbar-expand-lg bg-dark fixed-top">
                 <div className="container">
                     <img src={logo} alt="Logo" style={{ width: '150px', height: '50px' }} />
+                    
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>

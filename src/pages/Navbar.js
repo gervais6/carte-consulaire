@@ -3,7 +3,7 @@ import '../pages/navbar.css';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
-import logo from '../pages/Yonnee logo-3.png'; // Importez l'image de votre logo
+import logo from '../pages/Logo Yonnee.png'; // Importez l'image de votre logo
 import { FaUser , FaRegCalendar } from "react-icons/fa";
 import { GiCardboardBoxClosed } from "react-icons/gi";
 import { IoAirplaneSharp } from "react-icons/io5";
@@ -237,8 +237,7 @@ const Navbar = () => {
                         </button>
                     </form>
                 ) : (
-                    <p className='text-light'>Réservation effectuée.</p>
-                )}
+                  <p className='text-light'>Réservation effectuée. Veuillez consulter votre e-mail pour confirmer la validation.</p>                )}
             </div>
         </div>
     </div>
