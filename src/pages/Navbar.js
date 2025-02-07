@@ -169,7 +169,7 @@ const Navbar = () => {
                 </form>
                 <div className="form-check d-flex justify-content-center mb-5" style={{ marginTop: 20, color: "white" }}>
                     <label className="form-check-label" htmlFor="form2Example3">
-                        Vous n'avez pas un compte <Link  className="" to="/compte" style={{ textDecoration: "none", fontSize: 14 }}>Inscrivez-vous</Link>
+                        Vous n'avez pas un compte <Link  className="" to="/compte" style={{ textDecoration: "none", fontSize: 15 }}>Inscrivez-vous</Link>
                     </label>
                 </div>
                 <div className="form-check d-flex justify-content-center mb-5" style={{ marginTop: -30, color: "white" }}>
