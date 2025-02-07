@@ -149,11 +149,8 @@ const Navbar = () => {
                                             <h5 className="mb-3" style={{ color: "white" }}>{submission.company}</h5>
                                             <div className='pays text-dark' style={{ fontWeight: "100" }}>{submission.from}</div>
                                         </div>
-                                        <div className='col-12 col-md-4 text-center'>
-                                            <h5 className="mb-5"></h5>
-                                            <div className='pays text-dark'>
-                                                <IoAirplaneSharp style={{ fontSize: 20, marginTop: -10 }} />
-                                            </div>
+                                        <div className='col-12 col-md-4 d-flex justify-content-center align-items-center'>
+                                            <IoAirplaneSharp style={{ fontSize: 40 }} /> {/* Augmenter la taille de l'icône si nécessaire */}
                                         </div>
                                         <div className='col-12 col-md-4 text-center'>
                                             <h5 className="mb-3" style={{ color: "white" }}>{submission.kilos} colis restant</h5>
