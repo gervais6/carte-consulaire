@@ -76,70 +76,75 @@ const Resetpassword = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", background: "#212529",fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>  
-
-    <div className="container">
-      <h2 className="text-center" style={{marginBottom:30,color:"white"}}>Réinitialiser votre mot de passe</h2>
-      <div className="row">
-        <div className="col-md-6 offset-md-3">
-          <form className="login-form" onSubmit={handleSubmit}>
-            <div className="form-group">
-              <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                required 
-                value={formData.email} 
-                onChange={handleChange} 
-                placeholder="Entrez votre email" 
-                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} 
-              />
-            </div>
-            <div className="form-group" style={{ position: 'relative' }}>
-              <input 
-                type={showPassword ? 'text' : 'password'} 
-                id="password"
-                name="password"
-                required
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Entrez votre nouveau mot de passe"
-                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} 
-              />
-              <span 
-                onClick={() => setShowPassword(!showPassword)} 
-                style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: 'black' }}
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </span >
-            </div>
-            <div className="form-group" style={{ position: 'relative' }}>
-              <input 
-                type={showPasswordConfirmation ? 'text' : 'password'} 
-                id="passwordConfirmation"
-                name="passwordConfirmation"
-                required
-                value={formData.passwordConfirmation}
-                onChange={handleChange}
-                placeholder="Confirmez votre mot de passe"
-                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }} 
-              />
-              <span 
-                onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)} 
-                style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: 'black' }}
-              >
-                {showPasswordConfirmation ? <VisibilityOff /> : <Visibility />}
-              </span>
-            </div>
-            <button type="submit" className="btn btn-primary btn-block" style={{ width: '100%' }}>Confirmez</button>
-          </form>
-          <p className="text-center" style={{ marginTop: '20px' }}>
-            Revenir à la <Link to="/connect" style={{ textDecoration: 'none' }}>connexion</Link>
-          </p>
+    <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", background: "#343a40", fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 offset-md-3">
+            <form onSubmit={handleSubmit} className="bg-dark p-4 rounded shadow">
+              <div className="modal-header" style={{ background: '#212529', color: 'white' }}>
+                <h5 className="modal-title" id="resetPasswordModalLabel">Réinitialiser votre mot de passe</h5>
+              </div>
+              <hr style={{ border: "2px solid white", marginBottom: 20 }} />
+              <div className="mb-3">
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  required 
+                  value={formData.email} 
+                  onChange={handleChange} 
+                  placeholder="Entrez votre email" 
+                  className="form-control" 
+                  style={{ borderRadius: '5px' }} 
+                />
+              </div>
+              <div className="mb-3" style={{ position: 'relative' }}>
+                <input 
+                  type={showPassword ? 'text' : 'password'} 
+                  id="password"
+                  name="password"
+                  required
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Entrez votre nouveau mot de passe"
+                  className="form-control" 
+                  style={{ borderRadius: '5px' }} 
+                />
+                <span 
+                  onClick={() => setShowPassword(!showPassword)} 
+                  style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: 'black' }}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </span>
+              </div>
+              <div className="mb-3" style={{ position: 'relative' }}>
+                <input 
+                  type={showPasswordConfirmation ? 'text' : 'password'} 
+                  id="passwordConfirmation"
+                  name="passwordConfirmation"
+                  required
+                  value={formData.passwordConfirmation}
+                  onChange={handleChange}
+                  placeholder="Confirmez votre mot de passe"
+                  className="form-control" 
+                  style={{ borderRadius: '5px' }} 
+                />
+                <span 
+                  onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)} 
+                  style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: 'black' }}
+                >
+                  {showPasswordConfirmation ? <VisibilityOff /> : <Visibility />}
+                </span>
+              </div>
+              <button type="submit" className="btn btn-dark" style={{ width: '100%', padding: '10px', background: "#343a40" }}>Confirmez</button>
+            </form>
+            <p className="text-center" style={{ marginTop: '20px', color: "white" }}>
+              Revenir à la <Link to="/connect" style={{ textDecoration: 'none',fontSize:18 }}>connexion</Link>
+            </p>
+          </div>
         </div>
+        <ToastContainer />
       </div>
-      <ToastContainer />
-    </div>
     </div>
   );
 };

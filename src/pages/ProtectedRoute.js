@@ -6,7 +6,7 @@ import { useAuth } from './AuthContext';
 const ProtectedRoute = ({ element }) => {
     const { isAuthenticated } = useAuth();
 
-    return isAuthenticated ? element : <Navigate to="/connect" />;
+    return isAuthenticated ? element : <Navigate to="/suivi" />;
 };
 
 export default ProtectedRoute;

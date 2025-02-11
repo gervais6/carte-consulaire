@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../pages/navbar.css';
 import logo from '../pages/Logo Yonnee.png'; // Importez l'image de votre logo
 
 const Suivi = () => {
+    const [trackingNumber, setTrackingNumber] = useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Ici, vous pouvez ajouter la logique pour traiter le numéro de suivi
+        console.log("Numéro de suivi soumis:", trackingNumber);
+        // Par exemple, faire une requête API pour obtenir les informations du colis
+    };
+
     return ( 
         <div>
             <nav className="navbar navbar-expand-lg bg-dark fixed-top">
@@ -22,7 +31,7 @@ const Suivi = () => {
                 </div>
             </nav>
 
-            <header className="hero" id="compte" style={{ minHeight: '100vh', fontFamily: 'Poppins, sans-serif', fontWeight: 800, backgroundColor: '#343a40' }}>
+            <header className="hero" id="compte" style={{ minHeight: '100vh', fontFamily: 'Poppins, sans-serif', fontWeight: 800, backgroundColor: '#343a40', overflow: 'auto' }}>
                 <div className="container h-100">
                     <div className="row align-items-center h-100">
                         <div className="col-lg-12 text-center mt-5">
@@ -32,9 +41,16 @@ const Suivi = () => {
                             <div className='col-lg-12 bg-dark rounded-4 d-flex flex-column flex-md-row justify-content-center' style={{ padding: '40px 20px', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)' }}>
                                 <div className="container">
                                     <div className="position-relative mb-4">
-                                        <form className="d-flex">
+                                        <form className="d-flex" onSubmit={handleSubmit}>
                                             <div className="input-group">
-                                                <input className="form-control form-control-lg" type="search" placeholder="Entrez votre numéro de suivi" aria-label="Search" />
+                                                <input 
+                                                    className="form-control form-control-lg" 
+                                                    type="search" 
+                                                    placeholder="Entrez votre numéro de suivi" 
+                                                    aria-label="Search" 
+                                                    value={trackingNumber}
+                                                    onChange={(e) => setTrackingNumber(e.target.value)}
+                                                />
                                                 <button className="btn btn-light px-4" type="submit">
                                                     <i className="bi bi-search"></i>
                                                 </button>

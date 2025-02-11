@@ -554,3 +554,11 @@ search-bar {
 }
 
 
+.modal-backdrop {
+  display: none !important;
+}
+
+
+
+
+

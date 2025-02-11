@@ -10,6 +10,8 @@ import { AuthProvider } from './pages/AuthContext';
 import Resetpassword from './pages/restepassword';
 import Admin from'./pages/Admin'
 import Suivi from'./pages/suivi'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import './index.css';
 
@@ -27,8 +29,8 @@ const App = () => {
 
                 
 
-                              <Route path="/profils" element={
-              <ProtectedRoute element={<Profils />} />
+                              <Route path="/suivi" element={
+              <ProtectedRoute element={<Suivi/>} />
               
               
             } 
