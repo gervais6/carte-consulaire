@@ -119,11 +119,11 @@ const LoginForm = () => {
                                     Se connecter
                                 </button>
                             </form>
-                            <div className="form-check d-flex justify-content-center mb-5" style={{ marginTop: 20, color: "white" }}>
-                                <label className="form-check-label" htmlFor="form2Example3">
-                                    Vous n'avez pas un compte ? <Link to="/compte" style={{ textDecoration: "none", fontSize: 16 }}>Inscrivez-vous</Link>
-                                </label>
-                            </div>
+                            <div className="form-check d-flex justify-content-center mb-5" style={{ marginTop: 20, color: "white", whiteSpace: 'nowrap' }}>
+    <label className="form-check-label" htmlFor="form2Example3">
+        Vous n'avez pas un compte ? <Link to="/compte" style={{ textDecoration: "none", fontSize: 16 }}>Inscrivez-vous</Link>
+    </label>
+</div>
                             <div className="form-check d-flex justify-content-center mb-5" style={{ marginTop: -30, color: "white" }}>
                                 <label className="form-check-label" htmlFor="form2Example3">
                                     Vous avez oublié votre <Link to="/mdp" style={{ textDecoration: "none" }}>mot de passe</Link> ?

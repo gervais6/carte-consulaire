@@ -132,11 +132,13 @@ const Compte = () => {
                 </div>
                 <button type="submit" className="btn btn-dark" style={{ width: '100%', padding: '10px',background:"#343a40" }}>S'inscrire</button>
               </form>
-              <div className="form-check d-flex justify-content-center mb-5" style={{ marginTop: 20, color: "white" }}>
-                <label className="form-check-label" htmlFor="form2Example3">
-                  Vous avez un compte ? <Link to="/connect" style={{ textDecoration: "none", fontSize: 18 }}>Connectez-vous</Link>
-                </label>
-              </div>
+
+
+              <div className="form-check d-flex justify-content-center mb-5" style={{ marginTop: 20, color: "white", whiteSpace: 'nowrap' }}>
+    <label className="form-check-label" htmlFor="form2Example3">
+    Vous avez un compte ? <Link to="/connect" style={{ textDecoration: "none", fontSize: 16 }}>Connectez-vous</Link>
+    </label>
+</div>
             </div>
           </div>
           <ToastContainer />
