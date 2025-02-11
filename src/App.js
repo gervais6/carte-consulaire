@@ -25,7 +25,6 @@ const App = () => {
                     <Route path="/mdp" element={<Mdp />} />
                     <Route path="/resetpassword" element={<Resetpassword />} />
                     <Route path="/admin" element={<Admin />} />
-                    <Route path="/suivi" element={<Suivi/>} />
 
                 
 

@@ -118,20 +118,20 @@ const Navbar = () => {
             <nav className="navbar navbar-expand-lg bg-dark fixed-top">
                 <div className="container">
                     <img src={logo} alt="Logo" style={{ width: '150px', height: '50px' }} />
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavd" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <button className="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavd" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNavd">
-                        <ul className="navbar-nav ms-auto">
+                        <ul className="navbar-nav ms-auto mt-3">
 
-                            <li className="nav-item">
-                                <Link className="nav-link me-4" to="connect" style={{ color: '#ffffff', fontFamily: 'Poppins, sans-serif' }}>Se connecter</Link>
+                            <li className="nav-item ms-auto">
+                                <Link className="nav-link " to="connect" style={{ color: '#ffffff', fontFamily: 'Poppins, sans-serif' }}>Se connecter</Link>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link me-4" href="#about" style={{ color: '#ffffff', fontFamily: 'Poppins, sans-serif' }}>À propos de nous</a>
+                            <li className="nav-item ms-auto">
+                                <a className="nav-link " href="#about" style={{ color: '#ffffff', fontFamily: 'Poppins, sans-serif' }}>À propos de nous</a>
                             </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="#contact" style={{ color: '#ffffff', fontFamily: 'Poppins, sans-serif' }}>Contact</a>
+                            <li className="nav-item ms-auto">
+                                <a className="nav-link " href="#contact" style={{ color: '#ffffff', fontFamily: 'Poppins, sans-serif' }}>Contact</a>
                             </li>
                         </ul>
                     </div>
