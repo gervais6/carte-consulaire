@@ -115,7 +115,7 @@ const Navbar = () => {
 
     return (
         <div>
-            <nav className="navbar navbar-expand-lg fixed-top" style={{backgroundColor: '#343a40' }}>
+            <nav className="navbar navbar-expand-lg bg-dark fixed-top">
                 <div className="container">
                     <img src={logo} alt="Logo" style={{ width: '150px', height: '50px' }} />
                     <button className="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavd" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -185,7 +185,7 @@ const Navbar = () => {
                                             <IoAirplaneSharp style={{ fontSize: 30, color: "black" }} />
                                         </div>
                                         <div className='col-12 col-md-4 text-center'>
-                                            <h5 className="mb-3" style={{ color: "#FFD700", fontSize: '1.2rem', fontWeight: 'bold', backgroundColor: '#495057', padding: '10px', borderRadius: '5px' }}>
+                                            <h5 className="mb-3" style={{ color: "#FFD700", fontSize: '1rem', fontWeight: 'bold', backgroundColor: '#495057', padding: '10px', borderRadius: '5px' }}>
                                                 {submission.kilos} colis restant
                                             </h5>
 

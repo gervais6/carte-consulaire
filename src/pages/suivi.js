@@ -55,7 +55,7 @@ const Suivi = () => {
 
     return ( 
         <div>
-            <nav className="navbar navbar-expand-lg fixed-top" style={{backgroundColor: '#343a40' }}>
+            <nav className="navbar navbar-expand-lg bg-dark fixed-top" >
                 <div className="container">
                     <img src={logo} alt="Logo" style={{ width: '150px', height: '50px' }} />
                     <button className="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@ const Suivi = () => {
 
                         <div className="dropdown ms-auto "style={{marginRight:-25}} >
 
-                        <button className="  btn btn-seecondary text-light   dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{border:'none'}}>
+                        <button className="  btn btn-outline-dark text-light   dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
 
 <BiUserCircle className="me-2  " style={{fontSize:25,marginLeft:100}} /> {/* Icône d'utilisateur */}
 
