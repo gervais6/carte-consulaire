@@ -2,16 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../pages/navbar.css';
 import logo from '../pages/Logo Yonnee.png';
-
+import { BiUserCircle } from 'react-icons/bi'; // Exemple d'icône d'utilisateur
 const Suivi = () => {
     const [trackingNumber, setTrackingNumber] = useState('');
     const navigate = useNavigate();
+    const [userName, setUserName] = useState(''); // État pour le nom de l'utilisateur
 
 
-    const handleLogout = () => {
-        localStorage.removeItem('token'); // Supprime le token
-        navigate('/connect'); // Redirige vers la page de connexion
-    };
 
     useEffect(() => {
         // Récupérer le token depuis le localStorage
@@ -29,19 +26,80 @@ const Suivi = () => {
         // Ajoutez ici la logique pour traiter le numéro de suivi
     };
 
+
+    useEffect(() => {
+        window.history.pushState(null, '', window.location.href);
+        const handlePopState = (event) => {
+            window.history.pushState(null, '', window.location.href);
+        };
+        window.addEventListener('popstate', handlePopState);
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, []);
+
+
+    const handleLogout = () => {
+
+        localStorage.removeItem('token'); // Supprime le token
+
+        localStorage.removeItem('userName'); // Supprime le nom de l'utilisateur
+
+        navigate('/'); // Redirige vers la page de connexion
+
+    };
+
+
+
+ 
+
     return ( 
         <div>
-            <nav className="navbar navbar-expand-lg bg-dark fixed-top">
+            <nav className="navbar navbar-expand-lg fixed-top" style={{backgroundColor: '#343a40' }}>
                 <div className="container">
                     <img src={logo} alt="Logo" style={{ width: '150px', height: '50px' }} />
                     <button className="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className="collapse navbar-collapse p-3" id="navbarNav">
+                    <div className="collapse navbar-collapse " id="navbarNav">
                         <ul className="navbar-nav ms-auto">
-                            <li className="nav-item">
-                                <a className="nav-link me-5" href="#compte" style={{ color: 'white', fontFamily: 'Poppins, sans-serif', fontWeight: 200 }}>Mon compte</a>
-                            </li>
+
+
+                        <div className="dropdown ms-auto "style={{marginRight:-25}} >
+
+                        <button className="  btn btn-seecondary text-light   dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{border:'none'}}>
+
+<BiUserCircle className="me-2  " style={{fontSize:25,marginLeft:100}} /> {/* Icône d'utilisateur */}
+
+Mon compte
+
+</button>
+
+<ul className="dropdown-menu dropdown-menu-end">
+
+    <li>
+
+        <a className="dropdown-item" href="#" onClick={handleLogout}>
+
+            <i className="bi bi-box-arrow-right"></i> Déconnexion
+
+        </a>
+
+    </li>
+
+    <li>
+
+        <a className="dropdown-item disabled" href="#">
+
+            <h6 className="text-dark mb-0">Bienvenue, {userName}!</h6> {/* Affiche le nom de l'utilisateur */}
+
+        </a>
+
+    </li>
+
+</ul>
+
+</div>
                         </ul>
                     </div>
                 </div>

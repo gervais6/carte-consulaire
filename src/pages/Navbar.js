@@ -115,7 +115,7 @@ const Navbar = () => {
 
     return (
         <div>
-            <nav className="navbar navbar-expand-lg bg-dark fixed-top">
+            <nav className="navbar navbar-expand-lg fixed-top" style={{backgroundColor: '#343a40' }}>
                 <div className="container">
                     <img src={logo} alt="Logo" style={{ width: '150px', height: '50px' }} />
                     <button className="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavd" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
