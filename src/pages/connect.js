@@ -24,39 +24,27 @@ const LoginForm = () => {
     };
   
     const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      // Basic validation
-      if (!formData.email || !formData.password) { // Change 'username' to 'email'
-          toast.error("Tous les champs sont requis.");
-          return;
-      }
-  
-      try {
-          const response = await axios.post("http://localhost:8000/api/login", formData);
-          console.log(response.data);
-  
-          // Check if login was successful
-          if (response.data.success) {
-            localStorage.setItem('token', response.data.token); 
-            login(); 
-            toast.success("Connexion réussie.");
-            setTimeout(() => {
-                navigate('/suivi'); 
-            }, 2000);
-          } else {
-              toast.error(response.data.message || "Identifiants incorrects.");
-          }
-      } catch (error) {
-          console.error("Erreur lors de la connexion:", error);
-          // Handle errors appropriately
-          if (error.response) {
-              const errorMessage = error.response.data.message || "Erreur lors de la connexion. Veuillez réessayer.";
-              toast.error(errorMessage);
-          } else {
-              toast.error("Erreur lors de la connexion. Veuillez réessayer.");
-          }
-      }
+        e.preventDefault();
+        if (!formData.email || !formData.password) {
+            toast.error("Tous les champs sont requis.");
+            return;
+        }
+    
+        try {
+            const response = await axios.post("http://localhost:8000/api/login", formData);
+            if (response.data.success) {
+                login(response.data.token); // Mettez à jour l'état d'authentification
+                toast.success("Connexion réussie.");
+                setTimeout(() => {
+                    navigate('/suivi');
+                }, 2000);
+            } else {
+                toast.error(response.data.message || "Identifiants incorrects.");
+            }
+        } catch (error) {
+            const errorMessage = error.response?.data.message || "Erreur lors de la connexion. Veuillez réessayer.";
+            toast.error(errorMessage);
+        }
     };
 
     return (

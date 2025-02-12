@@ -1,15 +1,32 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../pages/navbar.css';
-import logo from '../pages/Logo Yonnee.png'; // Importez l'image de votre logo
+import logo from '../pages/Logo Yonnee.png';
 
 const Suivi = () => {
     const [trackingNumber, setTrackingNumber] = useState('');
+    const navigate = useNavigate();
+
+
+    const handleLogout = () => {
+        localStorage.removeItem('token'); // Supprime le token
+        navigate('/connect'); // Redirige vers la page de connexion
+    };
+
+    useEffect(() => {
+        // Récupérer le token depuis le localStorage
+        const storedToken = localStorage.getItem('token');
+        console.log("Token récupéré:", storedToken); // Ajoutez ceci pour déboguer
+        if (!storedToken) {
+            // Rediriger vers la page de connexion si le token n'existe pas
+            navigate('/connect'); // Remplacez '/connect' par la route de votre page de connexion
+        }
+    }, [navigate]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Ici, vous pouvez ajouter la logique pour traiter le numéro de suivi
         console.log("Numéro de suivi soumis:", trackingNumber);
-        // Par exemple, faire une requête API pour obtenir les informations du colis
+        // Ajoutez ici la logique pour traiter le numéro de suivi
     };
 
     return ( 
@@ -17,8 +34,7 @@ const Suivi = () => {
             <nav className="navbar navbar-expand-lg bg-dark fixed-top">
                 <div className="container">
                     <img src={logo} alt="Logo" style={{ width: '150px', height: '50px' }} />
-                    
-                    <button className="navbar-toggler  bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <button className="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse p-3" id="navbarNav">
@@ -35,9 +51,7 @@ const Suivi = () => {
                 <div className="container h-100">
                     <div className="row align-items-center h-100">
                         <div className="col-lg-12 text-center mt-5">
-                            <h1 className="display-4 fw-bold mb-4 text-light">
-                                Suivez votre colis
-                            </h1>
+                            <h1 className="display-4 fw-bold mb-4 text-light">Suivez votre colis</h1>
                             <div className='col-lg-12 bg-dark rounded-4 d-flex flex-column flex-md-row justify-content-center' style={{ padding: '40px 20px', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)' }}>
                                 <div className="container">
                                     <div className="position-relative mb-4">

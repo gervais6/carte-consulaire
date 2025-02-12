@@ -185,16 +185,17 @@ const Navbar = () => {
                                             <IoAirplaneSharp style={{ fontSize: 30, color: "black" }} />
                                         </div>
                                         <div className='col-12 col-md-4 text-center'>
-                                            <h5 className="mb-3" style={{ color: "#FFD700", fontSize: '1.5rem', fontWeight: 'bold', backgroundColor: '#495057', padding: '10px', borderRadius: '5px' }}>
+                                            <h5 className="mb-3" style={{ color: "#FFD700", fontSize: '1.2rem', fontWeight: 'bold', backgroundColor: '#495057', padding: '10px', borderRadius: '5px' }}>
                                                 {submission.kilos} colis restant
                                             </h5>
+
+
                                             <div className='pays text-light' style={{ fontWeight: "100" }}>{submission.to}</div>
                                         </div>
                                     </div>
                                     <hr style={{ border: "1px solid #ffffff" }} />
                                     <div className='row'>
                                         <div className='col-12 col-md-4'>
-                                            <h5 className="mb-3 text-light" style={{ fontWeight: "bold" }}>Date de départ</h5>
                                             <div className='pays text-light' style={{ fontWeight: "100" }}>{submission.departure_date}</div>
                                         </div>
                                         <div className='col-12 col-md-4 text-center'>
