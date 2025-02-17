@@ -16,6 +16,7 @@ import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {  useNavigate } from 'react-router-dom';
+import cover from'../pages/Nouveau_projet-removebg-preview.png'
 
 const Navbar = () => {
     const [nom, setNom] = useState('');
@@ -125,7 +126,7 @@ const Navbar = () => {
                         <ul className="navbar-nav ms-auto mt-3">
 
                             <li className="nav-item ms-auto">
-                                <Link className="nav-link " to="connect" style={{ color: '#ffffff', fontFamily: 'Poppins, sans-serif' }}>Se connecter</Link>
+                                <Link className="nav-link " href="#compte" to="connect" style={{ color: '#ffffff', fontFamily: 'Poppins, sans-serif' }}>Se connecter</Link>
                             </li>
                             <li className="nav-item ms-auto">
                                 <a className="nav-link " href="#about" style={{ color: '#ffffff', fontFamily: 'Poppins, sans-serif' }}>À propos de nous</a>
@@ -137,6 +138,9 @@ const Navbar = () => {
                     </div>
                 </div>
             </nav>
+
+
+            
 
 
 
@@ -185,9 +189,11 @@ const Navbar = () => {
                                             <IoAirplaneSharp style={{ fontSize: 30, color: "black" }} />
                                         </div>
                                         <div className='col-12 col-md-4 text-center'>
-                                            <h5 className="mb-3" style={{ color: "#FFD700", fontSize: '1rem', fontWeight: 'bold', backgroundColor: '#495057', padding: '10px', borderRadius: '5px' }}>
+                                            <h5 className="mb-3" style={{ color: "#FFD700", fontSize: '1.2rem', fontWeight: 'bold', backgroundColor: '#495057', padding: '10px', borderRadius: '5px' }}>
                                                 {submission.kilos} colis restant
                                             </h5>
+
+                                            
 
 
                                             <div className='pays text-light' style={{ fontWeight: "100" }}>{submission.to}</div>
@@ -196,6 +202,8 @@ const Navbar = () => {
                                     <hr style={{ border: "1px solid #ffffff" }} />
                                     <div className='row'>
                                         <div className='col-12 col-md-4'>
+                                        <h5 className="mb-3 text-light" style={{ fontWeight: "bold" }}>Date de départ</h5>
+
                                             <div className='pays text-light' style={{ fontWeight: "100" }}>{submission.departure_date}</div>
                                         </div>
                                         <div className='col-12 col-md-4 text-center'>
@@ -283,12 +291,12 @@ const Navbar = () => {
                 <h1 className="display-4 fw-bold mb-4 text-center text-light">yónnee, c’est quoi ?</h1>
                 <div className='col-lg-12 bg-dark rounded-4 shadow' style={{ padding: '40px 20px', background: 'rgba(37, 117, 252, 0.8)' }}>
                     <div className="row align-items-center">
-                        <div className="col-lg-6 order-lg-1 ">
+                        <div className="col-lg-6 order-lg-1 text-center ">
                             <img 
-                                src={""} // Remplacez par l'URL de votre image
+                                src={cover} // Remplacez par l'URL de votre image
                                 alt="Description de l'image" 
                                 className="img-fluid" 
-                                style={{ maxWidth: '100%', height: 'auto', borderRadius: '10px', boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)' }} 
+                                style={{ maxWidth: '50%', height: 'auto', }} 
                             />
                         </div>
                         <div className="col-lg-6 order-lg-2 text-light text-left" style={{ fontWeight: 500 }}>

@@ -6,10 +6,40 @@ import { BiUserCircle } from 'react-icons/bi'; // Exemple d'icône d'utilisateur
 const Suivi = () => {
     const [trackingNumber, setTrackingNumber] = useState('');
     const navigate = useNavigate();
-    const [userName, setUserName] = useState(''); // État pour le nom de l'utilisateur
+    const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(true);
 
 
+    useEffect(() => {
+        const fetchUserEmail = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch('http://localhost:8000/api/personal-info', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}` // Ajout du token
+                    },
+                });
 
+                if (!response.ok) {
+                    const errorMessage = await response.text();
+                    throw new Error(`Erreur lors de la récupération de l'email: ${response.status} ${errorMessage}`);
+                }
+
+                const data = await response.json();
+                setEmail(data.email);
+            } catch (error) {
+                console.error("Erreur:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserEmail();
+    }, []);
+
+    
     useEffect(() => {
         // Récupérer le token depuis le localStorage
         const storedToken = localStorage.getItem('token');
@@ -39,14 +69,26 @@ const Suivi = () => {
     }, []);
 
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/api/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+            });
 
-        localStorage.removeItem('token'); // Supprime le token
-
-        localStorage.removeItem('userName'); // Supprime le nom de l'utilisateur
-
-        navigate('/'); // Redirige vers la page de connexion
-
+            if (response.ok) {
+                localStorage.removeItem('token');
+                console.log("Déconnexion réussie");
+                window.location.href = '/';
+            } else {
+                console.error("Erreur lors de la déconnexion");
+            }
+        } catch (error) {
+            console.error("Erreur réseau :", error);
+        }
     };
 
 
@@ -69,33 +111,25 @@ const Suivi = () => {
 
                         <button className="  btn btn-outline-dark text-light   dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-<BiUserCircle className="me-2  " style={{fontSize:25,marginLeft:100}} /> {/* Icône d'utilisateur */}
+                      <BiUserCircle className="me-2  " style={{fontSize:25,marginLeft:100}} /> {/* Icône d'utilisateur */}
 
-Mon compte
+                       Mon compte
 
-</button>
+                         </button>
 
-<ul className="dropdown-menu dropdown-menu-end">
+                       <ul className="dropdown-menu dropdown-menu-end">
 
-    <li>
+                             <li>
+                                        <a className="dropdown-item disabled" href="#">
+                                            <h6 className="text-dark mb-0"><span style={{ color: 'black' }}>{loading ? 'Chargement...' : email}</span></h6>
+                                        </a>
+                                    </li>
 
-        <a className="dropdown-item" href="#" onClick={handleLogout}>
-
-            <i className="bi bi-box-arrow-right"></i> Déconnexion
-
-        </a>
-
-    </li>
-
-    <li>
-
-        <a className="dropdown-item disabled" href="#">
-
-            <h6 className="text-dark mb-0">Bienvenue, {userName}!</h6> {/* Affiche le nom de l'utilisateur */}
-
-        </a>
-
-    </li>
+                                    <li>
+                                        <a className="dropdown-item" href="#" onClick={handleLogout}>
+                                            <i className="bi bi-box-arrow-right"></i> Déconnexion
+                                        </a>
+                                    </li>
 
 </ul>
 

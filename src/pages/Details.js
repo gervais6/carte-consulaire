@@ -1,51 +1,115 @@
-const details = () => {
-    return ( 
-        <div>
-            <section id="about" className="py-5 " style={{ background: '#2575fc' }}>
-    <div className="container ">
-            <div className="row align-items-center m-5 bg-dark pt-5 pb-3  rounded-4"style={{ paddingBottom: 60, paddingTop: 40, paddingRight: 20, paddingLeft: 20, color: 'white', background: '#2575fc', }}>
-            <h3 className="title text-light"style={{marginTop:-30,marginLeft:10,fontFamily: 'Poppins, sans-serif', fontWeight: 500 ,marginBottom:20}}>Samba transit</h3>
-                <hr style={{border:"2px solid #FFFFFF"}}/>
-                <div className="col-lg-6 order-lg-2  " style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>
-                <p>
-                       Envoyer depuis   :
-                    </p> 
-                    <br/>                    
-                     <br/>                    
-                   
-                     <p>
-                     Envoyer vers   :
-
-                    </p>
-                    <br/>                    
-                    <br/>                    
-
-                    <p>Date limite des dépots :</p>
-
-                    <br />                    
-                     <br/>   
-                     <p>Date de départ :</p>
-
-                     <br />                    
-                     <br/>   
-                     <p>Date d'Arrivée :</p>
-
-                     <br />                    
-                     <br/>   
-                     <p>Prix :</p>
-                 
-
-                </div>
-
-
-
-
+<h2 className="text-center mb-4">Ajouter une Soumission</h2>
+<div className="row mb-4">
+    <div className="col-md-8 offset-md-2">
+        <form className="contact-form p-4 border rounded shadow" onSubmit={handleSubmit}>
+            <h4 className="text-center mb-4">Formulaire de Soumission</h4>
+            <div className="form-group">
+                <label htmlFor="company">Entreprise</label>
+                <input 
+                    type="text" 
+                    id="company" 
+                    name="company" 
+                    className="form-control" 
+                    value={formData.company} 
+                    onChange={handleChange} 
+                    required 
+                />
             </div>
-        
+
+            <div className="form-group">
+                <label htmlFor="from">De</label>
+                <input 
+                    type="text" 
+                    id="from" 
+                    name="from" 
+                    className="form-control" 
+                    value={formData.from} 
+                    onChange={handleChange} 
+                    required 
+                />
+            </div>
+            
+            <div className="form-group">
+                <label htmlFor="to">À</label>
+                <input 
+                    type="text" 
+                    id="to" 
+                    name="to" 
+                    className="form-control" 
+                    value={formData.to} 
+                    onChange={handleChange} 
+                    required 
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="kilos">Kilos</label>
+                <input 
+                    type="number" 
+                    id="kilos" 
+                    name="kilos" 
+                    className="form-control" 
+                    value={formData.kilos} 
+                    onChange={handleChange} 
+                    required 
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="departure_date">Date de départ</label>
+                <input 
+                    type="date" 
+                    id="departure_date" 
+                    name="departure_date" 
+                    className="form-control" 
+                    value={formData.departure_date} 
+                    onChange={handleChange} 
+                    required 
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="price">Prix</label>
+                <input 
+                    type="number" 
+                    id="price" 
+                    name="price" 
+                    className="form-control" 
+                    value={formData.price} 
+                    onChange={handleChange} 
+                    required 
+                />
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-block">Soumettre</button>
+        </form>
     </div>
-</section>
-        </div>
-     );
-}
- 
-export default details;
+</div>
+
+<div className="submissions">
+    <h3 className="text-center mb-4">Soumissions</h3>
+    <table className="table table-striped table-bordered">
+        <thead className="thead-dark">
+            <tr>
+                <th>Entreprise</th>
+                <th>De</th>
+                <th>À</th>
+                <th>Kilos</th>
+                <th>Date de départ</th>
+                <th>Prix</th>
+            </tr>
+        </thead>
+        <tbody>
+            {submissions.map((submission, index) => (
+                <tr key={index}>
+                    <td>{submission.company}</td>
+                    <td>{submission.from}</td>
+                    <td>{submission.to}</td>
+                    <td>{submission.kilos}</td>
+                    <td>{submission.departure_date}</td>
+                    <td>{submission.price}</td>
+                </tr>
+            ))}
+        </tbody>
+    </table>
+</div>
