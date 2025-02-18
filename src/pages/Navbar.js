@@ -197,7 +197,7 @@ const Navbar = () => {
                     <IoAirplaneSharp style={{ fontSize: 40, color: "black" }} />
                 </div>
                 <div className='col-12 col-md-4 text-end'>
-                    <h5 className="mb-3" style={{ color: "#FFD700", fontSize: '1.5rem', fontWeight: 'bold', padding: '10px', borderRadius: '5px' }}>
+                    <h5 className="mb-3" style={{ color: "#1976d2", fontSize: '1.5rem', fontWeight: 'bold', padding: '10px', borderRadius: '5px' }}>
                         {submission.kilos} colis restant
                     </h5>
                     <div className='pays text-light' style={{ fontWeight: "100", fontSize: '1rem' }}>{submission.to}</div>
