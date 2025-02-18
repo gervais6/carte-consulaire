@@ -250,105 +250,112 @@ const Navbar = () => {
             </header>
 
             {/* Modal for reservation */}
-            <div className="modal fade" id="logiModal" tabIndex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content" style={{ backgroundColor: '#343a40', color: 'white', fontFamily: 'Poppins, sans-serif' }}>
-                        <div className="modal-header" style={{ background: '#212529' }}>
-                            <h5 className="modal-title" id="loginModalLabel">Réservez votre colis</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div className="modal-body">
-                            {localSelectedSubmission ? (
-                                <form onSubmit={handleSubmit}>
-                                    <div className="input-group mb-5" style={{ display: "flex", alignItems: "center" }}>
-                                        <div style={{ flex: 1 }}>
-                                            <GiCardboardBoxClosed style={{ fontSize: 30, marginBottom: 10 }} />
-                                            <span style={{ fontWeight: 800 }}> {localSelectedSubmission.company} </span>
-                                            <br />
-                                            <p className='text-light mt-3 ms-2'>
-                                                {localSelectedSubmission.from} - {localSelectedSubmission.to}<br /><br />
-                                                {localSelectedSubmission.price} F CFA /kg
-                                            </p>
-                                        </div>
-                                        <p style={{ marginRight: "10px", marginTop: 90, color: "white" }}>
-                                            {localSelectedSubmission.departure_date}
-                                        </p>
-                                    </div>
-                                    <hr style={{ border: "2px solid white", marginTop: -40, marginBottom: -25 }} />
-                                    <p className='text-light mt-5' style={{ fontWeight: 800 }}>
-                                        <FaUser  style={{ fontSize: 25, marginBottom: 10, marginRight: 10 }} /> Coordonnées
-                                    </p>
-                                    <TextField
-                                        className="mb-3"
-                                        label="Nom"
-                                        variant="outlined"
-                                        value={nom}
-                                        onChange={(e) => setNom(e.target.value)}
-                                        required
-                                        fullWidth
-                                    />
-                                    <TextField
-                                        className="mb-3"
-                                        label="Prénom"
-                                        variant="outlined"
-                                        value={prenom}
-                                        onChange={(e) => setPrenom(e.target.value)}
-                                        required
-                                        fullWidth
-                                    />
-                                    <TextField
-                                        className="mb-3"
-                                        label="Email"
-                                        variant="outlined"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                        fullWidth
-                                    />
-                                    <TextField
-                                        className="mb-3"
-                                        label="Téléphone"
-                                        variant="outlined"
-                                        type="number"
-                                        value={num}
-                                        onChange={(e) => setNum(e.target.value)}
-                                        required
-                                        fullWidth
-                                    />
-                                    <TextField
-                                        className="mb-3"
-                                        label="Nombre de kilos"
-                                        variant="outlined"
-                                        type="number"
-                                        value={kilos}
-                                        onChange={(e) => setKilos(e.target.value)}
-                                        required
-                                        fullWidth
-                                    />
-                                    <Button type="submit" variant="contained" color="primary" style={{ width: '100%' }}>
-                                        <FaRegCalendar style={{ marginRight: 10 }} /> Réserver
-                                    </Button>
-                                </form>
-                            ) : (
-                                <p className='text-light'>Réservation effectuée. Veuillez consulter votre e-mail pour confirmer la validation.</p>
-                            )}
-                        </div>
-                    </div>
-                </div>
+{/* Modal for reservation */}
+<div className="modal fade mt-5" id="logiModal" tabIndex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div className="modal-dialog modal-dialog-centered"> {/* Center the modal */}
+        <div className="modal-content" style={{ backgroundColor: '#343a40', color: 'white', fontFamily: 'Poppins, sans-serif' }}>
+            <div className="modal-header" style={{ background: '#212529' }}>
+                <h5 className="modal-title" id="loginModalLabel">Réservez votre colis</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div className="modal-body" style={{ padding: '20px' }}> {/* Add padding to the modal body */}
+                {localSelectedSubmission ? (
+                    <form onSubmit={handleSubmit}>
+                        <div className="input-group mb-5" style={{ display: "flex", alignItems: "center" }}>
+                            <div style={{ flex: 1 }}>
+                                <GiCardboardBoxClosed style={{ fontSize: 30, marginBottom: 10 }} />
+                                <span style={{ fontWeight: 800 }}> {localSelectedSubmission.company} </span>
+                                <br />
+                                <p className='text-light mt-3 ms-2'>
+                                    {localSelectedSubmission.from} - {localSelectedSubmission.to}<br /><br />
+                                    {localSelectedSubmission.price} F CFA /kg
+                                </p>
+                            </div>
+                            <p style={{ marginRight: "10px", marginTop: 90, color: "white" }}>
+                                {localSelectedSubmission.departure_date}
+                            </p>
+                        </div>
+                        <hr style={{ border: "2px solid white", marginTop: -40, marginBottom: -25 }} />
+                        <p className='text-light mt-5' style={{ fontWeight: 800 }}>
+                            <FaUser  style={{ fontSize: 25, marginBottom: 10, marginRight: 10 }} /> Coordonnées
+                        </p>
+                        <TextField
+                            className="mb-3"
+                            label=" Nom"
+                            variant="outlined"
+                            value={nom}
+                            onChange={(e) => setNom(e.target.value)}
+                            required
+                            fullWidth
+                        />
+                        <TextField
+                            className="mb-3"
+                            label="Prénom"
+                            variant="outlined"
+                            value={prenom}
+                            onChange={(e) => setPrenom(e.target.value)}
+                            required
+                            fullWidth
+                        />
+                        <TextField
+                            className="mb-3"
+                            label="Email"
+                            variant="outlined"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            fullWidth
+                        />
+                        <TextField
+                            className="mb-3"
+                            label="Téléphone"
+                            variant="outlined"
+                            type="number"
+                            value={num}
+                            onChange={(e) => setNum(e.target.value)}
+                            required
+                            fullWidth
+                        />
+                        <TextField
+                            className="mb-3"
+                            label="Nombre de kilos"
+                            variant="outlined"
+                            type="number"
+                            value={kilos}
+                            onChange={(e) => setKilos(e.target.value)}
+                            required
+                            fullWidth
+                        />
+                        <Button type="submit" variant="contained" color="primary" style={{ width: '100%' }}>
+                            <FaRegCalendar style={{ marginRight: 10 }} /> Réserver
+                        </Button>
+                    </form>
+                ) : (
+                    <p className='text-light mt-3'>Réservation effectuée. Veuillez consulter votre e-mail pour confirmer la validation.</p>
+                )}
+            </div>
+        </div>
+    </div>
+</div>
 
             <section id="about" className="py-5" style={{ minHeight: '100vh', fontFamily: 'Poppins, sans-serif', fontWeight: 800, backgroundColor: '#343a40' }}>
                 <Container>
                     <div className="row align-items-center h-100">
                         <div className="col-lg-12 mt-5">
-                            <h1 className="display-4 fw-bold mb-4 text-center text-light">yónnee, c’est quoi ?</h1>
-                            <div className='col-lg-12 bg-dark rounded-4 shadow' style={{ padding: '40px 20px', background: 'rgba(37, 117, 252, 0.8)' }}>
+                        <h1 
+    className=" text-center mb-4 text-light" 
+    style={{ 
+        whiteSpace: 'nowrap', 
+    }}
+>
+    yónnee, c’est quoi ?
+</h1>                            <div className='col-lg-12 bg-dark rounded-4 shadow' style={{ padding: '40px 20px', background: 'rgba(37, 117, 252, 0.8)' }}>
                                 <div className="row align-items-center">
                                     <div className="col-lg-6 order-lg-1 text-center ">
                                         <img
                                             src={cover}
                                             alt="Description de l'image"
-                                            className="img-fluid"
+                                            className="img-fluid mb-3"
                                             style={{ maxWidth: '50%', height: 'auto', }}
                                         />
                                     </div>
