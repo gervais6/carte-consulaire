@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Admin.css'; // Assurez-vous d'avoir ce fichier CSS pour le style
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import UserStatistics from '../pages/User'; // Assurez-vous que le chemin est correct
 
 const AdminDashboard = () => {
     const [formData, setFormData] = useState({
@@ -54,12 +57,12 @@ const AdminDashboard = () => {
                 throw new Error(errorData.message || 'Une erreur est survenue');
             }
 
-            alert('Données enregistrées avec succès !');
+            toast.success('Données enregistrées avec succès!');
             await fetchReservations(); // Récupérer les réservations après la soumission
             setFormData({ company: '', from: '', to: '', kilos: '', departure_date: '', price: '' }); // Réinitialiser le formulaire
         } catch (error) {
             console.error('Error submitting form:', error);
-            setError('Erreur lors de l\'envoi des données : ' + error.message);
+            toast.error('Erreur lors de l\'envoi des données: ' + error.message);
         } finally {
             setLoading(false);
         }
@@ -77,7 +80,7 @@ const AdminDashboard = () => {
             setReservations(data);
         } catch (error) {
             console.error('Error fetching reservations:', error);
-            setError('Erreur lors de la récupération des réservations.');
+            toast.error('Erreur lors de la récupération des réservations.');
         } finally {
             setLoading(false);
         }
@@ -89,15 +92,20 @@ const AdminDashboard = () => {
         setError('');
 
         try {
+            const token = localStorage.getItem('token');
+            console.log('Token:', token); // Vérifiez le token
+
             const response = await fetch('http://localhost:8000/api/connected-users', {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
             });
 
             if (!response.ok) {
+                const text = await response.text();
+                console.error('Response text:', text); // Affichez le texte de la réponse
                 throw new Error('Erreur lors de la récupération des utilisateurs connectés.');
             }
 
@@ -105,7 +113,7 @@ const AdminDashboard = () => {
             setConnectedUsers(data);
         } catch (error) {
             console.error('Error fetching connected users:', error);
-            setError('Erreur lors de la récupération des utilisateurs connectés.');
+            toast.error('Erreur lors de la récupération des utilisateurs connectés: ' + error.message);
         } finally {
             setLoading(false);
         }
@@ -140,8 +148,27 @@ const AdminDashboard = () => {
         setShowNextDeparture(false);
     };
 
+    // Récupération des soumissions
+    const fetchSubmissions = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch('http://localhost:8000/api/submissions');
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des soumissions.');
+            }
+            const data = await response.json();
+            setSubmissions(data);
+        } catch (error) {
+            console.error('Error fetching submissions:', error);
+            toast.error('Erreur lors de la récupération des soumissions.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     // Suppression d'une soumission
     const handleDeleteSubmission = async (id) => {
+        console.log('ID à supprimer:', id); // Vérifiez l'ID ici
         if (window.confirm('Êtes-vous sûr de vouloir supprimer cette soumission ?')) {
             setLoading(true);
             setError('');
@@ -149,18 +176,22 @@ const AdminDashboard = () => {
             try {
                 const response = await fetch(`http://localhost:8000/api/submissions/${id}`, {
                     method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                 });
 
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Une erreur est survenue');
+                    const text = await response.text();
+                    console.error('Response text:', text); // Affichez le texte de la réponse
+                    throw new Error(text || 'Une erreur est survenue');
                 }
 
-                alert('Données supprimées avec succès !');
-                fetchReservations(); // Récupérer à nouveau les réservations
+                toast.success('Données supprimées avec succès!');
+                await fetchSubmissions(); // Récupérer à nouveau les soumissions
             } catch (error) {
                 console.error('Error deleting submission:', error);
-                setError('Erreur lors de la suppression des données : ' + error.message);
+                toast.error('Erreur lors de la suppression des données: ' + error.message);
             } finally {
                 setLoading(false);
             }
@@ -170,7 +201,7 @@ const AdminDashboard = () => {
     // Remplissage du formulaire pour modification
     const handleEditSubmission = (submission) => {
         setFormData({
-            id: submission.id, // Assurez-vous de définir l'ID
+            id: submission.id,
             company: submission.company,
             from: submission.from,
             to: submission.to,
@@ -197,39 +228,24 @@ const AdminDashboard = () => {
 
     // Récupération des soumissions
     useEffect(() => {
-        const fetchSubmissions = async () => {
-            try {
-                const response = await fetch('http://localhost:8000/api/submissions');
-                if (!response.ok) {
-                    throw new Error('Erreur lors de la récupération des données');
-                }
-                const data = await response.json();
-                setSubmissions(data);
-            } catch (error) {
-                console.error('Error fetching submissions:', error);
-            }
-        };
-
         fetchSubmissions();
     }, []);
 
     // Mise à jour d'une soumission
     const handleUpdateSubmission = async (id) => {
-        // Vérifiez que tous les champs requis sont remplis
         if (!formData.company || !formData.from || !formData.to || !formData.kilos || !formData.departure_date || !formData.price) {
-            alert('Veuillez remplir tous les champs requis.');
+            toast.error('Veuillez remplir tous les champs requis.');
             return;
         }
 
         try {
             const response = await axios.put(`http://localhost:8000/api/submissions/${id}`, formData);
-            console.log('Submission updated:', response.data);
-            alert('Données mises à jour avec succès !');
+            toast.success('Données mises à jour avec succès!');
             fetchReservations(); // Récupérer à nouveau les réservations
             setFormData({ id: null, company: '', from: '', to: '', kilos: '', departure_date: '', price: '' }); // Réinitialiser le formulaire
         } catch (error) {
             console.error('Error updating submission:', error);
-            setError('Erreur lors de la mise à jour des données : ' + error.message);
+            toast.error('Erreur lors de la mise à jour des données: ' + error.message);
         }
     };
 
@@ -244,6 +260,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-dashboard" style={{ fontFamily: 'Poppins, sans-serif', backgroundColor: '#343a40', color: '#ffffff' }}>
+            <ToastContainer />
             <div className="wrapper">
                 <div className="main-content" style={{ marginRight: sidebarCollapsed ? '0' : '300px', padding: '20px' }}>
                     <h1 className="mb-4" style={{ color: 'white' }}>Tableau de Bord Administrateur</h1>
@@ -256,76 +273,11 @@ const AdminDashboard = () => {
                             {loading ? (
                                 <p>Chargement des utilisateurs connectés...</p>
                             ) : (
-                                <>
-                                    {/* Statistiques des utilisateurs connectés */}
-                                    <div className="row mb-4">
-                                        <div className="col-xl-3 col-md-6">
-                                            <div className="card bg-dark text-white" style={{ height: '150px' }}>
-                                                <div className="card-body d-flex flex-column justify-content-between">
-                                                    <div className="float-right">
-                                                        <i className="fa fa-users text-white h4 ml-3"></i>
-                                                    </div>
-                                                    <h5 className="font-size-20 mt-0 pt-1" style={{ color: "white" }}>{connectedUsers.length}</h5>
-                                                    <p className="text-white mb-0">Utilisateurs Connectés</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="col-xl-3 col-md-6">
-                                            <div className="card bg-dark text-white" style={{ height: '150px' }}>
-                                                <div className="card-body d-flex flex-column justify-content-between">
-                                                    <div className="float-right">
-                                                        <i className="fa fa-balance-scale text-white h4 ml-3"></i>
-                                                    </div>
-                                                    <h5 className="font-size-20 mt-0 pt-1" style={{ color: "white" }}>{totalKilos}</h5>
-                                                    <p className="text-white mb-0">Total Kilos</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="col-xl-3 col-md-6">
-                                            <div className="card bg-dark text-white" style={{ height: '150px' }}>
-                                                <div className="card-body d-flex flex-column justify-content-between">
-                                                    <div className="float-right">
-                                                        <i className="fa fa-euro-sign text-white h4 ml-3"></i>
-                                                    </div>
-                                                    <h5 className="font-size-20 mt-0 pt-1" style={{ color: "white" }}>{totalPrice.toFixed(2)} F cfa</h5>
-                                                    <p className="text-white mb-0">Total Price</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Table des Utilisateurs Connectés */}
-                                    <h3>Utilisateurs connectés :</h3>
-                                    <div className="table-responsive">
-                                        <table className="table table-dark table-striped table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Nom</th>
-                                                    <th scope="col">Prénom</th>
-                                                    <th scope="col">Email</th>
-                                                    <th scope="col">Statut</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {connectedUsers.map(user => (
-                                                    <tr key={user.id}>
-                                                        <td>{user.name}</td>
-                                                        <td>{user.prenom}</td>
-                                                        <td>{user.email}</td>
-                                                        <td>{user.status}</td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </>
+                                <UserStatistics connectedUsers={connectedUsers} totalKilos={totalKilos} totalPrice={totalPrice} />
                             )}
                         </div>
                     ) : showNextDeparture ? (
                         <div className="container mt-5">
-
                             <div className="row mb-4">
                                 {/* Submission Form */}
                                 <div className="col-md-6 mb-4">
@@ -582,7 +534,7 @@ const AdminDashboard = () => {
                                             <div className="float-right">
                                                 <i className="fa fa-euro-sign text-white h4 ml-3"></i>
                                             </div>
-                                            <h5 className="font-size-20 mt-0 pt-1" style={{ color: "white" }}>{totalPrice.toFixed(2)} F cfa</h5>
+                                            <h5 className="font-size-20 mt-0 pt-1" style={{ color: "white" }}>{totalPrice.toFixed(2)} F CFA</h5>
                                             <p className="text-white mb-0">Total Price</p>
                                         </div>
                                     </div>
@@ -651,12 +603,9 @@ const AdminDashboard = () => {
                                                                     <td>{reservation.from}</td>
                                                                     <td>{reservation.to}</td>
                                                                     <td>{reservation.departure_date}</td>
-                                                                    <td>{parseFloat(reservation.price).toFixed(2)} F cfa</td>
+                                                                    <td>{parseFloat(reservation.price).toFixed(2)} F CFA</td>
                                                                     <td>
-                                                                        <div className="action">
-                                                                            <a href="#" className="text-success mr-4" data-toggle="tooltip" data-placement="top" title="Edit" onClick={() => handleEditSubmission(reservation)}>
-                                                                                <i className="fa fa-pencil h5 m-0"></i>
-                                                                            </a>
+                                                                        <div className="action text-center">
                                                                             <a href="#" className="text-danger" data-toggle="tooltip" data-placement="top" title="Close" onClick={() => handleDeleteSubmission(reservation.id)}>
                                                                                 <i className="fa fa-remove h5 m-0"></i>
                                                                             </a>
@@ -697,7 +646,7 @@ const AdminDashboard = () => {
 
                     <div className="p-3 border-bottom ">
                         <div className="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/40" className="rounded-circle me-2" alt="User    " />
+                            <img src="https://via.placeholder.com/40" className="rounded-circle me-2" alt="User   " />
                             <div>
                                 <h6 className="mb-0">John Doe</h6>
                                 <small className="text-muted">Online</small>

@@ -571,5 +571,39 @@ search-bar {
 }
 
 
+.text-decorated {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
 
+.gradient-text {
+  background: linear-gradient(90deg, #FFD700, #FF4500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.custom-font {
+  font-family: 'Poppins', sans-serif; /* Ensure you have this font imported */
+  letter-spacing: 2px;
+}
+
+.background-highlight {
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.animated-text {
+  animation: fadeIn 1s ease-in-out;
+}
 
