@@ -4,8 +4,10 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'; 
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css'; 
+import { TextField, Button, IconButton, InputAdornment } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility'; 
 import VisibilityOff from '@mui/icons-material/VisibilityOff'; 
+import logo from '../pages/Logo Yonnee.png'; // Importez l'image de votre logo
 
 const Resetpassword = () => {
   const [formData, setFormData] = useState({
@@ -82,11 +84,11 @@ const Resetpassword = () => {
           <div className="col-md-6 offset-md-3">
             <form onSubmit={handleSubmit} className="bg-dark p-4 rounded shadow">
               <div className="modal-header" style={{ background: '#212529', color: 'white' }}>
-                <h5 className="modal-title" id="resetPasswordModalLabel">Réinitialiser votre mot de passe</h5>
+              <img src={logo} alt="Logo" style={{ width: '100px', marginBottom: '-25px' }} /> {/* Logo Display */}
               </div>
               <hr style={{ border: "2px solid white", marginBottom: 20 }} />
               <div className="mb-3">
-                <input 
+                <TextField 
                   type="email" 
                   id="email" 
                   name="email" 
@@ -94,12 +96,13 @@ const Resetpassword = () => {
                   value={formData.email} 
                   onChange={handleChange} 
                   placeholder="Entrez votre email" 
-                  className="form-control" 
+                  fullWidth 
+                  variant="outlined" 
                   style={{ borderRadius: '5px' }} 
                 />
               </div>
               <div className="mb-3" style={{ position: 'relative' }}>
-                <input 
+                <TextField 
                   type={showPassword ? 'text' : 'password'} 
                   id="password"
                   name="password"
@@ -107,18 +110,22 @@ const Resetpassword = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Entrez votre nouveau mot de passe"
-                  className="form-control" 
+                  fullWidth 
+                  variant="outlined" 
                   style={{ borderRadius: '5px' }} 
                 />
-                <span 
-                  onClick={() => setShowPassword(!showPassword)} 
-                  style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: 'black' }}
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </span>
+                <InputAdornment position="end" style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}>
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                    style={{ background: 'transparent' }} 
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
               </div>
               <div className="mb-3" style={{ position: 'relative' }}>
-                <input 
+                <TextField 
                   type={showPasswordConfirmation ? 'text' : 'password'} 
                   id="passwordConfirmation"
                   name="passwordConfirmation"
@@ -126,20 +133,26 @@ const Resetpassword = () => {
                   value={formData.passwordConfirmation}
                   onChange={handleChange}
                   placeholder="Confirmez votre mot de passe"
-                  className="form-control" 
+                  fullWidth 
+                  variant="outlined" 
                   style={{ borderRadius: '5px' }} 
                 />
-                <span 
-                  onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)} 
-                  style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer', color: 'black' }}
-                >
-                  {showPasswordConfirmation ? <VisibilityOff /> : <Visibility />}
-                </span>
+                <InputAdornment position="end" style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}>
+                  <IconButton
+                    onClick={() => setShowPasswordConfirmation(!showPasswordConfirmation)}
+                    edge="end"
+                    style={{ background: 'transparent' }} 
+                  >
+                    {showPasswordConfirmation ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
               </div>
-              <button type="submit" className="btn btn-dark" style={{ width: '100%', padding: '10px', background: "#343a40" }}>Confirmez</button>
+              <Button type="submit" variant="contained" color="primary" style={{ width: '100%', padding: '10px', background: "#343a40" }}>
+                Confirmez
+              </Button>
             </form>
             <p className="text-center" style={{ marginTop: '20px', color: "white" }}>
-              Revenir à la <Link to="/connect" style={{ textDecoration: 'none',fontSize:18 }}>connexion</Link>
+              Revenir à la <Link to="/connect" style={{ textDecoration: 'none', fontSize: 18 }}>connexion</Link>
             </p>
           </div>
         </div>

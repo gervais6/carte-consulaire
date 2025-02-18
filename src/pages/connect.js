@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { IconButton, InputAdornment } from '@mui/material';
+import { IconButton, InputAdornment, TextField, Button } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import logo from '../pages/Logo Yonnee.png'; // Importez l'image de votre logo
 import '../pages/navbar.css';
-import {  useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from './AuthContext'; 
 
-
 const LoginForm = () => {
-    const [formData, setFormData] = useState({ email: '', password: '' }); // Change 'name' to 'email'
+    const [formData, setFormData] = useState({ email: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const { login } = useAuth(); 
   
     const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData({ ...formData, [name]: value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
   
     const handleSubmit = async (e) => {
@@ -33,7 +31,7 @@ const LoginForm = () => {
         try {
             const response = await axios.post("http://localhost:8000/api/login", formData);
             if (response.data.success) {
-                login(response.data.token); // Mettez à jour l'état d'authentification
+                login(response.data.token);
                 toast.success("Connexion réussie.");
                 setTimeout(() => {
                     navigate('/suivi');
@@ -49,25 +47,18 @@ const LoginForm = () => {
 
     return (
         <>
-           
-
-            {/* Formulaire de connexion */}
-            <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", background: "#343a40", fontFamily: 'Poppins, sans-serif', fontWeight: 500}}>
+            <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh", background: "#343a40", fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6 offset-md-3">
                             <form onSubmit={handleSubmit} className="bg-dark p-4 rounded shadow">
                                 <div className="modal-header" style={{ background: '#212529', color: 'white' }}>
-                                    <h5 className="modal-title" id="loginModalLabel">Connexion</h5>
-                                </div>
-                                <div className="input-group mb-4" style={{ display: "flex", alignItems: "center" }}>
-                                    <div style={{ flex: 1 }}>
-                                        <span style={{ fontWeight: 800, color: 'white' }}></span>
-                                    </div>
+                                    <img src={logo} alt="Logo" style={{ width: '100px', marginBottom: '10px' }} /> {/* Logo Display */}
                                 </div>
                                 <hr style={{ border: "2px solid white", marginTop: -20, marginBottom: 20 }} />
+                                
                                 <div className="mb-3">
-                                    <input 
+                                    <TextField 
                                         type="text" 
                                         id="email" 
                                         name="email" 
@@ -75,12 +66,13 @@ const LoginForm = () => {
                                         value={formData.email} 
                                         onChange={handleChange} 
                                         placeholder="Entrez votre email" 
-                                        className="form-control" 
+                                        fullWidth 
+                                        variant="outlined" 
                                         style={{ borderRadius: '5px' }} 
                                     />
                                 </div>
                                 <div className="mb-3" style={{ position: 'relative' }}>
-                                    <input 
+                                    <TextField 
                                         type={showPassword ? 'text' : 'password'} 
                                         id="password"
                                         name="password"
@@ -88,7 +80,8 @@ const LoginForm = () => {
                                         value={formData.password}
                                         onChange={handleChange}
                                         placeholder="Entrez votre mot de passe"
-                                        className="form-control" 
+                                        fullWidth 
+                                        variant="outlined" 
                                         style={{ borderRadius: '5px' }} 
                                     />
                                     <InputAdornment position="end" style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)' }}>
@@ -103,15 +96,15 @@ const LoginForm = () => {
                                         </IconButton>
                                     </InputAdornment>
                                 </div>
-                                <button type="submit" className="btn btn-dark" style={{ width: '100%', padding: '10px',background:"#343a40" }}>
+                                <Button type="submit" variant="contained" color="primary" style={{ width: '100%', padding: '10px', background: "#343a40" }}>
                                     Se connecter
-                                </button>
+                                </Button>
                             </form>
                             <div className="form-check d-flex justify-content-center mb-5 me-3" style={{ marginTop: 20, color: "white", whiteSpace: 'nowrap' }}>
-    <label className="form-check-label" htmlFor="form2Example3">
-        Vous n'avez pas un compte ? <Link to="/compte" style={{ textDecoration: "none", fontSize: 16 }}>Inscrivez-vous</Link>
-    </label>
-</div>
+                                <label className="form-check-label" htmlFor="form2Example3">
+                                    Vous n'avez pas un compte ? <Link to="/compte" style={{ textDecoration: "none", fontSize: 16 }}>Inscrivez-vous</Link>
+                                </label>
+                            </div>
                             <div className="form-check d-flex justify-content-center mb-5" style={{ marginTop: -30, color: "white" }}>
                                 <label className="form-check-label" htmlFor="form2Example3">
                                     Vous avez oublié votre <Link to="/mdp" style={{ textDecoration: "none" }}>mot de passe</Link> ?

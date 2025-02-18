@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css'; 
+import { TextField, Button } from '@mui/material';
+import logo from '../pages/Logo Yonnee.png'; // Importez l'image de votre logo
+
 
 const MotsDePasseOublier = () => {
   const [formData, setFormData] = useState({
@@ -63,11 +66,11 @@ const MotsDePasseOublier = () => {
           <div className="col-md-6 offset-md-3">
             <form onSubmit={handleSubmit} className="bg-dark p-4 rounded shadow">
               <div className="modal-header" style={{ background: '#212529', color: 'white' }}>
-                <h5 className="modal-title" id="loginModalLabel">Réinitialiser votre mot de passe</h5>
+              <img src={logo} alt="Logo" style={{ width: '100px', marginBottom: '-25px' }} /> {/* Logo Display */}
               </div>
               <hr style={{ border: "2px solid white", marginBottom: 20 }} />
               <div className="mb-3">
-                <input 
+                <TextField 
                   type="email" 
                   id="email" 
                   name="email" 
@@ -75,15 +78,16 @@ const MotsDePasseOublier = () => {
                   value={formData.email} 
                   onChange={handleChange} 
                   placeholder="Entrez votre email" 
-                  className="form-control" 
+                  fullWidth 
+                  variant="outlined" 
                   style={{ borderRadius: '5px' }} 
                 />
               </div>
-              <button type="submit" className="btn btn-dark" style={{ width: '100%', padding: '10px', background: "#343a40" }}>
+              <Button type="submit" variant="contained" color="primary" style={{ width: '100%', padding: '10px', background: "#343a40" }}>
                 Envoyer votre e-mail
-              </button>
+              </Button>
             </form>
-            <p className="text-center" style={{ marginTop: '20px', color: "white" ,fontSize:18}}>
+            <p className="text-center" style={{ marginTop: '20px', color: "white", fontSize: 18 }}>
               Revenir à la <Link to="/connect" style={{ textDecoration: 'none' }}>connexion</Link>
             </p>
           </div>
