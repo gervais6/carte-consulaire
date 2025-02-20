@@ -151,14 +151,20 @@ const Navbar = () => {
                             </h1>
                             <div className='col-lg-12 bg-dark rounded-4 d-flex flex-column flex-md-row justify-content-center' style={{ padding: '40px 20px', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)' }}>
                                 <div className="container">
-                                    <div className="position-relative mb-4">
-                                        <TextField
-                                            variant="outlined"
-                                            placeholder="Trouver un GP..."
-                                            value={searchTerm}
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                            style={{ borderRadius: '20px', padding: '10px 20px', width: '100%' }}
-                                        />
+                                    <div className="position-relative mb-4  ">
+                                    <form className="d-flex" onSubmit={handleSubmit}>
+                                            <div className="input-group">
+                                                <input 
+                                                    className="form-control form-control-lg" 
+                                                    type="search" 
+                                                    placeholder="Recherche GPs..." 
+                                                    aria-label="Search" 
+                                                    value={searchTerm}
+                                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                                    />
+
+                                            </div>
+                                        </form>
                                     </div>
                                     <div className="recent-searches pt-3">
     <p className="text-muted mb-3" style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Prochains départs</p>
@@ -244,6 +250,8 @@ const Navbar = () => {
 `}</style>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </Container>

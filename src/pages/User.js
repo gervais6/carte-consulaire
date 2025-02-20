@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UserStatistics = ({ connectedUsers, totalKilos, totalPrice }) => {
+const UserStatistics = ({ connectedUsers, totalKilos, totalPrice, searchTerm, handleSearchChange }) => {
     return (
         <>
             {/* Statistiques des utilisateurs connectés */}
@@ -40,10 +40,32 @@ const UserStatistics = ({ connectedUsers, totalKilos, totalPrice }) => {
                         </div>
                     </div>
                 </div>
+
+                <div className="col-xl-3 col-md-6">
+                    <div className="card bg-dark text-white" style={{ height: '150px' }}>
+                        <div className="card-body d-flex flex-column justify-content-between">
+                            <form>
+                                <div className="form-group mb-0">
+                                    <label>Recherche</label>
+                                    <div className="input-group mb-0 mt-3">
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            aria-describedby="project-search-addon"
+                                            value={searchTerm}
+                                            onChange={handleSearchChange}
+                                            style={{ backgroundColor: '#495057', color: 'white', borderRadius: '20px' }}
+                                        />
+                                        <i className="fas fa-search search-icon"></i>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {/* Table des Utilisateurs Connectés */}
-            <h3>Utilisateurs connectés :</h3>
             <div className="table-responsive">
                 <table className="table table-dark table-striped table-bordered">
                     <thead>

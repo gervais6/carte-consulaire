@@ -93,9 +93,7 @@ const AdminDashboard = () => {
 
         try {
             const token = localStorage.getItem('token');
-            console.log('Token:', token); // Vérifiez le token
-
-            const response = await fetch('http://localhost:8000/api/connected-users', {
+            const response = await fetch('http://localhost:8000/api/personal-info', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -105,12 +103,19 @@ const AdminDashboard = () => {
 
             if (!response.ok) {
                 const text = await response.text();
-                console.error('Response text:', text); // Affichez le texte de la réponse
-                throw new Error('Erreur lors de la récupération des utilisateurs connectés.');
+                throw new Error('Erreur lors de la récupération des informations personnelles.');
             }
 
             const data = await response.json();
-            setConnectedUsers(data);
+            console.log('Connected User:', data); // Vérifiez la structure des données
+
+            // Assurez-vous que data est un objet
+            if (data && typeof data === 'object') {
+                setConnectedUsers([data]); // Mettez-le dans un tableau pour le traitement ultérieur
+            } else {
+                console.error('La réponse n\'est pas un objet valide:', data);
+                setConnectedUsers([]); // Ou gérer l'erreur comme vous le souhaitez
+            }
         } catch (error) {
             console.error('Error fetching connected users:', error);
             toast.error('Erreur lors de la récupération des utilisateurs connectés: ' + error.message);
@@ -268,12 +273,50 @@ const AdminDashboard = () => {
                     
                     {showProfile ? (
                         <div>
-                            <h2>Profil de l'utilisateur</h2>
-                            <button onClick={handleBackToDashboard} className="btn btn-secondary">Retour au tableau de bord</button>
                             {loading ? (
                                 <p>Chargement des utilisateurs connectés...</p>
                             ) : (
-                                <UserStatistics connectedUsers={connectedUsers} totalKilos={totalKilos} totalPrice={totalPrice} />
+                                Array.isArray(connectedUsers) && connectedUsers.map(user => (
+
+                                    <div key={user.id}>
+                    
+                                        <h3>{user.name} {user.prenom}</h3>
+                    
+                                        <p>Email: {user.email}</p>
+                    
+                                        <p>Bio: {user.bio || 'Pas de bio disponible'}</p>
+                    
+                                        <p>Créé le: {new Date(user.created_at).toLocaleDateString()}</p>
+                    
+                    
+                                        {/* Affichage des réservations de l'utilisateur */}
+                    
+                                        <h4>Réservations de l'utilisateur :</h4>
+                    
+                                        {Array.isArray(user.reservations) && user.reservations.length > 0 ? (
+                    
+                                            <ul>
+                    
+                                                {user.reservations.map(reservation => (
+                    
+                                                    <li key={reservation.id}>
+                    
+                                                        {reservation.from} à {reservation.to} - {reservation.kilos} kilos - {reservation.price} F CFA
+                    
+                                                    </li>
+                    
+                                                ))}
+                    
+                                            </ul>
+                    
+                                        ) : (
+                    
+                                            <p>Aucune réservation trouvée.</p>
+                    
+                                        )}
+                    
+                                    </div>
+                                ))
                             )}
                         </div>
                     ) : showNextDeparture ? (
@@ -583,7 +626,6 @@ const AdminDashboard = () => {
                                                             <th scope="col">Arrivée</th>
                                                             <th scope="col">Date</th>
                                                             <th scope="col">Prix</th>
-                                                            <th scope="col">Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -604,13 +646,6 @@ const AdminDashboard = () => {
                                                                     <td>{reservation.to}</td>
                                                                     <td>{reservation.departure_date}</td>
                                                                     <td>{parseFloat(reservation.price).toFixed(2)} F CFA</td>
-                                                                    <td>
-                                                                        <div className="action text-center">
-                                                                            <a href="#" className="text-danger" data-toggle="tooltip" data-placement="top" title="Close" onClick={() => handleDeleteSubmission(reservation.id)}>
-                                                                                <i className="fa fa-remove h5 m-0"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    </td>
                                                                 </tr>
                                                             ))
                                                         )}
@@ -646,7 +681,7 @@ const AdminDashboard = () => {
 
                     <div className="p-3 border-bottom ">
                         <div className="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/40" className="rounded-circle me-2" alt="User   " />
+                            <img src="https://via.placeholder.com/40" className="rounded-circle me-2" alt="User  " />
                             <div>
                                 <h6 className="mb-0">John Doe</h6>
                                 <small className="text-muted">Online</small>
