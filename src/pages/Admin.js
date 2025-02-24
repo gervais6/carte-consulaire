@@ -626,6 +626,8 @@ const AdminDashboard = () => {
                                                             <th scope="col">Arrivée</th>
                                                             <th scope="col">Date</th>
                                                             <th scope="col">Prix</th>
+                                                            <th scope="col">Status</th>
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
