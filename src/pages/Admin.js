@@ -3,7 +3,6 @@ import './Admin.css'; // Assurez-vous d'avoir ce fichier CSS pour le style
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UserStatistics from '../pages/User'; // Assurez-vous que le chemin est correct
 
 const AdminDashboard = () => {
     const [formData, setFormData] = useState({
@@ -24,7 +23,7 @@ const AdminDashboard = () => {
     const [showNextDeparture, setShowNextDeparture] = useState(false);
     const [connectedUsers, setConnectedUsers] = useState([]);
     const [submissions, setSubmissions] = useState([]);
-
+    const [statusMessage, setStatusMessage] = useState('');
     // Gestion des changements dans le formulaire
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -34,6 +33,46 @@ const AdminDashboard = () => {
     // Gestion de la recherche
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
+    };
+
+
+    const fetchReservations = async () => {
+        setLoading(true);
+        try {
+            const response = await fetch('http://localhost:8000/api/reservations');
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des réservations.');
+            }
+            const data = await response.json();
+            
+            // Assurez-vous que chaque réservation a une propriété statuses
+            const reservationsWithStatuses = data.map(reservation => ({
+                ...reservation,
+                statuses: reservation.statuses || [] // Initialiser à un tableau vide si undefined
+            }));
+    
+            setReservations(reservationsWithStatuses);
+        } catch (error) {
+            console.error('Error fetching reservations:', error);
+            toast.error('Erreur lors de la récupération des réservations.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    const updateStatus = (index, newStatus) => {
+
+        const updatedReservations = [...reservations];
+
+        updatedReservations[index].status = newStatus;
+
+        setReservations(updatedReservations);
+
+        setStatusMessage(`Statut de la réservation ${index} mis à jour à: ${newStatus}`);
+
+        toast.success(`Statut mis à jour à: ${newStatus}`);
+
     };
 
     // Soumission du formulaire pour ajouter une nouvelle soumission
@@ -68,23 +107,7 @@ const AdminDashboard = () => {
         }
     };
 
-    // Récupération des réservations
-    const fetchReservations = async () => {
-        setLoading(true);
-        try {
-            const response = await fetch('http://localhost:8000/api/reservations');
-            if (!response.ok) {
-                throw new Error('Erreur lors de la récupération des réservations.');
-            }
-            const data = await response.json();
-            setReservations(data);
-        } catch (error) {
-            console.error('Error fetching reservations:', error);
-            toast.error('Erreur lors de la récupération des réservations.');
-        } finally {
-            setLoading(false);
-        }
-    };
+
 
     // Récupération des utilisateurs connectés
     const fetchConnectedUsers = async () => {
@@ -166,6 +189,52 @@ const AdminDashboard = () => {
         } catch (error) {
             console.error('Error fetching submissions:', error);
             toast.error('Erreur lors de la récupération des soumissions.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    
+
+
+
+    const addStatus = async (reservationId, newStatus) => {
+        setLoading(true);
+        setError('');
+    
+        try {
+            const response = await fetch(`http://localhost:8000/api/reservations/${reservationId}/status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: newStatus }),
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Une erreur est survenue lors de la mise à jour du statut.');
+            }
+    
+            const updatedStatus = await response.json();
+            // Mettre à jour l'état des réservations
+            const updatedReservations = reservations.map(reservation => {
+                if (reservation.id === reservationId) {
+                    // Ajouter le nouveau statut à la liste des statuts
+                    return {
+                        ...reservation,
+                        statuses: [...reservation.statuses, updatedStatus],
+                    };
+                }
+                return reservation;
+            });
+    
+            setReservations(updatedReservations);
+            toast.success(`Statut mis à jour à: ${newStatus}`);
+        } catch (error) {
+            console.error('Error adding status:', error);
+            toast.error('Erreur lors de la mise à jour du statut: ' + error.message);
         } finally {
             setLoading(false);
         }
@@ -272,51 +341,41 @@ const AdminDashboard = () => {
                     {error && <div className="alert alert-danger">{error}</div>}
                     
                     {showProfile ? (
-                        <div>
+                        <div className="container mt-5">
                             {loading ? (
                                 <p>Chargement des utilisateurs connectés...</p>
                             ) : (
-                                Array.isArray(connectedUsers) && connectedUsers.map(user => (
+                                <div className="row">
+                                    <div className="col-lg-12">
+                                        <div className="card bg-dark text-white">
+                                            <div className="card-body">
+                                                <div className="table-responsive">
+                                                    <table className="table table-dark table-striped table-bordered table-centered table-nowrap">
+                                                        <thead>
+                                                            <tr>
+                                                            <th scope="col">#ID</th>
 
-                                    <div key={user.id}>
-                    
-                                        <h3>{user.name} {user.prenom}</h3>
-                    
-                                        <p>Email: {user.email}</p>
-                    
-                                        <p>Bio: {user.bio || 'Pas de bio disponible'}</p>
-                    
-                                        <p>Créé le: {new Date(user.created_at).toLocaleDateString()}</p>
-                    
-                    
-                                        {/* Affichage des réservations de l'utilisateur */}
-                    
-                                        <h4>Réservations de l'utilisateur :</h4>
-                    
-                                        {Array.isArray(user.reservations) && user.reservations.length > 0 ? (
-                    
-                                            <ul>
-                    
-                                                {user.reservations.map(reservation => (
-                    
-                                                    <li key={reservation.id}>
-                    
-                                                        {reservation.from} à {reservation.to} - {reservation.kilos} kilos - {reservation.price} F CFA
-                    
-                                                    </li>
-                    
-                                                ))}
-                    
-                                            </ul>
-                    
-                                        ) : (
-                    
-                                            <p>Aucune réservation trouvée.</p>
-                    
-                                        )}
-                    
+                                                                <th scope="col">Nom</th>
+                                                                <th scope="col">Prénom</th>
+                                                                <th scope="col">Email</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {Array.isArray(connectedUsers) && connectedUsers.map(user => (
+                                                                <tr key={user.id}>
+                                                                    <td>{user.id}</td>
+                                                                    <td>{user.name}</td>
+                                                                    <td>{user.prenom}</td>
+                                                                    <td>{user.email}</td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                ))
+                                </div>
                             )}
                         </div>
                     ) : showNextDeparture ? (
@@ -613,46 +672,102 @@ const AdminDashboard = () => {
                                     <div className="card bg-dark text-white">
                                         <div className="card-body">
                                             <div className="table-responsive">
-                                                <table className="table table-dark table-striped table-bordered table-centered table-nowrap">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Nom</th>
-                                                            <th scope="col">Prénom</th>
-                                                            <th scope="col">Email</th>
-                                                            <th scope="col">Téléphone</th>
-                                                            <th scope="col">Kilos</th>
-                                                            <th scope="col">Entreprise</th>
-                                                            <th scope="col">Départ</th>
-                                                            <th scope="col">Arrivée</th>
-                                                            <th scope="col">Date</th>
-                                                            <th scope="col">Prix</th>
-                                                            <th scope="col">Status</th>
+                                            <table className="table table-dark table-striped table-bordered table-centered table-nowrap">
+    <thead>
+        <tr>
 
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {loading ? (
-                                                            <tr>
-                                                                <td colSpan="11" className="text-center">Loading...</td>
-                                                            </tr>
-                                                        ) : (
-                                                            filteredReservations.map((reservation, index) => (
-                                                                <tr key={index}>
-                                                                    <td>{reservation.nom}</td>
-                                                                    <td>{reservation.prenom}</td>
-                                                                    <td>{reservation.email}</td>
-                                                                    <td>{reservation.num}</td>
-                                                                    <td>{reservation.kilos}</td>
-                                                                    <td>{reservation.company}</td>
-                                                                    <td>{reservation.from}</td>
-                                                                    <td>{reservation.to}</td>
-                                                                    <td>{reservation.departure_date}</td>
-                                                                    <td>{parseFloat(reservation.price).toFixed(2)} F CFA</td>
-                                                                </tr>
-                                                            ))
-                                                        )}
-                                                    </tbody>
-                                                </table>
+            <th scope="col">Nom</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Email</th>
+            <th scope="col">Téléphone</th>
+            <th scope="col">Kilos</th>
+            <th scope="col">Entreprise</th>
+            <th scope="col">Départ</th>
+            <th scope="col">Arrivée</th>
+            <th scope="col">Date</th>
+            <th scope="col">Prix</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {loading ? (
+            <tr>
+                <td colSpan="11" className="text-center">Loading...</td>
+            </tr>
+        ) : (
+            filteredReservations.map((reservation, index) => (
+                <tr key={index}>
+
+                    <td>{reservation.nom}</td>
+                    <td>{reservation.prenom}</td>
+                    <td>{reservation.email}</td>
+                    <td>{reservation.num}</td>
+                    <td>{reservation.kilos}</td>
+                    <td>{reservation.company}</td>
+                    <td>{reservation.from}</td>
+                    <td>{reservation.to}</td>
+                    <td>{reservation.departure_date}</td>
+                    <td>{parseFloat(reservation.price).toFixed(2)} F CFA</td>
+                    <td>
+    <button 
+        className="btn btn-secondary dropdown-toggle" 
+        type="button" 
+        id={`dropdownMenuButton${index}`} 
+        data-bs-toggle="dropdown" 
+        aria-expanded="false"
+    >
+        Changer le statut 
+    </button>
+    <ul className="dropdown-menu" aria-labelledby={`dropdownMenuButton${index}`} style={{ zIndex: 100 }}>
+        <li>
+            <button 
+                className="dropdown-item" 
+                onClick={() => addStatus(reservation.id, 'En attente')}
+            >
+                En attente
+            </button>
+        </li>
+        <li>
+            <button 
+                className="dropdown-item" 
+                onClick={() => addStatus(reservation.id, 'En transit')}
+            >
+                En transit
+            </button>
+        </li>
+        <li>
+            <button 
+                className="dropdown-item" 
+                onClick={() => addStatus(reservation.id, 'Livré')}
+            >
+                Livré
+            </button>
+        </li>
+        <li>
+            <button 
+                className="dropdown-item" 
+                onClick={() => addStatus(reservation.id, 'Retourné')}
+            >
+                Retourné
+            </button>
+        </li>
+        <li>
+            <button 
+                className="dropdown-item" 
+                onClick={() => addStatus(reservation.id, 'Annulé')}
+            >
+                Annulé
+            </button>
+        </li>
+    </ul>
+</td>
+                </tr>
+            ))
+        )}
+    </tbody>
+</table>
                                             </div>
                                         </div>
                                     </div>
