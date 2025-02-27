@@ -24,6 +24,7 @@ const AdminDashboard = () => {
     const [connectedUsers, setConnectedUsers] = useState([]);
     const [submissions, setSubmissions] = useState([]);
     const [statusMessage, setStatusMessage] = useState('');
+
     // Gestion des changements dans le formulaire
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -36,6 +37,32 @@ const AdminDashboard = () => {
     };
 
 
+    const handledeleteSubmission = async (id) => {
+
+        const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer cette soumission ?");
+    
+        if (confirmDelete) {
+    
+            try {
+    
+                const response = await axios.delete(`http://localhost:8000/api/submissions/${id}`);
+    
+                toast.success(response.data.message); // Affichez un message de succès
+    
+                // Mettez à jour l'état pour retirer la soumission supprimée
+    
+                setSubmissions(submissions.filter(submission => submission.id !== id));
+    
+            } catch (error) {
+    
+                toast.error('Erreur lors de la suppression de la soumission: ' + error.message); // Affichez un message d'erreur
+    
+            }
+    
+        }
+    
+    };
+
     const fetchReservations = async () => {
         setLoading(true);
         try {
@@ -44,13 +71,10 @@ const AdminDashboard = () => {
                 throw new Error('Erreur lors de la récupération des réservations.');
             }
             const data = await response.json();
-            
-            // Assurez-vous que chaque réservation a une propriété statuses
             const reservationsWithStatuses = data.map(reservation => ({
                 ...reservation,
-                statuses: reservation.statuses || [] // Initialiser à un tableau vide si undefined
+                statuses: reservation.statuses || []
             }));
-    
             setReservations(reservationsWithStatuses);
         } catch (error) {
             console.error('Error fetching reservations:', error);
@@ -60,22 +84,14 @@ const AdminDashboard = () => {
         }
     };
 
-
     const updateStatus = (index, newStatus) => {
-
         const updatedReservations = [...reservations];
-
         updatedReservations[index].status = newStatus;
-
         setReservations(updatedReservations);
-
         setStatusMessage(`Statut de la réservation ${index} mis à jour à: ${newStatus}`);
-
         toast.success(`Statut mis à jour à: ${newStatus}`);
-
     };
 
-    // Soumission du formulaire pour ajouter une nouvelle soumission
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -97,8 +113,8 @@ const AdminDashboard = () => {
             }
 
             toast.success('Données enregistrées avec succès!');
-            await fetchReservations(); // Récupérer les réservations après la soumission
-            setFormData({ company: '', from: '', to: '', kilos: '', departure_date: '', price: '' }); // Réinitialiser le formulaire
+            await fetchReservations();
+            setFormData({ company: '', from: '', to: '', kilos: '', departure_date: '', price: '' });
         } catch (error) {
             console.error('Error submitting form:', error);
             toast.error('Erreur lors de l\'envoi des données: ' + error.message);
@@ -107,9 +123,6 @@ const AdminDashboard = () => {
         }
     };
 
-
-
-    // Récupération des utilisateurs connectés
     const fetchConnectedUsers = async () => {
         setLoading(true);
         setError('');
@@ -130,14 +143,11 @@ const AdminDashboard = () => {
             }
 
             const data = await response.json();
-            console.log('Connected User:', data); // Vérifiez la structure des données
-
-            // Assurez-vous que data est un objet
             if (data && typeof data === 'object') {
-                setConnectedUsers([data]); // Mettez-le dans un tableau pour le traitement ultérieur
+                setConnectedUsers([data]);
             } else {
                 console.error('La réponse n\'est pas un objet valide:', data);
-                setConnectedUsers([]); // Ou gérer l'erreur comme vous le souhaitez
+                setConnectedUsers([]);
             }
         } catch (error) {
             console.error('Error fetching connected users:', error);
@@ -147,36 +157,30 @@ const AdminDashboard = () => {
         }
     };
 
-    // Récupération initiale des réservations
     useEffect(() => {
         fetchReservations();
     }, []);
 
-    // Gestion de l'affichage de la barre latérale
     const toggleSidebar = () => {
         setSidebarCollapsed(!sidebarCollapsed);
     };
 
-    // Gestion de l'affichage du profil utilisateur
     const handleProfileClick = async () => {
         setShowProfile(true);
         setShowNextDeparture(false);
         await fetchConnectedUsers();
     };
 
-    // Gestion de l'affichage du prochain départ
     const handleNextDepartureClick = () => {
         setShowProfile(false);
         setShowNextDeparture(true);
     };
 
-    // Retour au tableau de bord
     const handleBackToDashboard = () => {
         setShowProfile(false);
         setShowNextDeparture(false);
     };
 
-    // Récupération des soumissions
     const fetchSubmissions = async () => {
         setLoading(true);
         try {
@@ -194,15 +198,10 @@ const AdminDashboard = () => {
         }
     };
 
-
-    
-
-
-
     const addStatus = async (reservationId, newStatus) => {
         setLoading(true);
         setError('');
-    
+
         try {
             const response = await fetch(`http://localhost:8000/api/reservations/${reservationId}/status`, {
                 method: 'POST',
@@ -211,17 +210,15 @@ const AdminDashboard = () => {
                 },
                 body: JSON.stringify({ status: newStatus }),
             });
-    
+
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || 'Une erreur est survenue lors de la mise à jour du statut.');
             }
-    
+
             const updatedStatus = await response.json();
-            // Mettre à jour l'état des réservations
             const updatedReservations = reservations.map(reservation => {
                 if (reservation.id === reservationId) {
-                    // Ajouter le nouveau statut à la liste des statuts
                     return {
                         ...reservation,
                         statuses: [...reservation.statuses, updatedStatus],
@@ -229,7 +226,7 @@ const AdminDashboard = () => {
                 }
                 return reservation;
             });
-    
+
             setReservations(updatedReservations);
             toast.success(`Statut mis à jour à: ${newStatus}`);
         } catch (error) {
@@ -240,39 +237,36 @@ const AdminDashboard = () => {
         }
     };
 
-    // Suppression d'une soumission
-    const handleDeleteSubmission = async (id) => {
-        console.log('ID à supprimer:', id); // Vérifiez l'ID ici
-        if (window.confirm('Êtes-vous sûr de vouloir supprimer cette soumission ?')) {
-            setLoading(true);
-            setError('');
+        const handleDeleteSubmission = async (id) => {
+
+        const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer cette réservation ?");
+
+        if (confirmDelete) {
 
             try {
-                const response = await fetch(`http://localhost:8000/api/submissions/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
 
-                if (!response.ok) {
-                    const text = await response.text();
-                    console.error('Response text:', text); // Affichez le texte de la réponse
-                    throw new Error(text || 'Une erreur est survenue');
-                }
+                const response = await axios.delete(`http://localhost:8000/api/reservations/${id}`);
 
-                toast.success('Données supprimées avec succès!');
-                await fetchSubmissions(); // Récupérer à nouveau les soumissions
+                toast.success(response.data.message); // Affiche un toast de succès
+
+                setReservations(reservations.filter(reservation => reservation.id !== id));
+
             } catch (error) {
-                console.error('Error deleting submission:', error);
-                toast.error('Erreur lors de la suppression des données: ' + error.message);
-            } finally {
-                setLoading(false);
+
+                toast.error('Erreur lors de la suppression de la réservation: ' + error.message); // Affiche un toast d'erreur
+
             }
+
         }
+
     };
 
-    // Remplissage du formulaire pour modification
+
+
+    
+
+
+    
     const handleEditSubmission = (submission) => {
         setFormData({
             id: submission.id,
@@ -285,7 +279,6 @@ const AdminDashboard = () => {
         });
     };
 
-    // Filtrage des réservations
     const filteredReservations = reservations.filter(reservation => {
         return (
             reservation.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -296,16 +289,13 @@ const AdminDashboard = () => {
         );
     });
 
-    // Calculer les statistiques
     const totalKilos = reservations.reduce((total, reservation) => total + (reservation.kilos || 0), 0);
     const totalPrice = reservations.reduce((total, reservation) => total + (parseFloat(reservation.price) || 0), 0);
 
-    // Récupération des soumissions
     useEffect(() => {
         fetchSubmissions();
     }, []);
 
-    // Mise à jour d'une soumission
     const handleUpdateSubmission = async (id) => {
         if (!formData.company || !formData.from || !formData.to || !formData.kilos || !formData.departure_date || !formData.price) {
             toast.error('Veuillez remplir tous les champs requis.');
@@ -315,15 +305,14 @@ const AdminDashboard = () => {
         try {
             const response = await axios.put(`http://localhost:8000/api/submissions/${id}`, formData);
             toast.success('Données mises à jour avec succès!');
-            fetchReservations(); // Récupérer à nouveau les réservations
-            setFormData({ id: null, company: '', from: '', to: '', kilos: '', departure_date: '', price: '' }); // Réinitialiser le formulaire
+            fetchReservations();
+            setFormData({ id: null, company: '', from: '', to: '', kilos: '', departure_date: '', price: '' });
         } catch (error) {
             console.error('Error updating submission:', error);
             toast.error('Erreur lors de la mise à jour des données: ' + error.message);
         }
     };
 
-    // Filtrage des soumissions
     const filteredSubmissions = submissions.filter(submission => {
         return (
             submission.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -353,8 +342,7 @@ const AdminDashboard = () => {
                                                     <table className="table table-dark table-striped table-bordered table-centered table-nowrap">
                                                         <thead>
                                                             <tr>
-                                                            <th scope="col">#ID</th>
-
+                                                                <th scope="col">#ID</th>
                                                                 <th scope="col">Nom</th>
                                                                 <th scope="col">Prénom</th>
                                                                 <th scope="col">Email</th>
@@ -496,7 +484,7 @@ const AdminDashboard = () => {
                                     <div className="col-md-6 mb-4" key={submission.id}>
                                         <form className="contact-form p-4 border rounded shadow bg-dark text-white" onSubmit={(e) => {
                                             e.preventDefault();
-                                            handleDeleteSubmission(submission.id);
+                                            handledeleteSubmission(submission.id);
                                         }}>
                                             <h4 className="text-center mb-4 text-light">Formulaire de suppression</h4>
                                             <div className="form-group">
@@ -595,7 +583,8 @@ const AdminDashboard = () => {
                                                     />
                                                 </div>
                                             </div>
-                                            <button type="submit" className="btn btn-danger btn-block">Supprimer</button>
+                                            
+                                            <button type="submit" className="btn btn-danger btn-block" onClick={() => handledeleteSubmission(submission.id)}   >Supprimer</button>
                                             <button type="button" className="btn btn-warning btn-block ms-4" onClick={() => handleEditSubmission(submission)}>Modifier</button>
                                         </form>
                                     </div>
@@ -672,102 +661,111 @@ const AdminDashboard = () => {
                                     <div className="card bg-dark text-white">
                                         <div className="card-body">
                                             <div className="table-responsive">
-                                            <table className="table table-dark table-striped table-bordered table-centered table-nowrap">
-    <thead>
-        <tr>
+                                                <table className="table table-dark table-striped table-bordered table-centered table-nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Nom</th>
+                                                            <th scope="col">Prénom</th>
+                                                            <th scope="col">Email</th>
+                                                            <th scope="col">Téléphone</th>
+                                                            <th scope="col">Kilos</th>
+                                                            <th scope="col">Entreprise</th>
+                                                            <th scope="col">Départ</th>
+                                                            <th scope="col">Arrivée</th>
+                                                            <th scope="col">Date</th>
+                                                            <th scope="col">Prix</th>
+                                                            <th scope="col">Statut</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {loading ? (
+                                                            <tr>
+                                                                <td colSpan="11" className="text-center">Loading...</td>
+                                                            </tr>
+                                                        ) : (
+                                                            filteredReservations.map((reservation, index) => (
+                                                                <tr key={index}>
+                                                                    <td>{reservation.nom}</td>
+                                                                    <td>{reservation.prenom}</td>
+                                                                    <td>{reservation.email}</td>
+                                                                    <td>{reservation.num}</td>
+                                                                    <td>{reservation.kilos}</td>
+                                                                    <td>{reservation.company}</td>
+                                                                    <td>{reservation.from}</td>
+                                                                    <td>{reservation.to}</td>
+                                                                    <td>{reservation.departure_date}</td>
+                                                                    <td>{parseFloat(reservation.price).toFixed(2)} F CFA</td>
+                                                                    <td>
+                                                                        <button 
+                                                                            className="btn btn-secondary dropdown-toggle" 
+                                                                            type="button" 
+                                                                            id={`dropdownMenuButton${index}`} 
+                                                                            data-bs-toggle="dropdown" 
+                                                                            aria-expanded="false"
+                                                                        >
+                                                                            Changer le statut 
+                                                                        </button>
+                                                                        <ul className="dropdown-menu" aria-labelledby={`dropdownMenuButton${index}`} style={{ zIndex: 100 }}>
+                                                                            <li>
+                                                                                <button 
+                                                                                    className="dropdown-item" 
+                                                                                    onClick={() => addStatus(reservation.id, 'En attente')}
+                                                                                >
+                                                                                    En attente
+                                                                                </button>
+                                                                            </li>
+                                                                            <li>
+                                                                                <button 
+                                                                                    className="dropdown-item" 
+                                                                                    onClick={() => addStatus(reservation.id, 'En transit')}
+                                                                                >
+                                                                                    En transit
+                                                                                </button>
+                                                                            </li>
+                                                                            <li>
+                                                                                <button 
+                                                                                    className="dropdown-item" 
+                                                                                    onClick={() => addStatus(reservation.id, 'Livré')}
+                                                                                >
+                                                                                    Livré
+                                                                                </button>
+                                                                            </li>
+                                                                            <li>
+                                                                                <button 
+                                                                                    className="dropdown-item" 
+                                                                                    onClick={() => addStatus(reservation.id, 'Retourné')}
+                                                                                >
+                                                                                    Retourné
+                                                                                </button>
+                                                                            </li>
+                                                                            <li>
+                                                                                <button 
+                                                                                    className="dropdown-item" 
+                                                                                    onClick={() => addStatus(reservation.id, 'Annulé')}
+                                                                                >
+                                                                                    Annulé
+                                                                                </button>
+                                                                            </li>
+                                                                        </ul>
 
-            <th scope="col">Nom</th>
-            <th scope="col">Prénom</th>
-            <th scope="col">Email</th>
-            <th scope="col">Téléphone</th>
-            <th scope="col">Kilos</th>
-            <th scope="col">Entreprise</th>
-            <th scope="col">Départ</th>
-            <th scope="col">Arrivée</th>
-            <th scope="col">Date</th>
-            <th scope="col">Prix</th>
-            <th scope="col">Statut</th>
-            <th scope="col">Action</th>
+                                                                    </td>
+<td>
+    <div className='d-flex justify-content-start'>
 
-        </tr>
-    </thead>
-    <tbody>
-        {loading ? (
-            <tr>
-                <td colSpan="11" className="text-center">Loading...</td>
-            </tr>
-        ) : (
-            filteredReservations.map((reservation, index) => (
-                <tr key={index}>
-
-                    <td>{reservation.nom}</td>
-                    <td>{reservation.prenom}</td>
-                    <td>{reservation.email}</td>
-                    <td>{reservation.num}</td>
-                    <td>{reservation.kilos}</td>
-                    <td>{reservation.company}</td>
-                    <td>{reservation.from}</td>
-                    <td>{reservation.to}</td>
-                    <td>{reservation.departure_date}</td>
-                    <td>{parseFloat(reservation.price).toFixed(2)} F CFA</td>
-                    <td>
-    <button 
-        className="btn btn-secondary dropdown-toggle" 
-        type="button" 
-        id={`dropdownMenuButton${index}`} 
-        data-bs-toggle="dropdown" 
-        aria-expanded="false"
-    >
-        Changer le statut 
-    </button>
-    <ul className="dropdown-menu" aria-labelledby={`dropdownMenuButton${index}`} style={{ zIndex: 100 }}>
-        <li>
-            <button 
-                className="dropdown-item" 
-                onClick={() => addStatus(reservation.id, 'En attente')}
-            >
-                En attente
-            </button>
-        </li>
-        <li>
-            <button 
-                className="dropdown-item" 
-                onClick={() => addStatus(reservation.id, 'En transit')}
-            >
-                En transit
-            </button>
-        </li>
-        <li>
-            <button 
-                className="dropdown-item" 
-                onClick={() => addStatus(reservation.id, 'Livré')}
-            >
-                Livré
-            </button>
-        </li>
-        <li>
-            <button 
-                className="dropdown-item" 
-                onClick={() => addStatus(reservation.id, 'Retourné')}
-            >
-                Retourné
-            </button>
-        </li>
-        <li>
-            <button 
-                className="dropdown-item" 
-                onClick={() => addStatus(reservation.id, 'Annulé')}
-            >
-                Annulé
-            </button>
-        </li>
-    </ul>
+        <button 
+            className="btn btn-danger" 
+            onClick={() => handleDeleteSubmission(reservation.id)}
+        >
+            <i className="fas fa-trash"></i>
+        </button>
+    </div>
 </td>
-                </tr>
-            ))
-        )}
-    </tbody>
-</table>
+                                                                </tr>
+                                                            ))
+                                                        )}
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -798,7 +796,7 @@ const AdminDashboard = () => {
 
                     <div className="p-3 border-bottom ">
                         <div className="d-flex align-items-center">
-                            <img src="https://via.placeholder.com/40" className="rounded-circle me-2" alt="User  " />
+                            <img src="https://via.placeholder.com/40" className="rounded-circle me-2" alt="User " />
                             <div>
                                 <h6 className="mb-0">John Doe</h6>
                                 <small className="text-muted">Online</small>

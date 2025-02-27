@@ -339,7 +339,7 @@ const Navbar = () => {
                         </Button>
                     </form>
                 ) : (
-                    <p className='text-light mt-3'>Réservation effectuée. Veuillez consulter votre e-mail pour confirmer la validation.</p>
+                    <p className='text-light '>Réservation effectuée. Veuillez consulter votre e-mail pour confirmer la validation.</p>
                 )}
             </div>
         </div>
