@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import '../pages/navbar.css';
 import logo from '../pages/Logo Yonnee.png';
 import { BiUserCircle } from 'react-icons/bi'; // Exemple d'icône d'utilisateur
+import { ToastContainer, toast } from 'react-toastify'; // Importer ToastContainer et toast
+import 'react-toastify/dist/ReactToastify.css'; // Importer le CSS de react-toastify
+
 const Suivi = () => {
     const [trackingNumber, setTrackingNumber] = useState('');
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(true);
-
 
     useEffect(() => {
         const fetchUserEmail = async () => {
@@ -24,6 +26,7 @@ const Suivi = () => {
 
                 if (!response.ok) {
                     const errorMessage = await response.text();
+                    toast.error(`Erreur lors de la récupération de l'email: ${response.status} ${errorMessage}`); // Afficher un toast d'erreur
                     throw new Error(`Erreur lors de la récupération de l'email: ${response.status} ${errorMessage}`);
                 }
 
@@ -39,7 +42,6 @@ const Suivi = () => {
         fetchUserEmail();
     }, []);
 
-    
     useEffect(() => {
         // Récupérer le token depuis le localStorage
         const storedToken = localStorage.getItem('token');
@@ -50,24 +52,40 @@ const Suivi = () => {
         }
     }, [navigate]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Numéro de suivi soumis:", trackingNumber);
-        // Ajoutez ici la logique pour traiter le numéro de suivi
+
+        const token = localStorage.getItem('token')?.trim();
+        if (!token) {
+            toast.error('Vous devez vous connecter pour accéder à cette fonctionnalité.');
+            navigate('/connect');
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8000/api/track/${trackingNumber}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+
+            if (!response.ok) {
+                const errorMessage = await response.text();
+                toast.error(`Erreur lors de la récupération des informations de suivi: ${response.status} ${errorMessage}`); // Afficher un toast d'erreur
+                throw new Error(`Erreur lors de la récupération des informations de suivi: ${response.status} ${errorMessage}`);
+            }
+
+            const data = await response.json();
+            // Traitez les données de suivi ici
+            console.log("Données de suivi:", data);
+        } catch (error) {
+            console.error("Erreur:", error);
+            toast.error('Erreur lors de la récupération des informations de suivi.'); // Afficher un toast d'erreur générique
+        }
     };
-
-
-    useEffect(() => {
-        window.history.pushState(null, '', window.location.href);
-        const handlePopState = (event) => {
-            window.history.pushState(null, '', window.location.href);
-        };
-        window.addEventListener('popstate', handlePopState);
-        return () => {
-            window.removeEventListener('popstate', handlePopState);
-        };
-    }, []);
-
 
     const handleLogout = async () => {
         try {
@@ -85,55 +103,43 @@ const Suivi = () => {
                 window.location.href = '/';
             } else {
                 console.error("Erreur lors de la déconnexion");
+                toast.error('Erreur lors de la déconnexion.'); // Afficher un toast d'erreur
             }
         } catch (error) {
             console.error("Erreur réseau :", error);
+            toast.error('Erreur réseau lors de la déconnexion.'); // Afficher un toast d'erreur
         }
     };
 
-
-
- 
-
     return ( 
         <div>
-            <nav className="navbar navbar-expand-lg bg-dark fixed-top" >
+            <ToastContainer /> {/* Ajouter le ToastContainer ici */}
+            <nav className="navbar navbar-expand-lg bg-dark fixed-top">
                 <div className="container">
                     <img src={logo} alt="Logo" style={{ width: '150px', height: '50px' }} />
                     <button className="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div className="collapse navbar-collapse " id="navbarNav">
+                    <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav ms-auto">
-
-
-                        <div className="dropdown ms-auto "style={{marginRight:-25}} >
-
-                        <button className="  btn btn-outline-dark text-light   dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-
-                      <BiUserCircle className="me-2  " style={{fontSize:25,marginLeft:100}} /> {/* Icône d'utilisateur */}
-
-                       Mon compte
-
-                         </button>
-
-                       <ul className="dropdown-menu dropdown-menu-end">
-
-                             <li>
+                            <div className="dropdown ms-auto" style={{ marginRight: -25 }}>
+                                <button className="btn btn-outline-dark text-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <BiUserCircle className="me-2" style={{ fontSize: 25, marginLeft: 100 }} /> {/* Icône d'utilisateur */}
+                                    Mon compte
+                                </button>
+                                <ul className="dropdown-menu dropdown-menu-end">
+                                    <li>
                                         <a className="dropdown-item disabled" href="#">
                                             <h6 className="text-dark mb-0"><span style={{ color: 'black' }}>{loading ? 'Chargement...' : email}</span></h6>
                                         </a>
                                     </li>
-
                                     <li>
                                         <a className="dropdown-item" href="#" onClick={handleLogout}>
                                             <i className="bi bi-box-arrow-right"></i> Déconnexion
                                         </a>
                                     </li>
-
-</ul>
-
-</div>
+                                </ul>
+                            </div>
                         </ul>
                     </div>
                 </div>

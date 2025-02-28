@@ -119,24 +119,27 @@ const Navbar = () => {
 
     return (
         <div>
-            <AppBar position="fixed" style={{ backgroundColor: '#343a40' }}>
-                <Toolbar>
-                    <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
-                        <img src={logo} alt="Logo" style={{ width: '150px', height: '50px' }} />
-                    </IconButton>
-                    <Typography variant="h6" style={{ flexGrow: 1 }} />
-                    <Hidden smDown>
-                        <StyledButton component={Link} to="connect">Se connecter</StyledButton>
-                        <StyledButton component="a" href="#about">À propos de nous</StyledButton>
-                        <StyledButton component="a" href="#contact">Contact</StyledButton>
-                    </Hidden>
-                    <Hidden mdUp>
-                        <IconButton color="inherit" onClick={toggleDrawer(true)}>
-                            <span className="material-icons">menu</span>
-                        </IconButton>
-                    </Hidden>
-                </Toolbar>
-            </AppBar>
+<nav className="navbar navbar-expand-lg bg-dark fixed-top" style={{fontFamily: 'Poppins, sans-serif', fontWeight: 500,}}>
+    <div className="container">
+        <img src={logo} alt="Logo" style={{ width: '150px', height: '50px' }} />
+        <button className="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                    <Link className="nav-link text-white" to="connect">Se connecter</Link>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link text-white" href="#about">À propos de nous</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link text-white" href="#contact">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
             <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
                 {drawerList()}
