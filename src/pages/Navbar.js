@@ -28,6 +28,39 @@ const Navbar = () => {
     const [reservationSuccess, setReservationSuccess] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
 
+
+    useEffect(() => {
+
+        // Ajoute une entrée à l'historique pour empêcher le recul
+
+        window.history.pushState(null, '', window.location.href);
+
+
+        const handlePopState = (event) => {
+
+            // Ajoute à nouveau une entrée à l'historique pour empêcher le recul
+
+            window.history.pushState(null, '', window.location.href);
+
+        };
+
+
+        // Écoute l'événement popstate
+
+        window.addEventListener('popstate', handlePopState);
+
+
+        // Nettoyage de l'écouteur d'événements lors du démontage du composant
+
+        return () => {
+
+            window.removeEventListener('popstate', handlePopState);
+
+        };
+
+    }, []);
+ 
+
     useEffect(() => {
         const fetchSubmissions = async () => {
             try {
@@ -116,6 +149,9 @@ const Navbar = () => {
             </List>
         </div>
     );
+
+
+    
 
     return (
         <div>

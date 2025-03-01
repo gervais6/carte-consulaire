@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../pages/navbar.css';
 import logo from '../pages/Logo Yonnee.png';
-import { BiUserCircle } from 'react-icons/bi'; // Exemple d'icône d'utilisateur
-import { ToastContainer, toast } from 'react-toastify'; // Importer ToastContainer et toast
-import 'react-toastify/dist/ReactToastify.css'; // Importer le CSS de react-toastify
+import { BiUserCircle } from 'react-icons/bi';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Suivi = () => {
     const [trackingNumber, setTrackingNumber] = useState('');
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(true);
+    const [statuses, setStatuses] = useState([]); // État pour les statuts
 
     useEffect(() => {
         const fetchUserEmail = async () => {
@@ -18,15 +19,15 @@ const Suivi = () => {
             try {
                 const response = await fetch('http://localhost:8000/api/personal-info', {
                     method: 'GET',
-                    headers: {
+                    headers : {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}` // Ajout du token
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
                     },
                 });
 
                 if (!response.ok) {
                     const errorMessage = await response.text();
-                    toast.error(`Erreur lors de la récupération de l'email: ${response.status} ${errorMessage}`); // Afficher un toast d'erreur
+                    toast.error(`Erreur lors de la récupération de l'email: ${response.status} ${errorMessage}`);
                     throw new Error(`Erreur lors de la récupération de l'email: ${response.status} ${errorMessage}`);
                 }
 
@@ -43,12 +44,10 @@ const Suivi = () => {
     }, []);
 
     useEffect(() => {
-        // Récupérer le token depuis le localStorage
         const storedToken = localStorage.getItem('token');
-        console.log("Token récupéré:", storedToken); // Ajoutez ceci pour déboguer
+        console.log("Token récupéré:", storedToken);
         if (!storedToken) {
-            // Rediriger vers la page de connexion si le token n'existe pas
-            navigate('/connect'); // Remplacez '/connect' par la route de votre page de connexion
+            navigate('/connect');
         }
     }, [navigate]);
 
@@ -74,16 +73,33 @@ const Suivi = () => {
 
             if (!response.ok) {
                 const errorMessage = await response.text();
-                toast.error(`Erreur lors de la récupération des informations de suivi: ${response.status} ${errorMessage}`); // Afficher un toast d'erreur
+                toast.error(`Erreur lors de la récupération des informations de suivi: ${response.status} ${errorMessage}`);
                 throw new Error(`Erreur lors de la récupération des informations de suivi: ${response.status} ${errorMessage}`);
             }
 
             const data = await response.json();
-            // Traitez les données de suivi ici
             console.log("Données de suivi:", data);
+
+            const statusesResponse = await fetch(`http://localhost:8000/api/reservations/${data.reservation.id}/statuses`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+
+            if (!statusesResponse.ok) {
+                const errorMessage = await statusesResponse.text();
+                toast.error(`Erreur lors de la récupération des statuts: ${statusesResponse.status} ${errorMessage}`);
+                throw new Error(`Erreur lors de la récupération des statuts: ${statusesResponse.status} ${errorMessage}`);
+            }
+
+            const statusesData = await statusesResponse.json();
+            setStatuses(statusesData);
+
         } catch (error) {
             console.error("Erreur:", error);
-            toast.error('Erreur lors de la récupération des informations de suivi.'); // Afficher un toast d'erreur générique
+            toast.error('Erreur lors de la récupération des informations de suivi.');
         }
     };
 
@@ -103,17 +119,29 @@ const Suivi = () => {
                 window.location.href = '/';
             } else {
                 console.error("Erreur lors de la déconnexion");
-                toast.error('Erreur lors de la déconnexion.'); // Afficher un toast d'erreur
+                toast.error('Erreur lors de la déconnexion.');
             }
         } catch (error) {
             console.error("Erreur réseau :", error);
-            toast.error('Erreur réseau lors de la déconnexion.'); // Afficher un toast d'erreur
+            toast.error('Erreur réseau lors de la déconnexion.');
         }
     };
 
+    useEffect(() => {
+       window.history.pushState(null, '', window.location.href);
+       const handlePopState = (event) => {
+           window.history.pushState(null, '', window.location.href);
+       };
+       window.addEventListener('popstate', handlePopState);
+       return () => {
+           window.removeEventListener('popstate', handlePopState);
+       };
+   }, []);
+
+
     return ( 
         <div>
-            <ToastContainer /> {/* Ajouter le ToastContainer ici */}
+            <ToastContainer />
             <nav className="navbar navbar-expand-lg bg-dark fixed-top">
                 <div className="container">
                     <img src={logo} alt="Logo" style={{ width: '150px', height: '50px' }} />
@@ -124,13 +152,13 @@ const Suivi = () => {
                         <ul className="navbar-nav ms-auto">
                             <div className="dropdown ms-auto" style={{ marginRight: -25 }}>
                                 <button className="btn btn-outline-dark text-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <BiUserCircle className="me-2" style={{ fontSize: 25, marginLeft: 100 }} /> {/* Icône d'utilisateur */}
+                                    <BiUserCircle className="me-2" style={{ fontSize: 25, marginLeft: 100 }} />
                                     Mon compte
                                 </button>
                                 <ul className="dropdown-menu dropdown-menu-end">
                                     <li>
                                         <a className="dropdown-item disabled" href="#">
-                                            <h6 className="text-dark mb-0"><span style={{ color: 'black' }}>{loading ? 'Chargement...' : email}</span></h6>
+                                            <h6 className="text-dark mb-0"><span style={{ color: 'black' }}>{loading ? 'Chargement ...' : email}</span></h6>
                                         </a>
                                     </li>
                                     <li>
@@ -173,10 +201,36 @@ const Suivi = () => {
                             </div>
                         </div>
                     </div>
+                    <div className="col-lg-12 mt-4">
+   
+    {statuses.length > 0 ? (
+        <div className="row">
+            {statuses.map((status, index) => (
+                <div className="col-md-4 mb-3 mt-2" key={index}>
+                    <div className="card bg-dark text-light border-light shadow animate__animated animate__fadeIn">
+                        <div className="card-body">
+                            <div className="d-flex align-items-center">
+                                <i className="bi bi-check-circle-fill me-2" style={{ fontSize: '24px', color: '#28a745' }}></i>
+                                <h5 className="card-title">{status.status}</h5>
+                            </div>
+                            <p className="card-text">Description: {status.description || 'Aucune description disponible.'}</p>
+                            <p className="card-text"><small className="text-muted">Date: {new Date(status.date).toLocaleDateString()}</small></p>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    ) : (
+        <p className="text-light"></p>
+    )}
+    <div className="mt-4">
+
+    </div>
+</div>
                 </div>
             </header>
 
-            <footer className="bg-dark text-light py-5" style={{ fontFamily: 'Poppins, sans-serif', marginTop: -200 }}>
+            <footer className="bg-dark text-light py-5" style={{ fontFamily: 'Poppins, sans-serif' }}>
                 <footer className="footer text-center" style={{ fontFamily: 'Poppins, sans-serif' }}>
                     <div className="container">
                         <p>Copyright &copy; Tous droits réservés.</p>

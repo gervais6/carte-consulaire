@@ -23,7 +23,7 @@ const App = () => {
                     <Route path="/compte" element={<Compte />} />
                     <Route path="/mdp" element={<Mdp />} />
                     <Route path="/resetpassword" element={<Resetpassword />} />
-                    <Route path="/admin" element={<Admin />} />
+                    <Route path="/admin" element={<Admin />} />s
                     <Route 
                         path="/suivi" 
                         element={

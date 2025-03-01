@@ -321,6 +321,19 @@ const AdminDashboard = () => {
         );
     });
 
+
+    useEffect(() => {
+        window.history.pushState(null, '', window.location.href);
+        const handlePopState = (event) => {
+            window.history.pushState(null, '', window.location.href);
+        };
+        window.addEventListener('popstate', handlePopState);
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, []);
+ 
+
     return (
         <div className="admin-dashboard" style={{ fontFamily: 'Poppins, sans-serif', backgroundColor: '#343a40', color: '#ffffff' }}>
             <ToastContainer />
