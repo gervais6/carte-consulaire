@@ -63,6 +63,9 @@ const GlassCard = styled(Paper)(({ theme }) => ({
     height: '4px',
     background: 'linear-gradient(90deg, #1976d2 0%, #21CBF3 100%)',
     borderRadius: '24px 24px 0 0',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none', // Supprime la bordure bleue sur mobile
+    },
   },
   '&:after': {
     content: '""',
@@ -89,9 +92,6 @@ const GlassCard = styled(Paper)(({ theme }) => ({
     justifyContent: 'center',
     boxShadow: 'none',
     border: 'none',
-    '&:before': {
-      borderRadius: 0,
-    },
   },
 }));
 
