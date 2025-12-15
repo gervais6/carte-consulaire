@@ -11,11 +11,12 @@ import {
   Fade,
   Alert,
   InputAdornment,
-  CircularProgress
+  CircularProgress,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import { 
   Email,
-  Security,
   ArrowBack,
   LockReset,
   FlightTakeoff
@@ -38,6 +39,10 @@ const GradientButton = styled(Button)(({ theme }) => ({
   },
   '&.Mui-disabled': {
     background: 'rgba(255, 255, 255, 0.1)',
+  },
+  [theme.breakpoints.down('sm')]: {
+    padding: '12px 24px',
+    fontSize: '0.95rem',
   },
 }));
 
@@ -70,6 +75,20 @@ const GlassCard = styled(Paper)(({ theme }) => ({
     background: 'radial-gradient(circle, rgba(33, 203, 243, 0.1) 0%, transparent 70%)',
     borderRadius: '50%',
     filter: 'blur(20px)',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(3),
+    borderRadius: 20,
+    margin: theme.spacing(1),
+    backdropFilter: 'blur(10px)',
+  },
+  [theme.breakpoints.down('xs')]: {
+    padding: theme.spacing(2.5),
+    borderRadius: 16,
+    margin: 0,
   },
 }));
 
@@ -96,10 +115,19 @@ const AnimatedInput = styled(TextField)(({ theme }) => ({
         color: 'rgba(255, 255, 255, 0.5)',
         opacity: 1,
       },
+      [theme.breakpoints.down('sm')]: {
+        padding: '12px 14px',
+        fontSize: '0.95rem',
+      },
     },
   },
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none',
+  },
+  [theme.breakpoints.down('sm')]: {
+    '& .MuiInputAdornment-root': {
+      marginRight: 8,
+    },
   },
 }));
 
@@ -112,6 +140,15 @@ const IconContainer = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   color: '#21CBF3',
+  flexShrink: 0,
+  [theme.breakpoints.down('sm')]: {
+    width: 36,
+    height: 36,
+  },
+  [theme.breakpoints.down('xs')]: {
+    width: 32,
+    height: 32,
+  },
 }));
 
 const MotsDePasseOublier = () => {
@@ -123,6 +160,10 @@ const MotsDePasseOublier = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
+  
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallMobile = useMediaQuery(theme.breakpoints.down('xs'));
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -138,7 +179,6 @@ const MotsDePasseOublier = () => {
     setError('');
     setSuccess('');
 
-    // Validation logic
     if (!formData.email) {
       setError("Veuillez saisir votre adresse email.");
       return;
@@ -147,18 +187,15 @@ const MotsDePasseOublier = () => {
     setIsSubmitting(true);
 
     try {
-      // Send POST request to the API to request password reset
       const response = await axios.post('http://localhost:8000/api/password/email', {
         email: formData.email
       });
 
-      // If the request is successful, show a success message
       setSuccess(response.data.message || "Un lien de réinitialisation a été envoyé à votre adresse email.");
       setTimeout(() => {
         navigate('/connect');
       }, 3000);
     } catch (error) {
-      // Handle errors
       if (error.response) {
         setError(error.response.data.message || "Cette adresse email n'existe pas dans notre système.");
       } else {
@@ -176,7 +213,7 @@ const MotsDePasseOublier = () => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: 3,
+      padding: { xs: 2, sm: 3 },
       position: 'relative',
       overflow: 'hidden',
       '&:before': {
@@ -187,9 +224,12 @@ const MotsDePasseOublier = () => {
         right: 0,
         bottom: 0,
         background: 'radial-gradient(circle at 80% 20%, rgba(33, 203, 243, 0.1) 0%, transparent 50%)',
+        [theme.breakpoints.down('md')]: {
+          background: 'radial-gradient(circle at 50% 20%, rgba(33, 203, 243, 0.1) 0%, transparent 60%)',
+        },
       }
     }}>
-      {/* Effets décoratifs */}
+      {/* Effets décoratifs - masqués sur mobile */}
       <Box sx={{
         position: 'absolute',
         top: '20%',
@@ -199,13 +239,22 @@ const MotsDePasseOublier = () => {
         borderRadius: '50%',
         background: 'radial-gradient(circle, rgba(25, 118, 210, 0.05) 0%, transparent 70%)',
         filter: 'blur(40px)',
+        [theme.breakpoints.down('md')]: {
+          width: '200px',
+          height: '200px',
+          top: '10%',
+          left: '-10%',
+        },
+        [theme.breakpoints.down('sm')]: {
+          display: 'none',
+        },
       }} />
       
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ px: { xs: 1, sm: 2, md: 3 } }}>
         <Fade in={true} timeout={800}>
-          <Grid container spacing={6} alignItems="center">
+          <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center" justifyContent="center">
             {/* Section de bienvenue */}
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} sx={{ order: { xs: 2, md: 1 } }}>
               <Box sx={{ 
                 textAlign: { xs: 'center', md: 'left' },
                 mb: { xs: 4, md: 0 }
@@ -214,11 +263,13 @@ const MotsDePasseOublier = () => {
                   display: 'inline-flex', 
                   alignItems: 'center', 
                   gap: 2,
-                  mb: 3
+                  mb: 3,
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  textAlign: { xs: 'center', sm: 'left' }
                 }}>
                   <Box sx={{
-                    width: 70,
-                    height: 70,
+                    width: { xs: 60, sm: 70 },
+                    height: { xs: 60, sm: 70 },
                     borderRadius: '50%',
                     background: 'linear-gradient(135deg, rgba(33, 203, 243, 0.2) 0%, rgba(25, 118, 210, 0.1) 100%)',
                     border: '1px solid rgba(33, 203, 243, 0.3)',
@@ -246,12 +297,11 @@ const MotsDePasseOublier = () => {
                       border: '1px solid rgba(33, 203, 243, 0.2)',
                     }
                   }}>
-                    {/* Icône d'avion à la place de l'image */}
                     <FlightTakeoff style={{ 
                       position: 'relative',
                       zIndex: 2,
                       color: '#21CBF3',
-                      fontSize: 35,
+                      fontSize: isMobile ? 30 : 35,
                       filter: 'drop-shadow(0 0 8px rgba(33, 203, 243, 0.5))'
                     }} />
                   </Box>
@@ -262,7 +312,8 @@ const MotsDePasseOublier = () => {
                     WebkitTextFillColor: 'transparent',
                     backgroundSize: '200% auto',
                     animation: 'textShine 3s ease-in-out infinite alternate',
-                    fontSize: { xs: '2rem', md: '2.5rem' },
+                    fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' },
+                    mt: { xs: 1, sm: 0 }
                   }}>
                     yónnee
                   </Typography>
@@ -272,16 +323,22 @@ const MotsDePasseOublier = () => {
                   color: 'white',
                   mb: 3,
                   fontWeight: 800,
-                  lineHeight: 1.2
+                  lineHeight: 1.2,
+                  fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' }
                 }}>
-                  Mot de passe<br/>oublié ?
+                  {isMobile ? (
+                    <>Mot de passe oublié ?</>
+                  ) : (
+                    <>Mot de passe<br/>oublié ?</>
+                  )}
                 </Typography>
                 
                 <Typography variant="h6" sx={{ 
                   color: 'rgba(255, 255, 255, 0.8)',
                   mb: 4,
                   fontWeight: 400,
-                  maxWidth: 500
+                  fontSize: { xs: '1rem', sm: '1.1rem' },
+                  px: { xs: 1, sm: 0 }
                 }}>
                   Pas d'inquiétude ! Nous vous enverrons un lien de réinitialisation par email pour retrouver l'accès à votre compte.
                 </Typography>
@@ -291,31 +348,56 @@ const MotsDePasseOublier = () => {
                   display: 'flex', 
                   flexDirection: 'column',
                   gap: 2,
-                  mt: 5
+                  mt: { xs: 4, sm: 5 },
+                  px: { xs: 1, sm: 0 }
                 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     <IconContainer>
-                      <Typography sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>1</Typography>
+                      <Typography sx={{ 
+                        fontWeight: 'bold', 
+                        fontSize: { xs: '0.9rem', sm: '1.1rem' } 
+                      }}>
+                        1
+                      </Typography>
                     </IconContainer>
-                    <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+                    <Typography variant="body1" sx={{ 
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      fontSize: { xs: '0.9rem', sm: '1rem' }
+                    }}>
                       Saisissez votre adresse email
                     </Typography>
                   </Box>
                   
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     <IconContainer>
-                      <Typography sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>2</Typography>
+                      <Typography sx={{ 
+                        fontWeight: 'bold', 
+                        fontSize: { xs: '0.9rem', sm: '1.1rem' } 
+                      }}>
+                        2
+                      </Typography>
                     </IconContainer>
-                    <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+                    <Typography variant="body1" sx={{ 
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      fontSize: { xs: '0.9rem', sm: '1rem' }
+                    }}>
                       Recevez le lien de réinitialisation
                     </Typography>
                   </Box>
 
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                     <IconContainer>
-                      <Typography sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>3</Typography>
+                      <Typography sx={{ 
+                        fontWeight: 'bold', 
+                        fontSize: { xs: '0.9rem', sm: '1.1rem' } 
+                      }}>
+                        3
+                      </Typography>
                     </IconContainer>
-                    <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+                    <Typography variant="body1" sx={{ 
+                      color: 'rgba(255, 255, 255, 0.9)',
+                      fontSize: { xs: '0.9rem', sm: '1rem' }
+                    }}>
                       Créez un nouveau mot de passe
                     </Typography>
                   </Box>
@@ -324,7 +406,10 @@ const MotsDePasseOublier = () => {
             </Grid>
 
             {/* Formulaire de réinitialisation */}
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} sx={{ 
+              order: { xs: 1, md: 2 },
+              width: '100%'
+            }}>
               <GlassCard>
                 <Typography variant="h5" sx={{ 
                   color: 'white', 
@@ -332,9 +417,16 @@ const MotsDePasseOublier = () => {
                   fontWeight: 700,
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 2
+                  justifyContent: { xs: 'center', sm: 'flex-start' },
+                  gap: 2,
+                  fontSize: { xs: '1.3rem', sm: '1.5rem' },
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  textAlign: { xs: 'center', sm: 'left' }
                 }}>
-                  <LockReset sx={{ color: '#21CBF3' }} />
+                  <LockReset sx={{ 
+                    color: '#21CBF3',
+                    fontSize: { xs: 28, sm: 32 }
+                  }} />
                   Réinitialiser votre mot de passe
                 </Typography>
                 
@@ -348,6 +440,8 @@ const MotsDePasseOublier = () => {
                       backgroundColor: 'rgba(244, 67, 54, 0.1)',
                       color: '#ff6b6b',
                       border: '1px solid rgba(244, 67, 54, 0.3)',
+                      fontSize: { xs: '0.85rem', sm: '0.9rem' },
+                      py: { xs: 0.5, sm: 1 },
                       '& .MuiAlert-icon': {
                         color: '#ff6b6b'
                       }
@@ -367,6 +461,8 @@ const MotsDePasseOublier = () => {
                       backgroundColor: 'rgba(76, 175, 80, 0.1)',
                       color: '#4CAF50',
                       border: '1px solid rgba(76, 175, 80, 0.3)',
+                      fontSize: { xs: '0.85rem', sm: '0.9rem' },
+                      py: { xs: 0.5, sm: 1 },
                       '& .MuiAlert-icon': {
                         color: '#4CAF50'
                       }
@@ -392,9 +488,17 @@ const MotsDePasseOublier = () => {
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
-                              <Email style={{ color: '#21CBF3', fontSize: '1.1rem' }} />
+                              <Email style={{ 
+                                color: '#21CBF3', 
+                                fontSize: isMobile ? '1rem' : '1.1rem' 
+                              }} />
                             </InputAdornment>
                           ),
+                        }}
+                        sx={{
+                          '& .MuiInputBase-input': {
+                            fontSize: { xs: '0.95rem', sm: '1rem' }
+                          }
                         }}
                       />
                     </Box>
@@ -406,10 +510,11 @@ const MotsDePasseOublier = () => {
                       disabled={isSubmitting}
                       sx={{ 
                         mb: 3,
-                        py: 1.5,
-                        fontSize: '1.1rem',
+                        py: { xs: 1.2, sm: 1.5 },
+                        fontSize: { xs: '0.95rem', sm: '1.1rem' },
                         position: 'relative',
                         overflow: 'hidden',
+                        minHeight: { xs: 48, sm: 56 },
                         '&:before': {
                           content: '""',
                           position: 'absolute',
@@ -426,21 +531,29 @@ const MotsDePasseOublier = () => {
                       }}
                     >
                       {isSubmitting ? (
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Box sx={{ 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          justifyContent: 'center',
+                          gap: 1 
+                        }}>
                           <CircularProgress 
-                            size={20} 
+                            size={isMobile ? 18 : 20} 
                             thickness={4}
                             sx={{ color: 'white' }}
                           />
-                          Envoi en cours...
+                          <span>Envoi en cours...</span>
                         </Box>
                       ) : (
-                        'Envoyer le lien de réinitialisation'
+                        isMobile ? 'Envoyer le lien' : 'Envoyer le lien de réinitialisation'
                       )}
                     </GradientButton>
 
                     {/* Lien de retour */}
-                    <Box sx={{ textAlign: 'center', mt: 3 }}>
+                    <Box sx={{ 
+                      textAlign: 'center', 
+                      mt: { xs: 2, sm: 3 }
+                    }}>
                       <Button
                         component={Link}
                         to="/connect"
@@ -449,7 +562,7 @@ const MotsDePasseOublier = () => {
                           color: '#21CBF3',
                           textTransform: 'none',
                           fontWeight: 500,
-                          fontSize: '0.9rem',
+                          fontSize: { xs: '0.85rem', sm: '0.9rem' },
                           '&:hover': {
                             backgroundColor: 'rgba(33, 203, 243, 0.1)',
                           },
@@ -465,21 +578,31 @@ const MotsDePasseOublier = () => {
                     <Box sx={{ 
                       textAlign: 'center', 
                       mb: 3,
-                      p: 3,
+                      p: { xs: 2, sm: 3 },
                       borderRadius: 2,
                       backgroundColor: 'rgba(33, 203, 243, 0.05)',
                       border: '1px solid rgba(33, 203, 243, 0.2)'
                     }}>
-                      <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)', mb: 2 }}>
+                      <Typography variant="body1" sx={{ 
+                        color: 'rgba(255, 255, 255, 0.9)', 
+                        mb: 2,
+                        fontSize: { xs: '0.9rem', sm: '1rem' }
+                      }}>
                         ✅ Vérifiez votre boîte de réception (et vos spams)
                       </Typography>
-                      <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                      <Typography variant="body2" sx={{ 
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        fontSize: { xs: '0.8rem', sm: '0.9rem' }
+                      }}>
                         Cliquez sur le lien que nous vous avons envoyé pour créer un nouveau mot de passe.
                       </Typography>
                     </Box>
 
                     {/* Lien de retour */}
-                    <Box sx={{ textAlign: 'center', mt: 3 }}>
+                    <Box sx={{ 
+                      textAlign: 'center', 
+                      mt: { xs: 2, sm: 3 }
+                    }}>
                       <Button
                         component={Link}
                         to="/connect"
@@ -488,7 +611,7 @@ const MotsDePasseOublier = () => {
                           color: '#21CBF3',
                           textTransform: 'none',
                           fontWeight: 500,
-                          fontSize: '0.9rem',
+                          fontSize: { xs: '0.85rem', sm: '0.9rem' },
                           '&:hover': {
                             backgroundColor: 'rgba(33, 203, 243, 0.1)',
                           },
@@ -531,6 +654,23 @@ const MotsDePasseOublier = () => {
           }
           to {
             transform: rotate(360deg);
+          }
+        }
+
+        /* Optimisations pour mobile */
+        @media (max-width: 600px) {
+          html {
+            font-size: 14px;
+          }
+          
+          body {
+            -webkit-tap-highlight-color: transparent;
+          }
+        }
+
+        @media (max-width: 400px) {
+          html {
+            font-size: 13px;
           }
         }
       `}</style>
