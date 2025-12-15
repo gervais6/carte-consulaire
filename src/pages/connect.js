@@ -9,11 +9,12 @@ import {
   Container,
   Typography,
   Paper,
-  Grid,
   Fade,
   Divider,
   Alert,
-  CircularProgress
+  CircularProgress,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import { 
   Visibility, 
@@ -48,6 +49,10 @@ const GradientButton = styled(Button)(({ theme }) => ({
   '&.Mui-disabled': {
     background: 'rgba(255, 255, 255, 0.1)',
   },
+  [theme.breakpoints.down('sm')]: {
+    padding: '16px 24px',
+    fontSize: '1rem',
+  },
 }));
 
 const GlassCard = styled(Paper)(({ theme }) => ({
@@ -55,7 +60,7 @@ const GlassCard = styled(Paper)(({ theme }) => ({
   backdropFilter: 'blur(20px)',
   border: '1px solid rgba(255, 255, 255, 0.15)',
   borderRadius: 24,
-  padding: theme.spacing(5),
+  padding: theme.spacing(4),
   position: 'relative',
   overflow: 'hidden',
   boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
@@ -68,6 +73,9 @@ const GlassCard = styled(Paper)(({ theme }) => ({
     height: '4px',
     background: 'linear-gradient(90deg, #1976d2 0%, #21CBF3 100%)',
     borderRadius: '24px 24px 0 0',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none', // Supprime la bordure bleue sur mobile
+    },
   },
   '&:after': {
     content: '""',
@@ -79,6 +87,21 @@ const GlassCard = styled(Paper)(({ theme }) => ({
     background: 'radial-gradient(circle, rgba(33, 203, 243, 0.1) 0%, transparent 70%)',
     borderRadius: '50%',
     filter: 'blur(20px)',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(4),
+    borderRadius: 0,
+    margin: 0,
+    backdropFilter: 'blur(10px)',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    boxShadow: 'none',
+    border: 'none',
   },
 }));
 
@@ -99,16 +122,25 @@ const AnimatedInput = styled(TextField)(({ theme }) => ({
     },
     '& input': {
       color: 'white',
-      padding: '14px 16px',
+      padding: '16px',
       fontSize: '1rem',
       '&::placeholder': {
         color: 'rgba(255, 255, 255, 0.5)',
         opacity: 1,
       },
+      [theme.breakpoints.down('sm')]: {
+        padding: '16px',
+        fontSize: '1rem',
+      },
     },
   },
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none',
+  },
+  [theme.breakpoints.down('sm')]: {
+    '& .MuiInputAdornment-root': {
+      marginRight: 12,
+    },
   },
 }));
 
@@ -121,6 +153,10 @@ const IconContainer = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   color: '#21CBF3',
+  [theme.breakpoints.down('sm')]: {
+    width: 36,
+    height: 36,
+  },
 }));
 
 const LoginForm = () => {
@@ -131,11 +167,13 @@ const LoginForm = () => {
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
     const { login } = useAuth(); 
-  
+    
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
-        // Clear errors when user starts typing
         if (error) setError('');
     };
   
@@ -177,7 +215,7 @@ const LoginForm = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 3,
+        padding: { xs: 0, sm: 3 },
         position: 'relative',
         overflow: 'hidden',
         '&:before': {
@@ -188,9 +226,12 @@ const LoginForm = () => {
           right: 0,
           bottom: 0,
           background: 'radial-gradient(circle at 80% 20%, rgba(33, 203, 243, 0.1) 0%, transparent 50%)',
+          [theme.breakpoints.down('sm')]: {
+            background: 'radial-gradient(circle at 50% 30%, rgba(33, 203, 243, 0.1) 0%, transparent 70%)',
+          },
         }
       }}>
-        {/* Effets décoratifs */}
+        {/* Effets décoratifs - masqués sur mobile */}
         <Box sx={{
           position: 'absolute',
           top: '20%',
@@ -200,22 +241,175 @@ const LoginForm = () => {
           borderRadius: '50%',
           background: 'radial-gradient(circle, rgba(25, 118, 210, 0.05) 0%, transparent 70%)',
           filter: 'blur(40px)',
+          [theme.breakpoints.down('sm')]: {
+            display: 'none',
+          },
         }} />
         
-        <Container maxWidth="lg">
+        <Container 
+          maxWidth="lg" 
+          sx={{ 
+            px: { xs: 0, sm: 2, md: 3 },
+            height: { xs: '100%', sm: 'auto' },
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
           <Fade in={true} timeout={800}>
-            <Grid container spacing={6} alignItems="center">
-              {/* Section de bienvenue */}
-              <Grid item xs={12} md={6}>
+            <Box sx={{ 
+              width: '100%',
+              height: { xs: '100%', sm: 'auto' },
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              {/* Version Desktop/Tablet */}
+              {!isMobile ? (
                 <Box sx={{ 
-                  textAlign: { xs: 'center', md: 'left' },
-                  mb: { xs: 4, md: 0 }
+                  display: 'flex', 
+                  width: '100%', 
+                  gap: 6,
+                  alignItems: 'center'
                 }}>
+                  {/* Section de bienvenue - Desktop */}
                   <Box sx={{ 
-                    display: 'inline-flex', 
-                    alignItems: 'center', 
-                    gap: 2,
-                    mb: 3
+                    flex: 1,
+                    textAlign: 'left',
+                    color: 'white'
+                  }}>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: 2,
+                      mb: 3
+                    }}>
+                      <Box sx={{
+                        width: 70,
+                        height: 70,
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, rgba(33, 203, 243, 0.2) 0%, rgba(25, 118, 210, 0.1) 100%)',
+                        border: '1px solid rgba(33, 203, 243, 0.3)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        overflow: 'hidden',
+                        position: 'relative',
+                        boxShadow: 'inset 0 0 20px rgba(33, 203, 243, 0.15), 0 0 30px rgba(33, 203, 243, 0.1)',
+                      }}>
+                        <FlightTakeoff style={{ 
+                          position: 'relative',
+                          zIndex: 2,
+                          color: '#21CBF3',
+                          fontSize: 35,
+                          filter: 'drop-shadow(0 0 8px rgba(33, 203, 243, 0.5))'
+                        }} />
+                      </Box>
+                      <Typography variant="h3" sx={{
+                        fontWeight: 900,
+                        background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 50%, #FFFFFF 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundSize: '200% auto',
+                        animation: 'textShine 3s ease-in-out infinite alternate',
+                      }}>
+                        yónnee
+                      </Typography>
+                    </Box>
+                    
+                    <Typography variant="h4" sx={{ 
+                      mb: 3,
+                      fontWeight: 800,
+                      lineHeight: 1.2
+                    }}>
+                      Reconnectez-vous à<br/>votre compte
+                    </Typography>
+                    
+                    <Typography variant="h6" sx={{ 
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      mb: 4,
+                      fontWeight: 400,
+                      maxWidth: 500
+                    }}>
+                      Accédez à votre espace personnel pour gérer vos envois de colis et suivre vos transactions en temps réel.
+                    </Typography>
+                    
+                    {/* Avantages avec icônes MUI */}
+                    <Box sx={{ 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      gap: 2,
+                      mt: 5
+                    }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <IconContainer>
+                          <FlightTakeoff fontSize="small" />
+                        </IconContainer>
+                        <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+                          Accès instantané à vos voyages
+                        </Typography>
+                      </Box>
+                      
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <IconContainer>
+                          <LocalShipping fontSize="small" />
+                        </IconContainer>
+                        <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+                          Suivi en temps réel de vos colis
+                        </Typography>
+                      </Box>
+
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <IconContainer>
+                          <Payment fontSize="small" />
+                        </IconContainer>
+                        <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+                          Gestion sécurisée de vos paiements
+                        </Typography>
+                      </Box>
+
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <IconContainer>
+                          <People fontSize="small" />
+                        </IconContainer>
+                        <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
+                          Rencontrez des voyageurs vérifiés
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Box>
+
+                  {/* Formulaire - Desktop */}
+                  <Box sx={{ flex: 1, maxWidth: 500 }}>
+                    <GlassCard>
+                      <FormContent 
+                        formData={formData}
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        isSubmitting={isSubmitting}
+                        error={error}
+                        success={success}
+                        showPassword={showPassword}
+                        setShowPassword={setShowPassword}
+                        isMobile={isMobile}
+                      />
+                    </GlassCard>
+                  </Box>
+                </Box>
+              ) : (
+                /* Version Mobile - Plein écran */
+                <GlassCard sx={{ 
+                  width: '100%',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center'
+                }}>
+                  {/* En-tête mobile */}
+                  <Box sx={{ 
+                    textAlign: 'center', 
+                    mb: 4,
+                    px: 2
                   }}>
                     <Box sx={{
                       width: 70,
@@ -226,342 +420,54 @@ const LoginForm = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      margin: '0 auto 16px',
                       overflow: 'hidden',
                       position: 'relative',
                       boxShadow: 'inset 0 0 20px rgba(33, 203, 243, 0.15), 0 0 30px rgba(33, 203, 243, 0.1)',
-                      '&:before': {
-                        content: '""',
-                        position: 'absolute',
-                        width: '150%',
-                        height: '150%',
-                        background: 'conic-gradient(transparent, rgba(33, 203, 243, 0.2), transparent 30%)',
-                        animation: 'rotate 6s linear infinite',
-                      },
-                      '&:after': {
-                        content: '""',
-                        position: 'absolute',
-                        width: '90%',
-                        height: '90%',
-                        borderRadius: '50%',
-                        background: 'rgba(15, 23, 42, 0.9)',
-                        border: '1px solid rgba(33, 203, 243, 0.2)',
-                      }
                     }}>
-                      {/* Icône d'avion à la place de l'image */}
                       <FlightTakeoff style={{ 
                         position: 'relative',
                         zIndex: 2,
                         color: '#21CBF3',
-                        fontSize: 35,
+                        fontSize: 32,
                         filter: 'drop-shadow(0 0 8px rgba(33, 203, 243, 0.5))'
                       }} />
                     </Box>
-                    <Typography variant="h3" sx={{
-                      fontWeight: 900,
-                      background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 50%, #FFFFFF 100%)',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent',
-                      backgroundSize: '200% auto',
-                      animation: 'textShine 3s ease-in-out infinite alternate',
-                      fontSize: { xs: '2rem', md: '2.5rem' },
-                    }}>
-                      yónnee
-                    </Typography>
-                  </Box>
-                  
-                  <Typography variant="h4" sx={{ 
-                    color: 'white',
-                    mb: 3,
-                    fontWeight: 800,
-                    lineHeight: 1.2
-                  }}>
-                    Reconnectez-vous à<br/>votre compte
-                  </Typography>
-                  
-                  <Typography variant="h6" sx={{ 
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    mb: 4,
-                    fontWeight: 400,
-                    maxWidth: 500
-                  }}>
-                    Accédez à votre espace personnel pour gérer vos envois de colis et suivre vos transactions en temps réel.
-                  </Typography>
-                  
-                  {/* Avantages avec icônes MUI - Icône d'avion ajoutée */}
-                  <Box sx={{ 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    gap: 2,
-                    mt: 5
-                  }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                      <IconContainer>
-                        <FlightTakeoff fontSize="small" />
-                      </IconContainer>
-                      <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-                        Accès instantané à vos voyages
-                      </Typography>
-                    </Box>
                     
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                      <IconContainer>
-                        <LocalShipping fontSize="small" />
-                      </IconContainer>
-                      <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-                        Suivi en temps réel de vos colis
-                      </Typography>
-                    </Box>
-
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                      <IconContainer>
-                        <Payment fontSize="small" />
-                      </IconContainer>
-                      <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-                        Gestion sécurisée de vos paiements
-                      </Typography>
-                    </Box>
-
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                      <IconContainer>
-                        <People fontSize="small" />
-                      </IconContainer>
-                      <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-                        Rencontrez des voyageurs vérifiés
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-              </Grid>
-
-              {/* Formulaire de connexion */}
-              <Grid item xs={12} md={6}>
-                <GlassCard>
-                  <Typography variant="h5" sx={{ 
-                    color: 'white', 
-                    mb: 4,
-                    fontWeight: 700,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 2
-                  }}>
-                    <Login sx={{ color: '#21CBF3' }} />
-                    Connexion à votre compte
-                  </Typography>
-                  
-                  {/* Message d'erreur */}
-                  {error && (
-                    <Alert 
-                      severity="error" 
-                      sx={{ 
-                        mb: 3,
-                        borderRadius: 2,
-                        backgroundColor: 'rgba(244, 67, 54, 0.1)',
-                        color: '#ff6b6b',
-                        border: '1px solid rgba(244, 67, 54, 0.3)',
-                        '& .MuiAlert-icon': {
-                          color: '#ff6b6b'
-                        }
-                      }}
-                    >
-                      {error}
-                    </Alert>
-                  )}
-
-                  {/* Message de succès */}
-                  {success && (
-                    <Alert 
-                      severity="success" 
-                      sx={{ 
-                        mb: 3,
-                        borderRadius: 2,
-                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
-                        color: '#4CAF50',
-                        border: '1px solid rgba(76, 175, 80, 0.3)',
-                        '& .MuiAlert-icon': {
-                          color: '#4CAF50'
-                        }
-                      }}
-                    >
-                      {success}
-                    </Alert>
-                  )}
-                  
-                  <form onSubmit={handleSubmit}>
-                    {/* Email */}
-                    <Box sx={{ mb: 3 }}>
-                      <AnimatedInput
-                        fullWidth
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="adresse@email.com"
-                        error={!!error && !formData.email}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <Email style={{ color: '#21CBF3', fontSize: '1.1rem' }} />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Box>
-
-                    {/* Mot de passe */}
-                    <Box sx={{ mb: 4 }}>
-                      <AnimatedInput
-                        fullWidth
-                        type={showPassword ? 'text' : 'password'}
-                        id="password"
-                        name="password"
-                        required
-                        value={formData.password}
-                        onChange={handleChange}
-                        placeholder="Votre mot de passe"
-                        error={!!error && !formData.password}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <Lock style={{ color: '#21CBF3', fontSize: '1.1rem' }} />
-                            </InputAdornment>
-                          ),
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton
-                                onClick={() => setShowPassword(!showPassword)}
-                                edge="end"
-                                sx={{ 
-                                  color: '#21CBF3',
-                                  '&:hover': {
-                                    backgroundColor: 'rgba(33, 203, 243, 0.1)'
-                                  }
-                                }}
-                                size="small"
-                              >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                              </IconButton>
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Box>
-
-                    {/* Lien mot de passe oublié */}
-                    <Box sx={{ textAlign: 'right', mb: 3 }}>
-                      <Link 
-                        to="/mdp" 
-                        style={{ 
-                          textDecoration: 'none',
-                          color: '#21CBF3',
-                          fontSize: '0.9rem',
-                          fontWeight: 500,
-                          '&:hover': {
-                            textDecoration: 'underline'
-                          }
-                        }}
-                      >
-                        Mot de passe oublié ?
-                      </Link>
-                    </Box>
-
-                    {/* Bouton de connexion */}
-                    <GradientButton
-                      type="submit"
-                      fullWidth
-                      disabled={isSubmitting}
-                      sx={{ 
-                        mb: 3,
-                        py: 1.5,
-                        fontSize: '1.1rem',
-                        position: 'relative',
-                        overflow: 'hidden',
-                        '&:before': {
-                          content: '""',
-                          position: 'absolute',
-                          top: 0,
-                          left: '-100%',
-                          width: '100%',
-                          height: '100%',
-                          background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent)',
-                          transition: 'left 0.7s ease',
-                        },
-                        '&:hover:before': {
-                          left: '100%',
-                        }
-                      }}
-                    >
-                      {isSubmitting ? (
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                          <CircularProgress 
-                            size={20} 
-                            thickness={4}
-                            sx={{ color: 'white' }}
-                          />
-                          Connexion en cours...
-                        </Box>
-                      ) : (
-                        'Se connecter'
-                      )}
-                    </GradientButton>
-
-                    {/* Séparateur */}
-                    <Divider sx={{ 
-                      my: 3, 
-                      borderColor: 'rgba(255, 255, 255, 0.1)',
-                      '&:before, &:after': {
-                        borderColor: 'rgba(255, 255, 255, 0.1)',
-                      }
+                    <Typography variant="h4" sx={{ 
+                      color: 'white',
+                      mb: 2,
+                      fontWeight: 800,
+                      lineHeight: 1.2
                     }}>
-                      <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.5)', px: 2 }}>
-                        Pas encore membre ?
-                      </Typography>
-                    </Divider>
-
-                    {/* Bouton d'inscription */}
-                    <Button
-                      component={Link}
-                      to="/compte"
-                      variant="outlined"
-                      fullWidth
-                      sx={{
-                        color: 'white',
-                        borderColor: 'rgba(255, 255, 255, 0.2)',
-                        borderRadius: 12,
-                        py: 1.5,
-                        fontWeight: 600,
-                        fontSize: '1rem',
-                        background: 'rgba(255, 255, 255, 0.05)',
-                        transition: 'all 0.3s ease',
-                        '&:hover': {
-                          borderColor: '#21CBF3',
-                          background: 'rgba(33, 203, 243, 0.1)',
-                          transform: 'translateY(-2px)',
-                        },
-                      }}
-                    >
-                      Créer un compte
-                    </Button>
-                  </form>
-
-                  {/* Sécurité */}
-                  <Box sx={{ 
-                    mt: 4, 
-                    pt: 3, 
-                    borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 2
-                  }}>
-                    <Security sx={{ color: '#21CBF3', fontSize: '1.2rem' }} />
-                    <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                      Votre connexion est sécurisée et cryptée
+                      Connexion
+                    </Typography>
+                    
+                    <Typography variant="body1" sx={{ 
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      mb: 3,
+                      fontSize: '1rem',
+                      lineHeight: 1.5
+                    }}>
+                      Accédez à votre compte yónnee
                     </Typography>
                   </Box>
+
+                  {/* Formulaire mobile */}
+                  <FormContent 
+                    formData={formData}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    isSubmitting={isSubmitting}
+                    error={error}
+                    success={success}
+                    showPassword={showPassword}
+                    setShowPassword={setShowPassword}
+                    isMobile={isMobile}
+                  />
                 </GlassCard>
-              </Grid>
-            </Grid>
+              )}
+            </Box>
           </Fade>
         </Container>
 
@@ -593,9 +499,301 @@ const LoginForm = () => {
               transform: rotate(360deg);
             }
           }
+
+          /* Optimisations pour mobile */
+          @media (max-width: 600px) {
+            html {
+              font-size: 16px;
+            }
+            
+            body {
+              -webkit-tap-highlight-color: transparent;
+              overflow: hidden;
+            }
+            
+            /* Empêche le zoom sur les inputs iOS */
+            input, select, textarea {
+              font-size: 16px !important;
+            }
+          }
         `}</style>
       </Box>
     );
+};
+
+// Composant de contenu du formulaire réutilisable
+const FormContent = ({ 
+  formData, 
+  handleChange, 
+  handleSubmit, 
+  isSubmitting, 
+  error, 
+  success, 
+  showPassword, 
+  setShowPassword,
+  isMobile 
+}) => {
+  const theme = useTheme();
+
+  return (
+    <>
+      {!isMobile && (
+        <Typography variant="h5" sx={{ 
+          color: 'white', 
+          mb: 4,
+          fontWeight: 700,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2
+        }}>
+          <Login sx={{ color: '#21CBF3' }} />
+          Connexion à votre compte
+        </Typography>
+      )}
+      
+      {/* Message d'erreur */}
+      {error && (
+        <Alert 
+          severity="error" 
+          sx={{ 
+            mb: 3,
+            borderRadius: 2,
+            backgroundColor: 'rgba(244, 67, 54, 0.1)',
+            color: '#ff6b6b',
+            border: '1px solid rgba(244, 67, 54, 0.3)',
+            fontSize: isMobile ? '0.9rem' : '0.9rem',
+            py: isMobile ? 1 : 1,
+            '& .MuiAlert-icon': {
+              color: '#ff6b6b'
+            }
+          }}
+        >
+          {error}
+        </Alert>
+      )}
+
+      {/* Message de succès */}
+      {success && (
+        <Alert 
+          severity="success" 
+          sx={{ 
+            mb: 3,
+            borderRadius: 2,
+            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+            color: '#4CAF50',
+            border: '1px solid rgba(76, 175, 80, 0.3)',
+            fontSize: isMobile ? '0.9rem' : '0.9rem',
+            py: isMobile ? 1 : 1,
+            '& .MuiAlert-icon': {
+              color: '#4CAF50'
+            }
+          }}
+        >
+          {success}
+        </Alert>
+      )}
+      
+      <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+        {/* Email */}
+        <Box sx={{ mb: 3 }}>
+          <AnimatedInput
+            fullWidth
+            type="email"
+            id="email"
+            name="email"
+            required
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="adresse@email.com"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Email style={{ 
+                    color: '#21CBF3', 
+                    fontSize: isMobile ? '1.2rem' : '1.1rem' 
+                  }} />
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                fontSize: isMobile ? '1rem' : '1rem'
+              }
+            }}
+          />
+        </Box>
+
+        {/* Mot de passe */}
+        <Box sx={{ mb: 4 }}>
+          <AnimatedInput
+            fullWidth
+            type={showPassword ? 'text' : 'password'}
+            id="password"
+            name="password"
+            required
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Votre mot de passe"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Lock style={{ 
+                    color: '#21CBF3', 
+                    fontSize: isMobile ? '1.2rem' : '1.1rem' 
+                  }} />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword(!showPassword)}
+                    edge="end"
+                    sx={{ 
+                      color: '#21CBF3',
+                      '&:hover': {
+                        backgroundColor: 'rgba(33, 203, 243, 0.1)'
+                      }
+                    }}
+                    size="small"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              '& .MuiInputBase-input': {
+                fontSize: isMobile ? '1rem' : '1rem'
+              }
+            }}
+          />
+        </Box>
+
+        {/* Lien mot de passe oublié */}
+        <Box sx={{ textAlign: 'right', mb: 3 }}>
+          <Link 
+            to="/mdp" 
+            style={{ 
+              textDecoration: 'none',
+              color: '#21CBF3',
+              fontSize: isMobile ? '0.9rem' : '0.9rem',
+              fontWeight: 500,
+              '&:hover': {
+                textDecoration: 'underline'
+              }
+            }}
+          >
+            Mot de passe oublié ?
+          </Link>
+        </Box>
+
+        {/* Bouton de connexion */}
+        <GradientButton
+          type="submit"
+          fullWidth
+          disabled={isSubmitting}
+          sx={{ 
+            mb: 3,
+            py: isMobile ? 1.5 : 1.5,
+            fontSize: isMobile ? '1rem' : '1.1rem',
+            position: 'relative',
+            overflow: 'hidden',
+            minHeight: isMobile ? 56 : 56,
+            '&:before': {
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              left: '-100%',
+              width: '100%',
+              height: '100%',
+              background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent)',
+              transition: 'left 0.7s ease',
+            },
+            '&:hover:before': {
+              left: '100%',
+            }
+          }}
+        >
+          {isSubmitting ? (
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              gap: 1 
+            }}>
+              <CircularProgress 
+                size={isMobile ? 20 : 20} 
+                thickness={4}
+                sx={{ color: 'white' }}
+              />
+              <span>Connexion en cours...</span>
+            </Box>
+          ) : (
+            'Se connecter'
+          )}
+        </GradientButton>
+
+        {/* Séparateur */}
+        <Divider sx={{ 
+          my: 3, 
+          borderColor: 'rgba(255, 255, 255, 0.1)',
+          '&:before, &:after': {
+            borderColor: 'rgba(255, 255, 255, 0.1)',
+          }
+        }}>
+          <Typography variant="body2" sx={{ 
+            color: 'rgba(255, 255, 255, 0.5)', 
+            px: 2,
+            fontSize: isMobile ? '0.85rem' : '0.875rem'
+          }}>
+            Pas encore membre ?
+          </Typography>
+        </Divider>
+
+        {/* Bouton d'inscription */}
+        <Button
+          component={Link}
+          to="/compte"
+          variant="outlined"
+          fullWidth
+          sx={{
+            color: 'white',
+            borderColor: 'rgba(255, 255, 255, 0.2)',
+            borderRadius: 12,
+            py: isMobile ? 1.5 : 1.5,
+            fontWeight: 600,
+            fontSize: isMobile ? '1rem' : '1rem',
+            background: 'rgba(255, 255, 255, 0.05)',
+            transition: 'all 0.3s ease',
+            '&:hover': {
+              borderColor: '#21CBF3',
+              background: 'rgba(33, 203, 243, 0.1)',
+              transform: 'translateY(-2px)',
+            },
+          }}
+        >
+          Créer un compte
+        </Button>
+      </form>
+
+      {/* Sécurité */}
+      {!isMobile && (
+        <Box sx={{ 
+          mt: 4, 
+          pt: 3, 
+          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2
+        }}>
+          <Security sx={{ color: '#21CBF3', fontSize: '1.2rem' }} />
+          <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+            Votre connexion est sécurisée et cryptée
+          </Typography>
+        </Box>
+      )}
+    </>
+  );
 };
 
 export default LoginForm;
