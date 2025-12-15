@@ -1051,42 +1051,29 @@ const Navbar = () => {
                                 ))}
                             </Box>
 
-                            {/* Boutons - NOUVELLE DISPOSITION */}
-                            <Box sx={{ 
-                                display: 'flex', 
-                                flexDirection: isSmallMobile ? 'column' : 'row', 
-                                gap: 2,
-                                position: 'relative'
-                            }}>
-                                {/* Premier bouton en haut sur mobile */}
-                                <Box sx={{
-                                    mb: isSmallMobile ? 2 : 0,
-                                    width: isSmallMobile ? '100%' : 'auto'
+                            {/* Boutons - SEULEMENT SUR DESKTOP */}
+                            {!isMobile && (
+                                <Box sx={{ 
+                                    display: 'flex', 
+                                    gap: 2,
+                                    flexWrap: 'wrap',
+                                    mt: 4
                                 }}>
                                     <GradientButton 
-                                        fullWidth={isSmallMobile}
                                         sx={{ 
-                                            py: { xs: 1.5, sm: 1.8 },
-                                            px: { xs: 3, sm: 6 },
+                                            py: 1.8,
+                                            px: 6,
                                         }}
                                     >
                                         Commencer maintenant
                                     </GradientButton>
-                                </Box>
-                                
-                                {/* Deuxième bouton en bas sur mobile */}
-                                <Box sx={{
-                                    mt: isSmallMobile ? 2 : 0,
-                                    width: isSmallMobile ? '100%' : 'auto'
-                                }}>
                                     <Button 
                                         variant="contained"
-                                        fullWidth={isSmallMobile}
                                         sx={{
                                             background: 'linear-gradient(90deg, #64748B 0%, #94A3B8 100%)',
                                             borderRadius: 3,
-                                            py: { xs: 1.5, sm: 1.8 },
-                                            px: { xs: 3, sm: 6 },
+                                            py: 1.8,
+                                            px: 6,
                                             fontWeight: 600,
                                             '&:hover': {
                                                 background: 'linear-gradient(90deg, #475569 0%, #64748B 100%)',
@@ -1096,7 +1083,7 @@ const Navbar = () => {
                                         En savoir plus
                                     </Button>
                                 </Box>
-                            </Box>
+                            )}
                         </Grid>
 
                         {/* Mockup téléphone */}
@@ -1131,7 +1118,7 @@ const Navbar = () => {
                         </Grid>
                     </Grid>
 
-                    {/* Processus - NOUVELLE DISPOSITION */}
+                    {/* Processus */}
                     <Box sx={{ mt: { xs: 8, sm: 12 } }}>
                         <Typography variant="h3" sx={{ 
                             textAlign: 'center',
@@ -1252,46 +1239,45 @@ const Navbar = () => {
                             ))}
                         </Grid>
                         
-                        {/* Boutons de la section Processus */}
-                        <Box sx={{ 
-                            mt: 8, 
-                            textAlign: 'center',
-                            display: 'flex',
-                            flexDirection: isSmallMobile ? 'column' : 'row',
-                            gap: 3,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <GradientButton
-                                sx={{
-                                    py: { xs: 1.5, sm: 1.8 },
-                                    px: { xs: 4, sm: 8 },
-                                    fontSize: { xs: '0.95rem', sm: '1rem' }
-                                }}
-                            >
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                                    <IoAirplaneSharp />
-                                    Voir tous les trajets
-                                </Box>
-                            </GradientButton>
-                            
-                            <Button
-                                variant="outlined"
-                                sx={{
-                                    py: { xs: 1.5, sm: 1.8 },
-                                    px: { xs: 4, sm: 8 },
-                                    fontSize: { xs: '0.95rem', sm: '1rem' },
-                                    borderColor: '#21CBF3',
-                                    color: '#21CBF3',
-                                    '&:hover': {
-                                        borderColor: '#1976d2',
-                                        background: 'rgba(33, 203, 243, 0.1)',
-                                    }
-                                }}
-                            >
-                                Devenir voyageur
-                            </Button>
-                        </Box>
+                        {/* Boutons de la section Processus - SEULEMENT SUR DESKTOP */}
+                        {!isMobile && (
+                            <Box sx={{ 
+                                mt: 8, 
+                                textAlign: 'center',
+                                display: 'flex',
+                                gap: 3,
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <GradientButton
+                                    sx={{
+                                        py: 1.8,
+                                        px: 8,
+                                    }}
+                                >
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                        <IoAirplaneSharp />
+                                        Voir tous les trajets
+                                    </Box>
+                                </GradientButton>
+                                
+                                <Button
+                                    variant="outlined"
+                                    sx={{
+                                        py: 1.8,
+                                        px: 8,
+                                        borderColor: '#21CBF3',
+                                        color: '#21CBF3',
+                                        '&:hover': {
+                                            borderColor: '#1976d2',
+                                            background: 'rgba(33, 203, 243, 0.1)',
+                                        }
+                                    }}
+                                >
+                                    Devenir voyageur
+                                </Button>
+                            </Box>
+                        )}
                     </Box>
                 </Container>
             </Box>
