@@ -92,18 +92,24 @@ const GlassCard = styled(Paper)(({ theme }) => ({
     },
   },
   [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(4),
+    padding: theme.spacing(3),
     borderRadius: 0,
     margin: 0,
     backdropFilter: 'blur(10px)',
-    height: '100%',
-    width: '100%',
+    height: '100vh', // Changé à 100vh
+    width: '100vw', // Changé à 100vw
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start', // Changé de 'center' à 'flex-start'
     boxShadow: 'none',
     border: 'none',
     overflowY: 'auto', // Permet le défilement si nécessaire
+    position: 'fixed', // Changé à fixed pour couvrir tout l'écran
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1000,
   },
 }));
 
@@ -248,27 +254,26 @@ const LoginForm = () => {
           },
         }} />
         
-        <Container 
-          maxWidth="lg" 
-          sx={{ 
-            px: { xs: 0, sm: 2, md: 3 },
-            height: '100%', // Changé de { xs: '100%', sm: 'auto' } à '100%'
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <Fade in={true} timeout={800}>
-            <Box sx={{ 
-              width: '100%',
-              height: '100%', // Changé de { xs: '100%', sm: 'auto' } à '100%'
+        {!isMobile ? (
+          // Version Desktop/Tablet
+          <Container 
+            maxWidth="lg" 
+            sx={{ 
+              px: { xs: 0, sm: 2, md: 3 },
+              height: 'auto',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
-            }}>
-              {/* Version Desktop/Tablet */}
-              {!isMobile ? (
+            }}
+          >
+            <Fade in={true} timeout={800}>
+              <Box sx={{ 
+                width: '100%',
+                height: 'auto',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
                 <Box sx={{ 
                   display: 'flex', 
                   width: '100%', 
@@ -399,98 +404,90 @@ const LoginForm = () => {
                     </GlassCard>
                   </Box>
                 </Box>
-              ) : (
-                /* Version Mobile - Plein écran */
+              </Box>
+            </Fade>
+          </Container>
+        ) : (
+          // Version Mobile - Plein écran
+          <Box sx={{
+            width: '100vw',
+            height: '100vh',
+            position: 'relative',
+          }}>
+            <GlassCard>
+              {/* En-tête mobile */}
+              <Box sx={{ 
+                textAlign: 'center', 
+                mb: 3,
+                px: 2,
+                pt: 2,
+                flexShrink: 0
+              }}>
                 <Box sx={{
-                  width: '100%',
-                  height: '100%',
+                  width: 60,
+                  height: 60,
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, rgba(33, 203, 243, 0.2) 0%, rgba(25, 118, 210, 0.1) 100%)',
+                  border: '1px solid rgba(33, 203, 243, 0.3)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  margin: '0 auto 16px',
+                  overflow: 'hidden',
                   position: 'relative',
+                  boxShadow: 'inset 0 0 20px rgba(33, 203, 243, 0.15), 0 0 30px rgba(33, 203, 243, 0.1)',
                 }}>
-                  <GlassCard sx={{ 
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    pt: { xs: 4, sm: 6 }, // Padding top pour l'espacement en haut
-                  }}>
-                    {/* En-tête mobile */}
-                    <Box sx={{ 
-                      textAlign: 'center', 
-                      mb: 4,
-                      px: 2,
-                      flexShrink: 0 // Empêche le rétrécissement
-                    }}>
-                      <Box sx={{
-                        width: 70,
-                        height: 70,
-                        borderRadius: '50%',
-                        background: 'linear-gradient(135deg, rgba(33, 203, 243, 0.2) 0%, rgba(25, 118, 210, 0.1) 100%)',
-                        border: '1px solid rgba(33, 203, 243, 0.3)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        margin: '0 auto 16px',
-                        overflow: 'hidden',
-                        position: 'relative',
-                        boxShadow: 'inset 0 0 20px rgba(33, 203, 243, 0.15), 0 0 30px rgba(33, 203, 243, 0.1)',
-                      }}>
-                        <FlightTakeoff style={{ 
-                          position: 'relative',
-                          zIndex: 2,
-                          color: '#21CBF3',
-                          fontSize: 32,
-                          filter: 'drop-shadow(0 0 8px rgba(33, 203, 243, 0.5))'
-                        }} />
-                      </Box>
-                      
-                      <Typography variant="h4" sx={{ 
-                        color: 'white',
-                        mb: 2,
-                        fontWeight: 800,
-                        lineHeight: 1.2
-                      }}>
-                        Connexion
-                      </Typography>
-                      
-                      <Typography variant="body1" sx={{ 
-                        color: 'rgba(255, 255, 255, 0.8)',
-                        mb: 3,
-                        fontSize: '1rem',
-                        lineHeight: 1.5
-                      }}>
-                        Accédez à votre compte yónnee
-                      </Typography>
-                    </Box>
-
-                    {/* Formulaire mobile - prend tout l'espace restant */}
-                    <Box sx={{ 
-                      flex: 1,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      overflowY: 'auto',
-                      pb: 2 // Padding bottom pour l'espacement en bas
-                    }}>
-                      <FormContent 
-                        formData={formData}
-                        handleChange={handleChange}
-                        handleSubmit={handleSubmit}
-                        isSubmitting={isSubmitting}
-                        error={error}
-                        success={success}
-                        showPassword={showPassword}
-                        setShowPassword={setShowPassword}
-                        isMobile={isMobile}
-                      />
-                    </Box>
-                  </GlassCard>
+                  <FlightTakeoff style={{ 
+                    position: 'relative',
+                    zIndex: 2,
+                    color: '#21CBF3',
+                    fontSize: 28,
+                    filter: 'drop-shadow(0 0 8px rgba(33, 203, 243, 0.5))'
+                  }} />
                 </Box>
-              )}
-            </Box>
-          </Fade>
-        </Container>
+                
+                <Typography variant="h5" sx={{ 
+                  color: 'white',
+                  mb: 1,
+                  fontWeight: 800,
+                  lineHeight: 1.2
+                }}>
+                  Connexion
+                </Typography>
+                
+                <Typography variant="body2" sx={{ 
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  mb: 2,
+                  fontSize: '0.9rem',
+                  lineHeight: 1.4
+                }}>
+                  Accédez à votre compte yónnee
+                </Typography>
+              </Box>
+
+              {/* Formulaire mobile - prend tout l'espace */}
+              <Box sx={{ 
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                overflowY: 'auto',
+                pb: 2
+              }}>
+                <FormContent 
+                  formData={formData}
+                  handleChange={handleChange}
+                  handleSubmit={handleSubmit}
+                  isSubmitting={isSubmitting}
+                  error={error}
+                  success={success}
+                  showPassword={showPassword}
+                  setShowPassword={setShowPassword}
+                  isMobile={isMobile}
+                />
+              </Box>
+            </GlassCard>
+          </Box>
+        )}
 
         {/* Animations CSS */}
         <style jsx global>{`
@@ -541,6 +538,11 @@ const LoginForm = () => {
             /* Empêche le zoom sur les inputs iOS */
             input, select, textarea {
               font-size: 16px !important;
+            }
+            
+            /* Empêche le pull-to-refresh sur mobile */
+            * {
+              overscroll-behavior: none;
             }
           }
         `}</style>
