@@ -1,20 +1,63 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, Button, IconButton, TextField, Container, Drawer, List, ListItem, ListItemText, Hidden } from '@mui/material';
+import { Button, TextField, Container, Box, Typography, Grid, Card, CardContent, Avatar, Chip, IconButton, Modal, Fade, Backdrop } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import logo from '../pages/Logo Yonnee.png';
-import { FaUser , FaRegCalendar } from "react-icons/fa";
+import { FaUser, FaRegCalendar, FaSearch, FaPaperPlane, FaShieldAlt, FaMoneyBillWave, FaMapMarkerAlt, FaWeightHanging } from "react-icons/fa";
 import { GiCardboardBoxClosed } from "react-icons/gi";
-import { IoAirplaneSharp } from "react-icons/io5";
+import { IoAirplaneSharp, IoClose } from "react-icons/io5";
+import { MdOutlineEmail, MdOutlinePhone, MdLocationOn, MdAccessTime } from "react-icons/md";
+// Ajoutez ces imports avec les autres
+import { FaApple, FaGooglePlay } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { TbUserCircle } from "react-icons/tb";
 import cover from '../pages/portrait_black(1).png';
+import { FaSignInAlt } from "react-icons/fa";
+import { IoRocketSharp } from "react-icons/io5";
+import { MdOutlineContactSupport } from "react-icons/md";
+import { FaUsers } from "react-icons/fa";
+// Styles modernes avec styled-components
+const ModernCard = styled(Card)(({ theme }) => ({
+  borderRadius: 20,
+  background: 'linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+  backdropFilter: 'blur(10px)',
+  border: '1px solid rgba(255,255,255,0.1)',
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    transform: 'translateY(-8px)',
+    boxShadow: '0 20px 40px rgba(0,0,0,0.3)',
+  },
+}));
 
-const StyledButton = styled(Button)({
-    margin: '0.5rem',
-    color: '#ffffff',
-    '&:hover': {
-        backgroundColor: '#495057',
-    },
-});
+const GradientButton = styled(Button)(({ theme }) => ({
+  background: 'linear-gradient(90deg, #1976d2 0%, #21CBF3 100%)',
+  borderRadius: 12,
+  padding: '12px 32px',
+  fontWeight: 600,
+  textTransform: 'none',
+  fontSize: '1rem',
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    transform: 'translateY(-2px)',
+    boxShadow: '0 10px 20px rgba(25, 118, 210, 0.3)',
+  },
+}));
+
+const GlassContainer = styled(Box)(({ theme }) => ({
+  background: 'rgba(16, 20, 24, 0.8)',
+  backdropFilter: 'blur(20px)',
+  borderRadius: 24,
+  border: '1px solid rgba(255,255,255,0.1)',
+  padding: theme.spacing(4),
+}));
+
+const StatBox = styled(Box)(({ theme }) => ({
+  textAlign: 'center',
+  padding: theme.spacing(3),
+  borderRadius: 16,
+  background: 'rgba(25, 118, 210, 0.1)',
+  border: '1px solid rgba(25, 118, 210, 0.2)',
+}));
 
 const Navbar = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -26,41 +69,19 @@ const Navbar = () => {
     const [num, setNum] = useState('');
     const [kilos, setKilos] = useState('');
     const [reservationSuccess, setReservationSuccess] = useState(false);
-    const [drawerOpen, setDrawerOpen] = useState(false);
-
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
-
-        // Ajoute une entrée à l'historique pour empêcher le recul
-
         window.history.pushState(null, '', window.location.href);
-
-
         const handlePopState = (event) => {
-
-            // Ajoute à nouveau une entrée à l'historique pour empêcher le recul
-
             window.history.pushState(null, '', window.location.href);
-
         };
-
-
-        // Écoute l'événement popstate
-
         window.addEventListener('popstate', handlePopState);
-
-
-        // Nettoyage de l'écouteur d'événements lors du démontage du composant
-
         return () => {
-
             window.removeEventListener('popstate', handlePopState);
-
         };
-
     }, []);
  
-
     useEffect(() => {
         const fetchSubmissions = async () => {
             try {
@@ -74,7 +95,6 @@ const Navbar = () => {
                 console.error('Error fetching submissions:', error);
             }
         };
-
         fetchSubmissions();
     }, []);
 
@@ -118,6 +138,7 @@ const Navbar = () => {
                 setKilos('');
                 setLocalSelectedSubmission(null);
                 setReservationSuccess(true);
+                setModalOpen(false);
             } else {
                 console.error('Erreur lors de la réservation:', response.statusText);
             }
@@ -126,357 +147,2094 @@ const Navbar = () => {
         }
     };
 
-    const toggleDrawer = (open) => () => {
-        setDrawerOpen(open);
+    const handleOpenModal = (submission) => {
+        setLocalSelectedSubmission(submission);
+        setModalOpen(true);
     };
 
-    const drawerList = () => (
-        <div
-            role="presentation"
-            onClick={toggleDrawer(false)}
-            onKeyDown={toggleDrawer(false)}
-        >
-            <List>
-                <ListItem button component={Link} to="connect">
-                    <ListItemText primary="Se connecter" />
-                </ListItem>
-                <ListItem button component="a" href="#about">
-                    <ListItemText primary="À propos de nous" />
-                </ListItem>
-                <ListItem button component="a" href="#contact">
-                    <ListItemText primary="Contact" />
-                </ListItem>
-            </List>
-        </div>
-    );
-
-
-    
+    const handleCloseModal = () => {
+        setModalOpen(false);
+        setLocalSelectedSubmission(null);
+    };
 
     return (
-        <div>
-<nav className="navbar navbar-expand-lg bg-dark fixed-top" style={{fontFamily: 'Poppins, sans-serif', fontWeight: 500,}}>
-    <div className="container">
-        <img src={logo} alt="Logo" style={{ width: '150px', height: '50px' }} />
-        <button className="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
-                <li className="nav-item">
-                    <Link className="nav-link text-white" to="connect">Se connecter</Link>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link text-white" href="#about">À propos de nous</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link text-white" href="#contact">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-            <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-                {drawerList()}
-            </Drawer>
-
-            <header className="hero" id="compte" style={{ minHeight: '100vh', fontFamily: 'Poppins, sans-serif', fontWeight: 800, backgroundColor: '#343a40' }}>
-                <Container>
-                    <div className="row align-items-center h-100">
-                        <div className="col-lg-12 text-center mt-5">
-                            <h1 className="display-4 fw-bold mb-4 text-light">
-                                Simplifiez l'envoi de vos colis en un clic
-                            </h1>
-                            <div className='col-lg-12 bg-dark rounded-4 d-flex flex-column flex-md-row justify-content-center' style={{ padding: '40px 20px', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)' }}>
-                                <div className="container">
-                                    <div className="position-relative mb-4  ">
-                                    <form className="d-flex" onSubmit={handleSubmit}>
-                                            <div className="input-group">
-                                                <input 
-                                                    className="form-control form-control-lg" 
-                                                    type="search" 
-                                                    placeholder="Recherche GPs..." 
-                                                    aria-label="Search" 
-                                                    value={searchTerm}
-                                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                                    />
-
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div className="recent-searches pt-3">
-    <p className="text-muted mb-3" style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>Prochains départs</p>
-    {filteredSubmissions.map((submission, index) => (
-        <div
-            className="radio-container"
-            key={index}
-            type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#logiModal"
-            onClick={() => setLocalSelectedSubmission(submission)}
-            style={{
-                backgroundColor: 'rgba(52, 58, 64, 0.85)', // Faded dark background
-                borderRadius: '10px',
-                padding: '20px',
-                marginBottom: '15px',
-                transition: 'transform 0.2s, box-shadow 0.2s',
-                cursor: 'pointer',
-                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
-            }}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.02)';
-                e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.5)';
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.3)';
-            }}
-        >
-            <div className='row align-items-center'>
-                <div className='col-12 col-md-4 text-start'>
-                    <h5 className="mb-3" style={{ color: "white", fontSize: '1.5rem' }}>{submission.company}</h5>
-                    <div className='pays text-light' style={{ fontWeight: "100", fontSize: '1rem' }}>{submission.from}</div>
-                </div>
-                <div className='col-12 col-md-4 d-flex justify-content-center align-items-center'>
-                    <IoAirplaneSharp style={{ fontSize: 40, color: "black" }} />
-                </div>
-                <div className='col-12 col-md-4 text-end'>
-                    <h5 className="mb-3" style={{ color: "#1976d2", fontSize: '1.5rem', fontWeight: 'bold', padding: '10px', borderRadius: '5px' }}>
-                        {submission.kilos} colis restant
-                    </h5>
-                    <div className='pays text-light' style={{ fontWeight: "100", fontSize: '1rem' }}>{submission.to}</div>
-                </div>
-            </div>
-            <hr style={{ border: "1px solid #ffffff" }} />
-            <div className='row'>
-                <div className='col-12 col-md-4 text-start'>
-                    <h5 className="mb-3 text-light" style={{ fontWeight: "bold" }}>Date de départ</h5>
-                    <div className='pays text-light' style={{ fontWeight: "100" }}>{submission.departure_date}</div>
-                </div>
-                <div className='col-12 col-md-4 text-center'>
-                    <h5 className="mb-5"></h5>
-                    <div className='pays text-light'></div>
-                </div>
-                <div className='col-12 col-md-4 text-end'>
-                    <h5 className="mb-3 text-light" style={{ fontWeight: "bold" }}>Prix</h5>
-                    <div className='pays text-light' style={{ fontWeight: "100" }}>{submission.price} F CFA</div>
-                </div>
-            </div>
-        </div>
-    ))}
-</div>
-
-<style jsx>{`
-    @media (max-width: 767.98px) { /* Mobile styles */
-        .radio-container {
-            padding: 15px; /* Reduced padding for mobile */
-            margin-bottom: 10px; /* Reduced margin for mobile */
-            background-color: rgba(52, 58, 64, 0.85); /* Faded dark background on mobile */
-        }
-        .radio-container .row {
-            margin-bottom: 10px; /* Add spacing between rows */
-        }
-        .radio-container h5 {
-            font-size: 1.2rem; /* Smaller font size for mobile */
-            text-align: center; /* Center text on mobile */
-        }
-        .radio-container .pays {
-            font-size: 0.9rem; /* Smaller font size for mobile */
-            text-align: center; /* Center text on mobile */
-        }
+        <Box sx={{ 
+            background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%)',
+            color: 'white',
+            minHeight: '100vh',
+            fontFamily: '"Inter", "Roboto", sans-serif'
+        }}>
+            {/* Navigation Bar */}
+       <Box sx={{
+    position: 'fixed',
+    top: 0,
+    width: '100%',
+    zIndex: 1000,
+    background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(15, 23, 42, 0.92) 100%)',
+    backdropFilter: 'blur(25px) saturate(180%)',
+    borderBottom: '1px solid rgba(255,255,255,0.12)',
+    py: 2,
+    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.05)',
+    '&:after': {
+        content: '""',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: '1px',
+        background: 'linear-gradient(90deg, transparent, rgba(33, 203, 243, 0.5), transparent)',
+        opacity: 0.6
     }
-`}</style>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </Container>
-            </header>
-
-            {/* Modal for reservation */}
-{/* Modal for reservation */}
-<div className="modal fade mt-5" id="logiModal" tabIndex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-    <div className="modal-dialog modal-dialog-centered"> {/* Center the modal */}
-        <div className="modal-content" style={{ backgroundColor: '#343a40', color: 'white', fontFamily: 'Poppins, sans-serif' }}>
-            <div className="modal-header" style={{ background: '#212529' }}>
-                <h5 className="modal-title" id="loginModalLabel">Réservez votre colis</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body" style={{ padding: '20px' }}> {/* Add padding to the modal body */}
-                {localSelectedSubmission ? (
-                    <form onSubmit={handleSubmit}>
-                        <div className="input-group mb-5" style={{ display: "flex", alignItems: "center" }}>
-                            <div style={{ flex: 1 }}>
-                                <GiCardboardBoxClosed style={{ fontSize: 30, marginBottom: 10 }} />
-                                <span style={{ fontWeight: 800 }}> {localSelectedSubmission.company} </span>
-                                <br />
-                                <p className='text-light mt-3 ms-2'>
-                                    {localSelectedSubmission.from} - {localSelectedSubmission.to}<br /><br />
-                                    {localSelectedSubmission.price} F CFA /kg
-                                </p>
-                            </div>
-                            <p style={{ marginRight: "10px", marginTop: 90, color: "white" }}>
-                                {localSelectedSubmission.departure_date}
-                            </p>
-                        </div>
-                        <hr style={{ border: "2px solid white", marginTop: -40, marginBottom: -25 }} />
-                        <p className='text-light mt-5' style={{ fontWeight: 800 }}>
-                            <FaUser  style={{ fontSize: 25, marginBottom: 10, marginRight: 10 }} /> Coordonnées
-                        </p>
-                        <TextField
-                            className="mb-3"
-                            label=" Nom"
+}}>
+    <Container maxWidth="lg">
+        <Grid container alignItems="center" justifyContent="space-between">
+            <Grid item>
+                <Box sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 2,
+                    position: 'relative',
+                    '&:hover .logo-sparkle': {
+                        opacity: 1,
+                        transform: 'translate(-50%, -50%) scale(1.2)'
+                    }
+                }}>
+                    {/* Logo avec effet de brillance */}
+                    <Box sx={{
+                        position: 'relative',
+                        width: 40,
+                        height: 40,
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, rgba(33, 203, 243, 0.15) 0%, rgba(25, 118, 210, 0.1) 100%)',
+                        border: '1px solid rgba(33, 203, 243, 0.2)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        overflow: 'hidden',
+                        boxShadow: 'inset 0 0 20px rgba(33, 203, 243, 0.1), 0 0 30px rgba(33, 203, 243, 0.1)',
+                        '&:before': {
+                            content: '""',
+                            position: 'absolute',
+                            width: '200%',
+                            height: '200%',
+                            background: 'conic-gradient(transparent, rgba(33, 203, 243, 0.3), transparent 30%)',
+                            animation: 'rotate 4s linear infinite'
+                        },
+                        '&:after': {
+                            content: '""',
+                            position: 'absolute',
+                            width: '90%',
+                            height: '90%',
+                            borderRadius: '50%',
+                            background: 'rgba(15, 23, 42, 0.9)',
+                            border: '1px solid rgba(33, 203, 243, 0.1)'
+                        }
+                    }}>
+                        <IoAirplaneSharp style={{ 
+                            position: 'relative', 
+                            zIndex: 2, 
+                            color: '#21CBF3',
+                            fontSize: 20,
+                            filter: 'drop-shadow(0 0 8px rgba(33, 203, 243, 0.5))'
+                        }} />
+                    </Box>
+                    
+                    {/* Brillance au survol */}
+                    <Box className="logo-sparkle" sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: 20,
+                        width: 60,
+                        height: 60,
+                        background: 'radial-gradient(circle, rgba(33, 203, 243, 0.3) 0%, transparent 70%)',
+                        opacity: 0,
+                        transform: 'translate(-50%, -50%) scale(0.8)',
+                        transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                        pointerEvents: 'none',
+                        zIndex: 1
+                    }} />
+                    
+                    <Typography variant="h6" sx={{ 
+                        fontWeight: 900,
+                        background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 50%, #FFFFFF 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        fontSize: { xs: '1.4rem', md: '1.7rem' },
+                        letterSpacing: '-0.5px',
+                        textShadow: '0 0 30px rgba(33, 203, 243, 0.3)',
+                        backgroundSize: '200% auto',
+                        animation: 'textShine 3s ease-in-out infinite alternate',
+                        position: 'relative',
+                        '&:before': {
+                            content: '""',
+                            position: 'absolute',
+                            bottom: -4,
+                            left: 0,
+                            width: '100%',
+                            height: '2px',
+                            background: 'linear-gradient(90deg, transparent, rgba(33, 203, 243, 0.5), transparent)',
+                            opacity: 0.6
+                        }
+                    }}>
+                        yónnee
+                    </Typography>
+                </Box>
+            </Grid>
+            <Grid item>
+                <Box sx={{ 
+                    display: 'flex', 
+                    gap: 3, 
+                    alignItems: 'center',
+                    position: 'relative'
+                }}>
+                    {/* Bouton Connexion Premium */}
+                    <Link to="connect" style={{ textDecoration: 'none' }}>
+                        <Button 
                             variant="outlined"
-                            value={nom}
-                            onChange={(e) => setNom(e.target.value)}
-                            required
-                            fullWidth
-                        />
-                        <TextField
-                            className="mb-3"
-                            label="Prénom"
-                            variant="outlined"
-                            value={prenom}
-                            onChange={(e) => setPrenom(e.target.value)}
-                            required
-                            fullWidth
-                        />
-                        <TextField
-                            className="mb-3"
-                            label="Email"
-                            variant="outlined"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            fullWidth
-                        />
-                        <TextField
-                            className="mb-3"
-                            label="Téléphone"
-                            variant="outlined"
-                            type="number"
-                            value={num}
-                            onChange={(e) => setNum(e.target.value)}
-                            required
-                            fullWidth
-                        />
-                        <TextField
-                            className="mb-3"
-                            label="Nombre de kilos"
-                            variant="outlined"
-                            type="number"
-                            value={kilos}
-                            onChange={(e) => setKilos(e.target.value)}
-                            required
-                            fullWidth
-                        />
-                        <Button type="submit" variant="contained" color="primary" style={{ width: '100%' }}>
-                            <FaRegCalendar style={{ marginRight: 10 }} /> Réserver
+                            sx={{
+                                border: '2px solid transparent',
+                                color: '#21CBF3',
+                                borderRadius: 12,
+                                textTransform: 'none',
+                                fontWeight: 700,
+                                fontSize: '0.95rem',
+                                px: 5,
+                                py: 1.5,
+                                background: 'linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)) padding-box, linear-gradient(135deg, rgba(33, 203, 243, 0.4) 0%, rgba(25, 118, 210, 0.2) 100%) border-box',
+                                backdropFilter: 'blur(15px)',
+                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                                position: 'relative',
+                                overflow: 'hidden',
+                                '&:before': {
+                                    content: '""',
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: '-100%',
+                                    width: '100%',
+                                    height: '100%',
+                                    background: 'linear-gradient(90deg, transparent, rgba(33, 203, 243, 0.15), transparent)',
+                                    transition: 'left 0.8s ease'
+                                },
+                                '&:after': {
+                                    content: '""',
+                                    position: 'absolute',
+                                    inset: 0,
+                                    borderRadius: 10,
+                                    padding: '2px',
+                                    background: 'linear-gradient(135deg, rgba(33, 203, 243, 0.6), rgba(25, 118, 210, 0.3))',
+                                    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                                    WebkitMaskComposite: 'xor',
+                                    maskComposite: 'exclude',
+                                    opacity: 0,
+                                    transition: 'opacity 0.4s ease'
+                                },
+                                '&:hover': {
+                                    transform: 'translateY(-3px) scale(1.05)',
+                                    boxShadow: '0 15px 40px rgba(33, 203, 243, 0.3), inset 0 0 20px rgba(33, 203, 243, 0.1)',
+                                    '&:before': {
+                                        left: '100%'
+                                    },
+                                    '&:after': {
+                                        opacity: 1
+                                    },
+                                    '& .login-icon': {
+                                        transform: 'translateX(3px) rotate(10deg)',
+                                        filter: 'drop-shadow(0 0 12px rgba(33, 203, 243, 0.8))'
+                                    }
+                                },
+                                '&:active': {
+                                    transform: 'translateY(-1px) scale(1.02)',
+                                    transition: 'transform 0.1s ease'
+                                }
+                            }}
+                        >
+                            <Box sx={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: 2,
+                                position: 'relative',
+                                zIndex: 2
+                            }}>
+                                <FaSignInAlt className="login-icon" style={{ 
+                                    fontSize: '1.2rem',
+                                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                                    filter: 'drop-shadow(0 0 5px rgba(33, 203, 243, 0.5))'
+                                }} />
+                                <Typography sx={{
+                                    fontWeight: 700,
+                                    letterSpacing: '0.5px',
+                                    background: 'linear-gradient(90deg, #21CBF3 0%, #FFFFFF 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent'
+                                }}>
+                                    Connexion
+                                </Typography>
+                            </Box>
                         </Button>
-                    </form>
-                ) : (
-                    <p className='text-light '>Réservation effectuée. Veuillez consulter votre e-mail pour confirmer la validation.</p>
-                )}
-            </div>
-        </div>
-    </div>
-</div>
+                    </Link>
+                    
+                    {/* Bouton Proposer un voyage Premium */}
+                    <GradientButton
+                        sx={{
+                            px: 6,
+                            py: 1.8,
+                            fontSize: '1rem',
+                            borderRadius: 12,
+                            fontWeight: 800,
+                            background: 'linear-gradient(135deg, #1976d2 0%, #21CBF3 50%, #1976d2 100%)',
+                            backgroundSize: '200% auto',
+                            boxShadow: '0 10px 40px rgba(25, 118, 210, 0.4), inset 0 1px 1px rgba(255,255,255,0.2)',
+                            transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            '&:before': {
+                                content: '""',
+                                position: 'absolute',
+                                top: 0,
+                                left: '-100%',
+                                width: '100%',
+                                height: '100%',
+                                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+                                transition: 'left 0.8s ease'
+                            },
+                            '&:hover': {
+                                transform: 'translateY(-4px) scale(1.05)',
+                                boxShadow: '0 20px 50px rgba(25, 118, 210, 0.6), inset 0 0 30px rgba(255,255,255,0.1)',
+                                backgroundPosition: '100% 0',
+                                '&:before': {
+                                    left: '100%'
+                                },
+                                '& .plane-icon': {
+                                    transform: 'translateX(5px) rotate(45deg)',
+                                    filter: 'drop-shadow(0 0 15px rgba(255,255,255,0.8))'
+                                }
+                            },
+                            '&:active': {
+                                transform: 'translateY(-1px) scale(1.02)'
+                            }
+                        }}
+                    >
+                        <Box sx={{ 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            gap: 3,
+                            position: 'relative',
+                            zIndex: 2
+                        }}>
+                            <IoAirplaneSharp className="plane-icon" style={{ 
+                                fontSize: '1.4rem',
+                                transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                                filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.5))'
+                            }} />
+                            <Typography sx={{
+                                fontWeight: 800,
+                                letterSpacing: '0.8px',
+                                textShadow: '0 2px 10px rgba(0,0,0,0.3)'
+                            }}>
+                                Proposer un voyage
+                            </Typography>
+                        </Box>
+                    </GradientButton>
+                    
+                    {/* Indicateur de notification */}
+                    <Box sx={{
+                        position: 'absolute',
+                        top: -8,
+                        right: -8,
+                        width: 24,
+                        height: 24,
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #FF4081 0%, #F50057 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        animation: 'pulse 2s infinite',
+                        boxShadow: '0 0 20px rgba(245, 0, 87, 0.5)',
+                        border: '2px solid rgba(255,255,255,0.9)'
+                    }}>
+                        <Typography variant="caption" sx={{ 
+                            color: 'white', 
+                            fontWeight: 900,
+                            fontSize: '0.7rem'
+                        }}>
+                            3
+                        </Typography>
+                    </Box>
+                </Box>
+            </Grid>
+        </Grid>
+    </Container>
+    
+    {/* Animations CSS Globales */}
+    <style jsx global>{`
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes textShine {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(245, 0, 87, 0.5);
+            }
+            50% {
+                transform: scale(1.1);
+                boxShadow: 0 0 30px rgba(245, 0, 87, 0.7);
+            }
+        }
+    `}</style>
+</Box>
 
-            <section id="about" className="py-5" style={{ minHeight: '100vh', fontFamily: 'Poppins, sans-serif', fontWeight: 800, backgroundColor: '#343a40' }}>
-                <Container>
-                    <div className="row align-items-center h-100">
-                        <div className="col-lg-12 mt-5">
-                        <h1 
-    className=" text-center mb-4 text-light" 
-    style={{ 
-        whiteSpace: 'nowrap', 
-    }}
+        {/* Hero Section */}
+<Box sx={{ 
+    pt: 15, 
+    pb: 10,
+    position: 'relative',
+    overflow: 'hidden',
+    '&:before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'radial-gradient(circle at 20% 50%, rgba(33, 203, 243, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(25, 118, 210, 0.1) 0%, transparent 50%)',
+        zIndex: 0
+    }
+}}>
+    <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+        {/* Hero Content avec animation */}
+        <Box sx={{ 
+            textAlign: 'center', 
+            mb: 8,
+            opacity: 0,
+            animation: 'fadeInUp 0.8s ease forwards 0.3s'
+        }}>
+            <Typography variant="h1" sx={{
+                fontSize: { xs: '2.8rem', md: '4.5rem', lg: '5rem' },
+                fontWeight: 900,
+                mb: 4,
+                background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 50%, #FFFFFF 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundSize: '200% auto',
+                animation: 'textShine 3s ease-in-out infinite alternate',
+                lineHeight: 1.1,
+                letterSpacing: '-0.5px'
+            }}>
+                Voyagez utile,
+                <Box component="span" sx={{ 
+                    display: 'block',
+                    background: 'linear-gradient(90deg, #21CBF3 0%, #FFFFFF 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent'
+                }}>
+                    envoyez malin
+                </Box>
+            </Typography>
+            
+            <Typography variant="h5" sx={{
+                color: 'rgba(255,255,255,0.85)',
+                mb: 6,
+                maxWidth: 800,
+                mx: 'auto',
+                fontWeight: 400,
+                fontSize: { xs: '1.1rem', md: '1.4rem' },
+                lineHeight: 1.6,
+                textShadow: '0 2px 10px rgba(0,0,0,0.3)'
+            }}>
+                Connectez directement avec des voyageurs vérifiés pour envoyer vos colis 
+                <Box component="span" sx={{ 
+                    color: '#21CBF3', 
+                    fontWeight: 600,
+                    display: { xs: 'inline', md: 'inline' }
+                }}>
+                    {' '}jusqu'à 70% moins cher
+                </Box>
+                {' '}que les services traditionnels
+            </Typography>
+
+          
+        </Box>
+
+        {/* Section Search avec effets avancés */}
+        <Box sx={{ 
+            opacity: 0,
+            animation: 'fadeInUp 0.8s ease forwards 1s',
+            mb: 8
+        }}>
+            <GlassContainer sx={{ 
+                mb: 6, 
+                position: 'relative',
+                overflow: 'hidden',
+                '&:before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(33, 203, 243, 0.1) 0%, rgba(25, 118, 210, 0.05) 100%)',
+                    zIndex: -1
+                }
+            }}>
+                <Box sx={{ 
+                    position: 'relative',
+                    mb: 6
+                }}>
+                    <Box sx={{
+                        position: 'absolute',
+                        left: 24,
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        zIndex: 2,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2
+                    }}>
+                        <FaSearch style={{
+                            color: '#21CBF3',
+                            fontSize: 22,
+                            filter: 'drop-shadow(0 0 8px rgba(33, 203, 243, 0.5))'
+                        }} />
+                        <Box sx={{
+                            width: 2,
+                            height: 20,
+                            background: 'rgba(255,255,255,0.2)',
+                            borderRadius: 1
+                        }} />
+                    </Box>
+                    
+                    <TextField
+                        fullWidth
+                        placeholder="Où envoyez-vous ? Paris → Dakar, Lyon → Abidjan..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        sx={{
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: 3,
+                                background: 'rgba(15, 23, 42, 0.7)',
+                                border: '2px solid rgba(33, 203, 243, 0.3)',
+                                color: 'white',
+                                pl: 12,
+                                py: 2,
+                                fontSize: '1.1rem',
+                                transition: 'all 0.3s ease',
+                                backdropFilter: 'blur(10px)',
+                                '&:hover': {
+                                    borderColor: '#21CBF3',
+                                    boxShadow: '0 0 30px rgba(33, 203, 243, 0.2)'
+                                },
+                                '&.Mui-focused': {
+                                    borderColor: '#21CBF3',
+                                    boxShadow: '0 0 40px rgba(33, 203, 243, 0.3)',
+                                    '& fieldset': {
+                                        borderColor: '#21CBF3'
+                                    }
+                                }
+                            }
+                        }}
+                    />
+                    
+                    <Box sx={{
+                        position: 'absolute',
+                        right: 16,
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        display: 'flex',
+                        gap: 2,
+                        alignItems: 'center'
+                    }}>
+                        <Chip 
+                            label="Rapide" 
+                            size="small"
+                            sx={{ 
+                                bgcolor: 'rgba(76, 175, 80, 0.2)',
+                                color: '#4CAF50',
+                                fontWeight: 600
+                            }} 
+                        />
+                        <Chip 
+                            label="Économique" 
+                            size="small"
+                            sx={{ 
+                                bgcolor: 'rgba(33, 203, 243, 0.2)',
+                                color: '#21CBF3',
+                                fontWeight: 600
+                            }} 
+                        />
+                    </Box>
+                </Box>
+
+                {/* Cards de voyage premium */}
+                <Box sx={{ mb: 4 }}>
+                    <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'space-between',
+                        mb: 4
+                    }}>
+                        <Typography variant="h4" sx={{ 
+                            fontWeight: 800,
+                            background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 2
+                        }}>
+                            <Box sx={{
+                                width: 40,
+                                height: 40,
+                                borderRadius: '50%',
+                                background: 'rgba(33, 203, 243, 0.2)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <IoRocketSharp style={{ color: '#21CBF3', fontSize: 20 }} />
+                            </Box>
+                            Trajets disponibles
+                        </Typography>
+                        
+                        <Box sx={{ display: 'flex', gap: 1 }}>
+                            <Chip 
+                                label="Tous" 
+                                sx={{ 
+                                    bgcolor: 'rgba(33, 203, 243, 0.2)',
+                                    color: '#21CBF3',
+                                    fontWeight: 600,
+                                    cursor: 'pointer'
+                                }} 
+                            />
+                            <Chip 
+                                label="Prochain départ" 
+                                sx={{ 
+                                    bgcolor: 'rgba(255,255,255,0.05)',
+                                    color: 'rgba(255,255,255,0.7)',
+                                    cursor: 'pointer',
+                                    '&:hover': {
+                                        bgcolor: 'rgba(33, 203, 243, 0.1)'
+                                    }
+                                }} 
+                            />
+                            <Chip 
+                                label="Popularité" 
+                                sx={{ 
+                                    bgcolor: 'rgba(255,255,255,0.05)',
+                                    color: 'rgba(255,255,255,0.7)',
+                                    cursor: 'pointer',
+                                    '&:hover': {
+                                        bgcolor: 'rgba(33, 203, 243, 0.1)'
+                                    }
+                                }} 
+                            />
+                        </Box>
+                    </Box>
+                    
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                        {filteredSubmissions.map((submission, index) => (
+                            <Box 
+                                key={index}
+                                sx={{
+                                    opacity: 0,
+                                    animation: `fadeInUp 0.5s ease forwards ${0.5 + (index * 0.1)}s`
+                                }}
+                            >
+                                <ModernCard 
+                                    onClick={() => handleOpenModal(submission)}
+                                    sx={{
+                                        position: 'relative',
+                                        overflow: 'hidden',
+                                        '&:before': {
+                                            content: '""',
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            right: 0,
+                                            height: '1px',
+                                            background: 'linear-gradient(90deg, transparent, #21CBF3, transparent)'
+                                        },
+                                        '&:hover': {
+                                            transform: 'translateY(-8px) scale(1.01)',
+                                            boxShadow: '0 30px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(33, 203, 243, 0.3)',
+                                            '& .destination-icon': {
+                                                transform: 'rotate(45deg) translateX(10px)',
+                                                filter: 'drop-shadow(0 0 10px rgba(33, 203, 243, 0.7))'
+                                            }
+                                        }
+                                    }}
+                                >
+                                    <CardContent sx={{ p: 4 }}>
+                                        <Grid container alignItems="center" spacing={3}>
+                                            {/* Colonne Voyageur */}
+                                            <Grid item xs={12} md={3}>
+                                                <Box sx={{ 
+                                                    display: 'flex', 
+                                                    alignItems: 'center', 
+                                                    gap: 3,
+                                                    p: 2,
+                                                    borderRadius: 3,
+                                                    background: 'rgba(33, 203, 243, 0.05)'
+                                                }}>
+                                                    <Avatar sx={{ 
+                                                        bgcolor: 'rgba(33, 203, 243, 0.1)',
+                                                        width: 56,
+                                                        height: 56,
+                                                        border: '2px solid rgba(33, 203, 243, 0.3)'
+                                                    }}>
+                                                        <TbUserCircle style={{ 
+                                                            color: '#21CBF3', 
+                                                            fontSize: 30,
+                                                            filter: 'drop-shadow(0 0 5px rgba(33, 203, 243, 0.5))'
+                                                        }} />
+                                                    </Avatar>
+                                                    <Box>
+                                                        <Typography variant="h6" sx={{ 
+                                                            fontWeight: 700,
+                                                            color: 'white',
+                                                            mb: 1
+                                                        }}>
+                                                            {submission.company}
+                                                        </Typography>
+                                                        <Box sx={{ display: 'flex', gap: 1 }}>
+                                                            <Chip 
+                                                                label="Voyageur vérifié" 
+                                                                size="small" 
+                                                                sx={{ 
+                                                                    bgcolor: 'rgba(76, 175, 80, 0.15)',
+                                                                    color: '#4CAF50',
+                                                                    fontWeight: 600,
+                                                                    border: '1px solid rgba(76, 175, 80, 0.3)'
+                                                                }} 
+                                                            />
+                                                            <Chip 
+                                                                label="⭐ 4.8" 
+                                                                size="small" 
+                                                                sx={{ 
+                                                                    bgcolor: 'rgba(255, 193, 7, 0.15)',
+                                                                    color: '#FFC107',
+                                                                    fontWeight: 600,
+                                                                    border: '1px solid rgba(255, 193, 7, 0.3)'
+                                                                }} 
+                                                            />
+                                                        </Box>
+                                                    </Box>
+                                                </Box>
+                                            </Grid>
+                                            
+                                            {/* Colonne Trajet */}
+                                            <Grid item xs={12} md={5}>
+                                                <Box sx={{ 
+                                                    display: 'flex', 
+                                                    alignItems: 'center', 
+                                                    justifyContent: 'space-between',
+                                                    px: 4,
+                                                    py: 2,
+                                                    position: 'relative'
+                                                }}>
+                                                    {/* Ligne de trajet */}
+                                                    <Box sx={{
+                                                        position: 'absolute',
+                                                        top: '50%',
+                                                        left: 0,
+                                                        right: 0,
+                                                        height: 2,
+                                                        background: 'linear-gradient(90deg, rgba(33, 203, 243, 0.3) 0%, rgba(33, 203, 243, 0.1) 100%)',
+                                                        transform: 'translateY(-50%)',
+                                                        zIndex: 0
+                                                    }} />
+                                                    
+                                                    <Box sx={{ 
+                                                        textAlign: 'center', 
+                                                        position: 'relative', 
+                                                        zIndex: 1,
+                                                        p: 3,
+                                                        borderRadius: 3,
+                                                        background: 'rgba(15, 23, 42, 0.7)',
+                                                        backdropFilter: 'blur(10px)',
+                                                        border: '1px solid rgba(33, 203, 243, 0.2)'
+                                                    }}>
+                                                        <Typography variant="caption" sx={{ 
+                                                            color: '#21CBF3', 
+                                                            fontWeight: 600,
+                                                            letterSpacing: '2px',
+                                                            textTransform: 'uppercase',
+                                                            fontSize: '0.7rem',
+                                                            mb: 1,
+                                                            display: 'block'
+                                                        }}>
+                                                            Départ
+                                                        </Typography>
+                                                        <Typography variant="h5" sx={{ 
+                                                            fontWeight: 800,
+                                                            color: 'white',
+                                                            textShadow: '0 2px 10px rgba(0,0,0,0.3)'
+                                                        }}>
+                                                            {submission.from}
+                                                        </Typography>
+                                                    </Box>
+                                                    
+                                                    <IoAirplaneSharp className="destination-icon" style={{ 
+                                                        fontSize: 32, 
+                                                        color: '#21CBF3',
+                                                        position: 'relative',
+                                                        zIndex: 2,
+                                                        transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                                                        filter: 'drop-shadow(0 0 8px rgba(33, 203, 243, 0.4))'
+                                                    }} />
+                                                    
+                                                    <Box sx={{ 
+                                                        textAlign: 'center', 
+                                                        position: 'relative', 
+                                                        zIndex: 1,
+                                                        p: 3,
+                                                        borderRadius: 3,
+                                                        background: 'rgba(15, 23, 42, 0.7)',
+                                                        backdropFilter: 'blur(10px)',
+                                                        border: '1px solid rgba(33, 203, 243, 0.2)'
+                                                    }}>
+                                                        <Typography variant="caption" sx={{ 
+                                                            color: '#21CBF3', 
+                                                            fontWeight: 600,
+                                                            letterSpacing: '2px',
+                                                            textTransform: 'uppercase',
+                                                            fontSize: '0.7rem',
+                                                            mb: 1,
+                                                            display: 'block'
+                                                        }}>
+                                                            Destination
+                                                        </Typography>
+                                                        <Typography variant="h5" sx={{ 
+                                                            fontWeight: 800,
+                                                            color: 'white',
+                                                            textShadow: '0 2px 10px rgba(0,0,0,0.3)'
+                                                        }}>
+                                                            {submission.to}
+                                                        </Typography>
+                                                    </Box>
+                                                </Box>
+                                            </Grid>
+                                            
+                                            {/* Colonne Prix et Action */}
+                                            <Grid item xs={12} md={4}>
+                                                <Box sx={{ 
+                                                    textAlign: 'right',
+                                                    p: 3,
+                                                    borderRadius: 3,
+                                                    background: 'linear-gradient(135deg, rgba(33, 203, 243, 0.1) 0%, rgba(25, 118, 210, 0.05) 100%)',
+                                                    border: '1px solid rgba(33, 203, 243, 0.2)'
+                                                }}>
+                                                    <Box sx={{ 
+                                                        display: 'inline-flex',
+                                                        alignItems: 'center',
+                                                        gap: 2,
+                                                        mb: 3,
+                                                        p: '8px 16px',
+                                                        borderRadius: 20,
+                                                        background: 'rgba(33, 203, 243, 0.15)',
+                                                        border: '1px solid rgba(33, 203, 243, 0.3)'
+                                                    }}>
+                                                        <FaWeightHanging style={{ 
+                                                            color: '#21CBF3',
+                                                            filter: 'drop-shadow(0 0 5px rgba(33, 203, 243, 0.5))'
+                                                        }} />
+                                                        <Typography variant="h5" sx={{ 
+                                                            fontWeight: 800,
+                                                            color: 'white',
+                                                            textShadow: '0 2px 5px rgba(0,0,0,0.3)'
+                                                        }}>
+                                                            {submission.kilos} kg
+                                                        </Typography>
+                                                    </Box>
+                                                    
+                                                    <Box sx={{ mb: 3 }}>
+                                                        <Typography variant="h3" sx={{ 
+                                                            fontWeight: 900,
+                                                            background: 'linear-gradient(90deg, #1976d2 0%, #21CBF3 100%)',
+                                                            WebkitBackgroundClip: 'text',
+                                                            WebkitTextFillColor: 'transparent',
+                                                            lineHeight: 1,
+                                                            mb: 1
+                                                        }}>
+                                                            {submission.price} F CFA
+                                                            <Typography component="span" sx={{ 
+                                                                fontSize: '1rem', 
+                                                                ml: 1,
+                                                                color: 'rgba(255,255,255,0.7)'
+                                                            }}>
+                                                                /kg
+                                                            </Typography>
+                                                        </Typography>
+                                                        <Typography variant="caption" sx={{ 
+                                                            color: 'rgba(255,255,255,0.5)',
+                                                            display: 'block'
+                                                        }}>
+                                                            Prix total: {submission.price * submission.kilos} F CFA
+                                                        </Typography>
+                                                    </Box>
+                                                    
+                                                    <Button
+                                                        variant="contained"
+                                                        sx={{
+                                                            background: 'linear-gradient(90deg, #1976d2 0%, #21CBF3 100%)',
+                                                            borderRadius: 3,
+                                                            py: 1.5,
+                                                            px: 4,
+                                                            fontWeight: 700,
+                                                            fontSize: '1rem',
+                                                            textTransform: 'none',
+                                                            boxShadow: '0 8px 25px rgba(33, 203, 243, 0.4)',
+                                                            transition: 'all 0.3s ease',
+                                                            '&:hover': {
+                                                                transform: 'translateY(-2px)',
+                                                                boxShadow: '0 15px 35px rgba(33, 203, 243, 0.6)'
+                                                            }
+                                                        }}
+                                                    >
+                                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                                                            <FaRegCalendar style={{ fontSize: '1.2rem' }} />
+                                                            Réserver maintenant
+                                                        </Box>
+                                                    </Button>
+                                                </Box>
+                                            </Grid>
+                                        </Grid>
+                                        
+                                        {/* Footer de la carte */}
+                                        <Grid container spacing={2} sx={{ 
+                                            mt: 4, 
+                                            pt: 3, 
+                                            borderTop: '1px solid rgba(255,255,255,0.1)',
+                                            alignItems: 'center'
+                                        }}>
+                                            <Grid item xs={12} md={8}>
+                                                <Box sx={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+                                                    <Box sx={{ 
+                                                        display: 'flex', 
+                                                        alignItems: 'center', 
+                                                        gap: 1.5,
+                                                        p: 1.5,
+                                                        borderRadius: 2,
+                                                        background: 'rgba(255,255,255,0.03)'
+                                                    }}>
+                                                        <MdAccessTime style={{ 
+                                                            color: '#21CBF3',
+                                                            fontSize: 20 
+                                                        }} />
+                                                        <Box>
+                                                            <Typography variant="caption" sx={{ 
+                                                                color: 'rgba(255,255,255,0.5)',
+                                                                display: 'block'
+                                                            }}>
+                                                                Départ
+                                                            </Typography>
+                                                            <Typography variant="body2" sx={{ 
+                                                                color: 'white',
+                                                                fontWeight: 600
+                                                            }}>
+                                                                {submission.departure_date}
+                                                            </Typography>
+                                                        </Box>
+                                                    </Box>
+                                                    
+                                                    <Box sx={{ 
+                                                        display: 'flex', 
+                                                        alignItems: 'center', 
+                                                        gap: 1.5,
+                                                        p: 1.5,
+                                                        borderRadius: 2,
+                                                        background: 'rgba(255,255,255,0.03)'
+                                                    }}>
+                                                        <FaShieldAlt style={{ 
+                                                            color: '#21CBF3',
+                                                            fontSize: 18 
+                                                        }} />
+                                                        <Box>
+                                                            <Typography variant="caption" sx={{ 
+                                                                color: 'rgba(255,255,255,0.5)',
+                                                                display: 'block'
+                                                            }}>
+                                                                Assurance
+                                                            </Typography>
+                                                            <Typography variant="body2" sx={{ 
+                                                                color: 'white',
+                                                                fontWeight: 600
+                                                            }}>
+                                                                Jusqu'à 500 000 F CFA
+                                                            </Typography>
+                                                        </Box>
+                                                    </Box>
+                                                    
+                                                    <Box sx={{ 
+                                                        display: 'flex', 
+                                                        alignItems: 'center', 
+                                                        gap: 1.5,
+                                                        p: 1.5,
+                                                        borderRadius: 2,
+                                                        background: 'rgba(255,255,255,0.03)'
+                                                    }}>
+                                                        <MdLocationOn style={{ 
+                                                            color: '#21CBF3',
+                                                            fontSize: 20 
+                                                        }} />
+                                                        <Box>
+                                                            <Typography variant="caption" sx={{ 
+                                                                color: 'rgba(255,255,255,0.5)',
+                                                                display: 'block'
+                                                            }}>
+                                                                Livraison
+                                                            </Typography>
+                                                            <Typography variant="body2" sx={{ 
+                                                                color: 'white',
+                                                                fontWeight: 600
+                                                            }}>
+                                                                Main à main
+                                                            </Typography>
+                                                        </Box>
+                                                    </Box>
+                                                </Box>
+                                            </Grid>
+                                            
+                                            <Grid item xs={12} md={4}>
+                                                <Box sx={{ textAlign: 'right' }}>
+                                                    <Chip 
+                                                        label="🕒 Dernières places !" 
+                                                        sx={{ 
+                                                            bgcolor: 'rgba(244, 67, 54, 0.15)',
+                                                            color: '#F44336',
+                                                            fontWeight: 700,
+                                                            fontSize: '0.9rem',
+                                                            py: 2,
+                                                            border: '1px solid rgba(244, 67, 54, 0.3)',
+                                                            animation: 'pulse 2s infinite'
+                                                        }} 
+                                                    />
+                                                </Box>
+                                            </Grid>
+                                        </Grid>
+                                    </CardContent>
+                                </ModernCard>
+                            </Box>
+                        ))}
+                    </Box>
+                </Box>
+            </GlassContainer>
+        </Box>
+    </Container>
+    
+    {/* Animations CSS */}
+    <style jsx global>{`
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes textShine {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+    `}</style>
+</Box>
+
+        {/* À propos Section */}
+<Box sx={{ py: 10, background: 'rgba(0,0,0,0.3)' }}>
+    <Container maxWidth="lg">
+        <Grid container spacing={6} alignItems="center">
+            <Grid item xs={12} md={6}>
+                <Typography variant="h2" sx={{ 
+                    fontWeight: 800,
+                    mb: 4,
+                    background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent'
+                }}>
+                    Pourquoi<br/>choisir yónnee ?
+                </Typography>
+                
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                    <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: 3,
+                        p: 3,
+                        borderRadius: 2,
+                        background: 'rgba(255,255,255,0.05)',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                            transform: 'translateX(8px)',
+                            background: 'rgba(33, 203, 243, 0.1)',
+                        }
+                    }}>
+                        <Box sx={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 12,
+                            background: 'linear-gradient(135deg, #1976d2 0%, #21CBF3 100%)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0,
+                            boxShadow: '0 8px 20px rgba(33, 203, 243, 0.3)'
+                        }}>
+                            <FaMoneyBillWave style={{ fontSize: 24, color: 'white' }} />
+                        </Box>
+                        <Box>
+                            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                                Économisez jusqu'à 70%
+                            </Typography>
+                            <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                                Moins cher que les transporteurs traditionnels
+                            </Typography>
+                        </Box>
+                    </Box>
+                    {/* Bouton WhatsApp compact */}
+<Box
+  component="a"
+  href="https://wa.me/+2217785994?text=Bonjour%20yónnee,%20je%20souhaite%20en%20savoir%20plus"
+  target="_blank"
+  rel="noopener noreferrer"
+  sx={{
+    position: 'fixed',
+    bottom: 25,
+    right: 25,
+    width: 56,
+    height: 56,
+    borderRadius: '50%',
+    background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000,
+    boxShadow: '0 6px 20px rgba(37, 211, 102, 0.4)',
+    cursor: 'pointer',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    animation: 'float 3s ease-in-out infinite',
+    overflow: 'hidden',
+    border: '2px solid rgba(255,255,255,0.2)',
+    '&:hover': {
+      transform: 'scale(1.1)',
+      boxShadow: '0 8px 25px rgba(37, 211, 102, 0.6)',
+      '& .whatsapp-icon': {
+        transform: 'scale(1.1)'
+      }
+    }
+  }}
 >
-    yónnee, c’est quoi ?
-</h1>                            <div className='col-lg-12 bg-dark rounded-4 shadow' style={{ padding: '40px 20px', background: 'rgba(37, 117, 252, 0.8)' }}>
-                                <div className="row align-items-center">
-                                    <div className="col-lg-6 order-lg-1 text-center ">
-                                        <img
-                                            src={cover}
-                                            alt="Description de l'image"
-                                            className="img-fluid mb-3"
-                                            style={{ maxWidth: '50%', height: 'auto', }}
-                                        />
-                                    </div>
-                                    <div className="col-lg-6 order-lg-2 text-light text-left" style={{ fontWeight: 500 }}>
-                                        <p>
-                                            yónnee est une plateforme dédiée à l'envoi de colis. Nous gérons entièrement le processus d'expédition en utilisant nos propres GPs. Les clients souhaitant envoyer un colis, nous contactent directement pour organiser l'envoi, et nous leur permettons de suivre leur colis en temps réel via notre application ou notre site web.
-                                        </p>
-                                        <p>Rejoignez des milliers d'utilisateurs satisfaits qui ont déjà découvert la rapidité et la fiabilité de notre service d'envoi de colis.</p>
-                                        <br />
-                                        <p>yónnee offre une interface fluide et facilite au mieux le processus qui compte 5 étapes :
-                                            <br /><br />
-                                            <strong>01.</strong> Je renseigne l’adresse de départ et l’adresse de destination
-                                            <br /><br />
-                                            <strong>02.</strong> Je choisis une date de départ
-                                            <br /><br />
-                                            <strong>03.</strong> Je consulte les départs disponibles
-                                            <br /><br />
-                                            <strong>04.</strong> Je réserve et je me fais contacter par un conseiller de Yóbbal pour organiser l’envoi
-                                            <br /><br />
-                                            <strong>05.</strong> Je reçois mon numéro de suivi après paiement pour suivre mon colis en temps réel depuis l’application ou sur le site de yónnee.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Container>
-            </section>
+ 
+  {/* Icone compacte */}
+  <Box className="whatsapp-icon" sx={{
+    position: 'relative',
+    zIndex: 1,
+    transition: 'transform 0.3s ease',
+    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))'
+  }}>
+    <svg 
+      width="26" 
+      height="26" 
+      viewBox="0 0 24 24" 
+      fill="white"
+    >
+      <path d="M20.52 3.49C18.18 1.13 15.19 0 12 0 5.48 0 0 5.48 0 12c0 2.13.55 4.16 1.58 5.97L0 24l6.24-1.63c1.75 1 3.77 1.55 5.86 1.55 6.52 0 12-5.48 12-12 0-3.19-1.13-6.18-3.49-8.52zM12 21.75c-1.82 0-3.58-.5-5.12-1.43l-.36-.21-3.74.98.99-3.65-.21-.36C2.75 15.58 2.25 13.82 2.25 12c0-5.38 4.37-9.75 9.75-9.75 2.6 0 5.04 1.01 6.88 2.86 1.84 1.84 2.86 4.28 2.86 6.89 0 5.38-4.37 9.75-9.75 9.75z"/>
+      <path d="M17.5 14.21c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.18.2-.36.22-.67.07-.3-.15-1.27-.47-2.42-1.5-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.08-.15-.67-1.61-.92-2.2-.24-.59-.49-.51-.67-.51-.18 0-.38-.01-.58-.01-.2 0-.51.07-.78.35-.27.28-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.12 4.51.71.3 1.26.48 1.69.61.71.22 1.36.19 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.08-.12-.3-.2-.6-.35z" fill="white"/>
+    </svg>
+  </Box>
+</Box>
 
-            <footer className="bg-dark text-light py-5" id="contact" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                <Container>
-                    <h1 className='text-center mb-5' style={{ color: "#ffffff" }}>Contactez-nous</h1>
-                    <div className="row justify-content-center">
-                        <div className="col-lg-8">
-                            <div className="contact-form p-5 shadow-sm" style={{ background: '#343a40', borderRadius: '10px' }}>
-                                <h5 className="text-center mb-4" style={{ color: "white" }}>Envoyer un message</h5>
-                                <form>
-                                    <div className="row g-3 mt-3">
-                                        <div className="col-md-6">
-                                            <TextField fullWidth label="Nom" required />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <TextField fullWidth label="Prénom" required />
-                                        </div>
-                                        <div className="col-12">
-                                            <TextField fullWidth label="Email" required />
-                                        </div>
-                                        <div className="col-12">
-                                            <TextField fullWidth label="Message" multiline rows={4} required />
-                                        </div>
-                                        <div className="col-12">
-                                            <Button variant="contained" color="primary" type="submit" style={{ width: '100%' }}>Envoyer</Button>
-                                        </div>
-                                    </div>
+<style jsx global>{`
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+`}</style>
+
+                    <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: 3,
+                        p: 3,
+                        borderRadius: 2,
+                        background: 'rgba(255,255,255,0.05)',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                            transform: 'translateX(8px)',
+                            background: 'rgba(33, 203, 243, 0.1)',
+                        }
+                    }}>
+                        <Box sx={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 12,
+                            background: 'linear-gradient(135deg, #1976d2 0%, #21CBF3 100%)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0,
+                            boxShadow: '0 8px 20px rgba(33, 203, 243, 0.3)'
+                        }}>
+                            <FaShieldAlt style={{ fontSize: 24, color: 'white' }} />
+                        </Box>
+                        <Box>
+                            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                                Sécurité garantie
+                            </Typography>
+                            <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                                Profils vérifiés et suivi en temps réel
+                            </Typography>
+                        </Box>
+                    </Box>
+
+                    <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: 3,
+                        p: 3,
+                        borderRadius: 2,
+                        background: 'rgba(255,255,255,0.05)',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                            transform: 'translateX(8px)',
+                            background: 'rgba(33, 203, 243, 0.1)',
+                        }
+                    }}>
+                        <Box sx={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 12,
+                            background: 'linear-gradient(135deg, #1976d2 0%, #21CBF3 100%)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0,
+                            boxShadow: '0 8px 20px rgba(33, 203, 243, 0.3)'
+                        }}>
+                            <IoAirplaneSharp style={{ fontSize: 24, color: 'white' }} />
+                        </Box>
+                        <Box>
+                            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                                Flexibilité totale
+                            </Typography>
+                            <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                                Des départs quotidiens vers toutes destinations
+                            </Typography>
+                        </Box>
+                    </Box>
+                </Box>
+
+                {/* Bouton Call to Action */}
+                <Box sx={{ mt: 6, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                    <GradientButton 
+                        sx={{ 
+                            mr: 3,
+                            mb: { xs: 2, sm: 0 }
+                        }}
+                    >
+                        Commencer maintenant
+                    </GradientButton>
+                    <Button 
+                        variant="contained"
+                        sx={{
+                            background: 'linear-gradient(90deg, #64748B 0%, #94A3B8 100%)',
+                            borderRadius: 3,
+                            padding: '12px 32px',
+                            fontWeight: 600,
+                            textTransform: 'none',
+                            fontSize: '1rem',
+                            transition: 'all 0.3s ease',
+                            '&:hover': {
+                                transform: 'translateY(-2px)',
+                                boxShadow: '0 10px 20px rgba(100, 116, 139, 0.3)',
+                                background: 'linear-gradient(90deg, #475569 0%, #64748B 100%)',
+                            },
+                            color: 'white'
+                        }}
+                    >
+                        En savoir plus
+                    </Button>
+                </Box>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+                <Box sx={{ 
+                    position: 'relative',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>
+                    {/* Mockup de téléphone */}
+                    <Box sx={{
+                        position: 'relative',
+                        width: { xs: '280px', sm: '320px', md: '360px' },
+                        height: { xs: '560px', sm: '640px', md: '720px' },
+                        borderRadius: '40px',
+                        background: 'linear-gradient(135deg, #1E293B 0%, #334155 100%)',
+                        boxShadow: `
+                            0 0 0 1px rgba(255,255,255,0.1),
+                            0 20px 60px rgba(0,0,0,0.5),
+                            inset 0 0 0 1px rgba(255,255,255,0.05)
+                        `,
+                        overflow: 'hidden',
+                        border: 'none'
+                    }}>
+                        {/* Écran du téléphone avec l'image */}
+                        <Box sx={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            overflow: 'hidden',
+                            background: '#0F172A'
+                        }}>
+                            <img
+                                src={cover}
+                                alt="yónnee"
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    objectPosition: 'center'
+                                }}
+                            />
+                            {/* Overlay avec stats */}
+                            <Box sx={{
+                                position: 'absolute',
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                background: 'linear-gradient(to top, rgba(15,23,42,0.95), transparent)',
+                                p: 3,
+                                pt: 6
+                            }}>
+                                <Box sx={{ 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    justifyContent: 'center',
+                                    gap: 1,
+                                    mb: 2 
+                                }}>
+                                  
+                                  
+                                </Box>
+                                <Box sx={{ 
+                                    display: 'flex', 
+                                    justifyContent: 'space-around',
+                                    textAlign: 'center'
+                                }}>
+                                    
+                                </Box>
+                            </Box>
+                        </Box>
+                    </Box>
+
+                    {/* Éléments décoratifs flottants */}
+                    <Box sx={{
+                        position: 'absolute',
+                        top: '-40px',
+                        right: '-30px',
+                        width: '120px',
+                        height: '120px',
+                        borderRadius: '50%',
+                        background: 'radial-gradient(circle, rgba(33,203,243,0.2) 0%, rgba(33,203,243,0) 70%)',
+                        zIndex: -1
+                    }} />
+                    <Box sx={{
+                        position: 'absolute',
+                        bottom: '-20px',
+                        left: '-20px',
+                        width: '80px',
+                        height: '80px',
+                        borderRadius: '50%',
+                        background: 'radial-gradient(circle, rgba(25,118,210,0.2) 0%, rgba(25,118,210,0) 70%)',
+                        zIndex: -1
+                    }} />
+                </Box>
+            </Grid>
+        </Grid>
+
+        {/* Section supplémentaire - Processus */}
+        <Box sx={{ mt: 12 }}>
+            <Typography variant="h3" sx={{ 
+                textAlign: 'center',
+                fontWeight: 800,
+                mb: 6,
+                background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+            }}>
+                Comment ça marche ?
+            </Typography>
+            
+            <Grid container spacing={4}>
+                {[
+                    { 
+                        icon: <FaSearch style={{ fontSize: 28, color: 'white' }} />, 
+                        title: 'Recherchez', 
+                        desc: 'Trouvez un voyageur vers votre destination' 
+                    },
+                    { 
+                        icon: <GiCardboardBoxClosed style={{ fontSize: 28, color: 'white' }} />, 
+                        title: 'Réservez', 
+                        desc: 'Choisissez le nombre de kilos nécessaires' 
+                    },
+                    { 
+                        icon: <FaUser style={{ fontSize: 28, color: 'white' }} />, 
+                        title: 'Rencontrez', 
+                        desc: 'Organisez la remise du colis en personne' 
+                    },
+                    { 
+                        icon: <IoAirplaneSharp style={{ fontSize: 28, color: 'white' }} />, 
+                        title: 'Suivez', 
+                        desc: 'Suivez votre colis en temps réel' 
+                    }
+                ].map((step, index) => (
+                    <Grid item xs={12} sm={6} md={3} key={index}>
+                        <Box sx={{
+                            textAlign: 'center',
+                            p: 4,
+                            borderRadius: 3,
+                            background: 'rgba(255,255,255,0.03)',
+                            height: '100%',
+                            transition: 'all 0.3s ease',
+                            '&:hover': {
+                                transform: 'translateY(-8px)',
+                                background: 'rgba(33, 203, 243, 0.1)',
+                            }
+                        }}>
+                            <Box sx={{
+                                width: 70,
+                                height: 70,
+                                borderRadius: '50%',
+                                background: 'linear-gradient(135deg, #1976d2 0%, #21CBF3 100%)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                mx: 'auto',
+                                mb: 3,
+                                boxShadow: '0 8px 25px rgba(33, 203, 243, 0.4)'
+                            }}>
+                                {step.icon}
+                            </Box>
+                            <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+                                {step.title}
+                            </Typography>
+                            <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem' }}>
+                                {step.desc}
+                            </Typography>
+                        </Box>
+                    </Grid>
+                ))}
+            </Grid>
+        </Box>
+    </Container>
+</Box>
+            {/* Modal de réservation moderne */}
+            <Modal
+                open={modalOpen}
+                onClose={handleCloseModal}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={modalOpen}>
+                    <Box sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: { xs: '95%', sm: 600 },
+                        bgcolor: 'rgba(15, 23, 42, 0.95)',
+                        backdropFilter: 'blur(20px)',
+                        borderRadius: 4,
+                        boxShadow: '0 40px 80px rgba(0,0,0,0.5)',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        p: 4,
+                        outline: 'none'
+                    }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+                            <Typography variant="h5" sx={{ fontWeight: 700 }}>
+                                📦 Réserver des kilos
+                            </Typography>
+                            <IconButton onClick={handleCloseModal} sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                                <IoClose />
+                            </IconButton>
+                        </Box>
+
+                        {localSelectedSubmission && (
+                            <>
+                                {/* Détails du voyage */}
+                                <Box sx={{ 
+                                    mb: 4,
+                                    p: 3,
+                                    borderRadius: 3,
+                                    background: 'rgba(33, 203, 243, 0.1)',
+                                    border: '1px solid rgba(33, 203, 243, 0.2)'
+                                }}>
+                                    <Grid container spacing={2} alignItems="center">
+                                        <Grid item xs={12} md={8}>
+                                            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                                                {localSelectedSubmission.from} → {localSelectedSubmission.to}
+                                            </Typography>
+                                            <Box sx={{ display: 'flex', gap: 3, alignItems: 'center' }}>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <MdAccessTime style={{ color: '#21CBF3' }} />
+                                                    <Typography variant="body2">
+                                                        {localSelectedSubmission.departure_date}
+                                                    </Typography>
+                                                </Box>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                    <FaWeightHanging style={{ color: '#21CBF3' }} />
+                                                    <Typography variant="body2">
+                                                        {localSelectedSubmission.kilos} kg disponibles
+                                                    </Typography>
+                                                </Box>
+                                            </Box>
+                                        </Grid>
+                                        <Grid item xs={12} md={4} sx={{ textAlign: 'right' }}>
+                                            <Typography variant="h4" sx={{ 
+                                                fontWeight: 700,
+                                                background: 'linear-gradient(90deg, #1976d2 0%, #21CBF3 100%)',
+                                                WebkitBackgroundClip: 'text',
+                                                WebkitTextFillColor: 'transparent'
+                                            }}>
+                                                {localSelectedSubmission.price} F CFA
+                                                <Typography component="span" sx={{ fontSize: '0.875rem', ml: 1 }}>
+                                                    /kg
+                                                </Typography>
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
+                                </Box>
+
+                                {/* Formulaire */}
+                                <form onSubmit={handleSubmit}>
+                                    <Typography variant="subtitle1" sx={{ mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
+                                        <FaUser style={{ color: '#21CBF3' }} />
+                                        Vos coordonnées
+                                    </Typography>
+
+                                    <Grid container spacing={3} sx={{ mb: 4 }}>
+                                        <Grid item xs={12} sm={6}>
+                                            <TextField
+                                                fullWidth
+                                                label="Nom"
+                                                variant="outlined"
+                                                value={nom}
+                                                onChange={(e) => setNom(e.target.value)}
+                                                required
+                                                sx={{
+                                                    '& .MuiOutlinedInput-root': {
+                                                        borderRadius: 2,
+                                                        background: 'rgba(255,255,255,0.05)',
+                                                        border: '1px solid rgba(255,255,255,0.1)',
+                                                        color: 'white',
+                                                        '&:hover': {
+                                                            borderColor: '#21CBF3',
+                                                        }
+                                                    }
+                                                }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={6}>
+                                            <TextField
+                                                fullWidth
+                                                label="Prénom"
+                                                variant="outlined"
+                                                value={prenom}
+                                                onChange={(e) => setPrenom(e.target.value)}
+                                                required
+                                                sx={{
+                                                    '& .MuiOutlinedInput-root': {
+                                                        borderRadius: 2,
+                                                        background: 'rgba(255,255,255,0.05)',
+                                                        border: '1px solid rgba(255,255,255,0.1)',
+                                                        color: 'white',
+                                                        '&:hover': {
+                                                            borderColor: '#21CBF3',
+                                                        }
+                                                    }
+                                                }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={6}>
+                                            <TextField
+                                                fullWidth
+                                                label="Email"
+                                                type="email"
+                                                variant="outlined"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                                required
+                                                sx={{
+                                                    '& .MuiOutlinedInput-root': {
+                                                        borderRadius: 2,
+                                                        background: 'rgba(255,255,255,0.05)',
+                                                        border: '1px solid rgba(255,255,255,0.1)',
+                                                        color: 'white',
+                                                        '&:hover': {
+                                                            borderColor: '#21CBF3',
+                                                        }
+                                                    }
+                                                }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={6}>
+                                            <TextField
+                                                fullWidth
+                                                label="Téléphone"
+                                                type="tel"
+                                                variant="outlined"
+                                                value={num}
+                                                onChange={(e) => setNum(e.target.value)}
+                                                required
+                                                sx={{
+                                                    '& .MuiOutlinedInput-root': {
+                                                        borderRadius: 2,
+                                                        background: 'rgba(255,255,255,0.05)',
+                                                        border: '1px solid rgba(255,255,255,0.1)',
+                                                        color: 'white',
+                                                        '&:hover': {
+                                                            borderColor: '#21CBF3',
+                                                        }
+                                                    }
+                                                }}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <TextField
+                                                fullWidth
+                                                label="Nombre de kilos requis"
+                                                type="number"
+                                                variant="outlined"
+                                                value={kilos}
+                                                onChange={(e) => setKilos(e.target.value)}
+                                                required
+                                                sx={{
+                                                    '& .MuiOutlinedInput-root': {
+                                                        borderRadius: 2,
+                                                        background: 'rgba(255,255,255,0.05)',
+                                                        border: '1px solid rgba(255,255,255,0.1)',
+                                                        color: 'white',
+                                                        '&:hover': {
+                                                            borderColor: '#21CBF3',
+                                                        }
+                                                    }
+                                                }}
+                                            />
+                                        </Grid>
+                                    </Grid>
+
+                                    <GradientButton
+                                        type="submit"
+                                        fullWidth
+                                        startIcon={<FaRegCalendar />}
+                                    >
+                                        Réserver maintenant
+                                    </GradientButton>
                                 </form>
-                            </div>
-                        </div>
-                    </div>
-                </Container>
-            </footer>
+                            </>
+                        )}
+                    </Box>
+                </Fade>
+            </Modal>
 
-            <footer className="bg-dark text-light py-3">
-                <Container className="text-center">
-                    <p>Copyright &copy; Tous droits réservés.</p>
-                    <p>Conçu avec <span className="text-danger">&hearts;</span> par DEFAR</p>
-                    <div className="social-links">
-                        <a href="#" className="social-icon bg-primary me-2"><i className="fab fa-facebook-f"></i></a>
-                        <a href="#" className="social-icon bg-info me-2"><i className="fab fa-twitter"></i></a>
-                        <a href="#" className="social-icon bg-danger me-2"><i className="fab fa-instagram"></i></a>
-                        <a href="#" className="social-icon bg-primary"><i className="fab fa-linkedin-in"></i></a>
-                    </div>
-                </Container>
-            </footer>
-        </div>
+            {/* Footer */}
+          {/* Footer */}
+<Box sx={{ 
+    py: 10,
+    background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(10, 15, 30, 0.95) 100%)',
+    borderTop: '1px solid rgba(255,255,255,0.12)',
+    position: 'relative',
+    overflow: 'hidden',
+    '&:before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: '1px',
+        background: 'linear-gradient(90deg, transparent, rgba(33, 203, 243, 0.5), transparent)'
+    },
+    '&:after': {
+        content: '""',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: '1px',
+        background: 'linear-gradient(90deg, transparent, rgba(33, 203, 243, 0.3), transparent)'
+    }
+}}>
+    {/* Effets de fond subtils */}
+    <Box sx={{
+        position: 'absolute',
+        top: '10%',
+        left: '15%',
+        width: '200px',
+        height: '200px',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(33, 203, 243, 0.05) 0%, transparent 70%)',
+        filter: 'blur(30px)',
+        opacity: 0.4,
+        zIndex: 0
+    }} />
+    
+    <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+        <Grid container spacing={6}>
+            {/* Colonne Logo & Description - Version profonde */}
+            <Grid item xs={12} md={4}>
+                <Box sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: 2, 
+                    mb: 4,
+                    position: 'relative'
+                }}>
+                    <Box sx={{
+                        position: 'relative',
+                        '&:before': {
+                            content: '""',
+                            position: 'absolute',
+                            top: '-5px',
+                            left: '-5px',
+                            right: '-5px',
+                            bottom: '-5px',
+                            background: 'linear-gradient(45deg, #21CBF3, #1976d2, #21CBF3)',
+                            borderRadius: '50%',
+                            zIndex: 0,
+                            opacity: 0.3,
+                            filter: 'blur(8px)'
+                        }
+                    }}>
+                        <Box sx={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: '50%',
+                            background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(10, 15, 30, 0.9) 100%)',
+                            border: '1px solid rgba(33, 203, 243, 0.3)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            position: 'relative',
+                            zIndex: 1,
+                            boxShadow: 'inset 0 0 20px rgba(33, 203, 243, 0.2), 0 0 30px rgba(33, 203, 243, 0.15)'
+                        }}>
+                            <IoAirplaneSharp style={{ 
+                                color: '#21CBF3',
+                                fontSize: 24,
+                                filter: 'drop-shadow(0 0 8px rgba(33, 203, 243, 0.5))'
+                            }} />
+                        </Box>
+                    </Box>
+                    
+                    <Typography variant="h5" sx={{ 
+                        fontWeight: 800,
+                        background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 50%, #FFFFFF 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundSize: '200% auto',
+                        animation: 'textShine 3s ease-in-out infinite alternate',
+                        letterSpacing: '-0.5px',
+                        position: 'relative',
+                        '&:after': {
+                            content: '""',
+                            position: 'absolute',
+                            bottom: -4,
+                            left: 0,
+                            width: '40%',
+                            height: '2px',
+                            background: 'linear-gradient(90deg, #21CBF3, transparent)',
+                            borderRadius: 1
+                        }
+                    }}>
+                        yónnee
+                    </Typography>
+                </Box>
+                
+                <Typography sx={{ 
+                    color: 'rgba(255,255,255,0.85)', 
+                    mb: 4,
+                    fontSize: '1.05rem',
+                    lineHeight: 1.7,
+                    textShadow: '0 2px 10px rgba(0,0,0,0.3)'
+                }}>
+                    Connectez directement avec des voyageurs vérifiés pour envoyer vos colis 
+                    <Box component="span" sx={{ 
+                        color: '#21CBF3', 
+                        fontWeight: 600,
+                        display: 'inline',
+                        textShadow: '0 0 10px rgba(33, 203, 243, 0.5)'
+                    }}>
+                        {' '}jusqu'à 70% moins cher
+                    </Box>
+                    {' '}que les services traditionnels
+                </Typography>
+                
+               
+            </Grid>
+            
+            {/* Colonne Contact - Version profonde */}
+            <Grid item xs={12} md={4}>
+                <Typography variant="h6" sx={{ 
+                    fontWeight: 700, 
+                    mb: 4,
+                    background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    position: 'relative',
+                    display: 'inline-block',
+                    '&:before': {
+                        content: '""',
+                        position: 'absolute',
+                        bottom: -6,
+                        left: 0,
+                        width: '30px',
+                        height: '3px',
+                        background: '#21CBF3',
+                        borderRadius: 2,
+                        boxShadow: '0 0 10px rgba(33, 203, 243, 0.5)'
+                    }
+                }}>
+                    Contact
+                </Typography>
+                
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                    {[
+                        { 
+                            icon: <MdOutlineEmail style={{ fontSize: 22 }} />, 
+                            value: 'contact@yonnee.com',
+                            color: '#21CBF3'
+                        },
+                     
+                    ].map((contact, index) => (
+                        <Box 
+                            key={index}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 3,
+                                p: 3,
+                                borderRadius: 3,
+                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                                position: 'relative',
+                                overflow: 'hidden',
+                                '&:before': {
+                                    content: '""',
+                                    position: 'absolute',
+                                    left: 0,
+                                    top: 0,
+                                    bottom: 0,
+                                    width: '3px',
+                                    background: contact.color,
+                                    opacity: 0,
+                                    transition: 'opacity 0.4s ease'
+                                },
+                                '&:hover': {
+                                    transform: 'translateX(8px)',
+                                    background: 'rgba(255,255,255,0.05)',
+                                    borderColor: 'rgba(33, 203, 243, 0.2)',
+                                    '&:before': {
+                                        opacity: 0.8
+                                    },
+                                    '& .contact-circle': {
+                                        transform: 'scale(1.1) rotate(5deg)',
+                                        boxShadow: `0 0 25px ${contact.color}40, inset 0 0 15px ${contact.color}20`
+                                    }
+                                }
+                            }}
+                        >
+                            <Box className="contact-circle" sx={{
+                                width: 48,
+                                height: 48,
+                                borderRadius: '50%',
+                                background: `linear-gradient(135deg, ${contact.color}20 0%, ${contact.color}10 100%)`,
+                                border: `1px solid ${contact.color}30`,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}>
+                                {contact.icon}
+                            </Box>
+                            <Typography sx={{ 
+                                color: 'rgba(255,255,255,0.95)',
+                                fontWeight: 600,
+                                fontSize: '1.05rem',
+                                textShadow: '0 2px 5px rgba(0,0,0,0.2)'
+                            }}>
+                                {contact.value}
+                            </Typography>
+                        </Box>
+                    ))}
+                </Box>
+            </Grid>
+            
+            {/* Colonne Social & Apps - Version profonde */}
+            <Grid item xs={12} md={4}>
+                <Typography variant="h6" sx={{ 
+                    fontWeight: 700, 
+                    mb: 4,
+                    background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    position: 'relative',
+                    display: 'inline-block',
+                    '&:before': {
+                        content: '""',
+                        position: 'absolute',
+                        bottom: -6,
+                        left: 0,
+                        width: '30px',
+                        height: '3px',
+                        background: '#21CBF3',
+                        borderRadius: 2,
+                        boxShadow: '0 0 10px rgba(33, 203, 243, 0.5)'
+                    }
+                }}>
+                    Suivez-nous
+                </Typography>
+                
+                <Box sx={{ display: 'flex', gap: 2, mb: 5 }}>
+                    {[
+                        { 
+                            icon: <FaFacebookF style={{ fontSize: 20 }} />, 
+                            color: '#1877F2', 
+                            name: 'Facebook'
+                        },
+                        { 
+                            icon: <FaTwitter style={{ fontSize: 20 }} />, 
+                            color: '#1DA1F2', 
+                            name: 'Twitter'
+                        },
+                        { 
+                            icon: <FaInstagram style={{ fontSize: 20 }} />, 
+                            color: '#E4405F', 
+                            name: 'Instagram'
+                        },
+                        { 
+                            icon: <FaLinkedinIn style={{ fontSize: 20 }} />, 
+                            color: '#0A66C2', 
+                            name: 'LinkedIn'
+                        }
+                    ].map((social) => (
+                        <a 
+                            key={social.name}
+                            href={social.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ textDecoration: 'none' }}
+                        >
+                            <Box sx={{
+                                width: 52,
+                                height: 52,
+                                borderRadius: 3,
+                                background: 'rgba(255,255,255,0.03)',
+                                border: '1px solid rgba(255,255,255,0.08)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                                position: 'relative',
+                                overflow: 'hidden',
+                                '&:hover': {
+                                    transform: 'translateY(-6px) scale(1.1)',
+                                    background: `${social.color}20`,
+                                    borderColor: `${social.color}40`,
+                                    boxShadow: `0 15px 35px ${social.color}30, inset 0 0 20px ${social.color}15`,
+                                    '&:before': {
+                                        opacity: 0.15
+                                    },
+                                    '& .social-icon': {
+                                        transform: 'scale(1.2)',
+                                        filter: `drop-shadow(0 0 15px ${social.color})`
+                                    }
+                                },
+                                '&:before': {
+                                    content: '""',
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    background: `linear-gradient(135deg, ${social.color}30, transparent)`,
+                                    opacity: 0,
+                                    transition: 'opacity 0.4s ease'
+                                }
+                            }}>
+                                <Box className="social-icon" sx={{
+                                    color: 'white',
+                                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                                }}>
+                                    {social.icon}
+                                </Box>
+                            </Box>
+                        </a>
+                    ))}
+                </Box>
+                
+              
+               
+            </Grid>
+        </Grid>
+        
+        {/* Footer bas avec effets premium */}
+        <Box sx={{ 
+            mt: 8, 
+            pt: 5, 
+            borderTop: '1px solid rgba(255,255,255,0.1)',
+            position: 'relative',
+            '&:before': {
+                content: '""',
+                position: 'absolute',
+                top: -1,
+                left: '25%',
+                right: '25%',
+                height: '1px',
+                background: 'linear-gradient(90deg, transparent, rgba(33, 203, 243, 0.4), transparent)'
+            }
+        }}>
+            <Typography sx={{ 
+                color: 'rgba(255,255,255,0.5)', 
+                mb: 3,
+                fontSize: '0.9rem',
+                textShadow: '0 2px 5px rgba(0,0,0,0.2)',
+                textAlign: 'center'
+            }}>
+                © {new Date().getFullYear()} yónnee. Tous droits réservés.
+            </Typography>
+            
+            <Box sx={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                gap: 4, 
+                flexWrap: 'wrap',
+                position: 'relative'
+            }}>
+                {['Politique de confidentialité', 'Conditions d\'utilisation', 'Mentions légales', 'Cookies'].map((item, index) => (
+                    <Typography 
+                        key={index}
+                        sx={{ 
+                            color: 'rgba(255,255,255,0.6)', 
+                            fontSize: '0.85rem',
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease',
+                            position: 'relative',
+                            padding: '4px 8px',
+                            borderRadius: 1,
+                            '&:hover': {
+                                color: '#21CBF3',
+                                background: 'rgba(33, 203, 243, 0.1)',
+                                transform: 'translateY(-2px)',
+                                '&:before': {
+                                    width: '100%',
+                                    opacity: 1
+                                }
+                            },
+                            '&:before': {
+                                content: '""',
+                                position: 'absolute',
+                                bottom: -2,
+                                left: '10%',
+                                width: '0%',
+                                height: '2px',
+                                background: 'linear-gradient(90deg, transparent, #21CBF3, transparent)',
+                                borderRadius: 1,
+                                transition: 'all 0.3s ease',
+                                opacity: 0
+                            }
+                        }}
+                    >
+                        {item}
+                    </Typography>
+                ))}
+            </Box>
+            
+            {/* Signature élégante */}
+            <Box sx={{ 
+                mt: 4,
+                pt: 3,
+                borderTop: '1px solid rgba(255,255,255,0.05)',
+                textAlign: 'center'
+            }}>
+                <Typography variant="caption" sx={{ 
+                    color: 'rgba(255,255,255,0.4)',
+                    fontSize: '0.75rem',
+                    letterSpacing: '1px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 1
+                }}>
+                    <Box component="span" sx={{ 
+                        color: '#21CBF3',
+                        fontWeight: 600
+                    }}>
+                        ✈️
+                    </Box>
+                    Connecter le monde, un colis à la fois
+                    <Box component="span" sx={{ 
+                        color: '#21CBF3',
+                        fontWeight: 600
+                    }}>
+                        ✈️
+                    </Box>
+                </Typography>
+            </Box>
+        </Box>
+    </Container>
+    
+    {/* Animation CSS globale */}
+    <style jsx global>{`
+        @keyframes textShine {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+    `}</style>
+</Box>
+        </Box>
     );
 };
 
