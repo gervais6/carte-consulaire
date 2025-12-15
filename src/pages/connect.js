@@ -28,7 +28,6 @@ import {
   People
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
-import logo from '../pages/Logo Yonnee.png';
 import '../pages/navbar.css';
 import axios from 'axios';
 import { useAuth } from './AuthContext'; 
@@ -248,17 +247,14 @@ const LoginForm = () => {
                         border: '1px solid rgba(33, 203, 243, 0.2)',
                       }
                     }}>
-                      <img 
-                        src={logo} 
-                        alt="Logo yónnee" 
-                        style={{ 
-                          width: 45, 
-                          height: 45,
-                          position: 'relative',
-                          zIndex: 2,
-                          filter: 'brightness(0) invert(1)'
-                        }} 
-                      />
+                      {/* Icône d'avion à la place de l'image */}
+                      <FlightTakeoff style={{ 
+                        position: 'relative',
+                        zIndex: 2,
+                        color: '#21CBF3',
+                        fontSize: 35,
+                        filter: 'drop-shadow(0 0 8px rgba(33, 203, 243, 0.5))'
+                      }} />
                     </Box>
                     <Typography variant="h3" sx={{
                       fontWeight: 900,
