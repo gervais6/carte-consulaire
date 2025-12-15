@@ -64,7 +64,7 @@ const GlassCard = styled(Paper)(({ theme }) => ({
     background: 'linear-gradient(90deg, #1976d2 0%, #21CBF3 100%)',
     borderRadius: '24px 24px 0 0',
     [theme.breakpoints.down('sm')]: {
-      display: 'none', // Supprime la bordure bleue sur mobile
+      display: 'none',
     },
   },
   '&:after': {
@@ -82,16 +82,24 @@ const GlassCard = styled(Paper)(({ theme }) => ({
     },
   },
   [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(4),
+    padding: theme.spacing(3),
     borderRadius: 0,
     margin: 0,
     backdropFilter: 'blur(10px)',
-    height: '100%',
+    height: '100vh', // Changé à 100vh
+    width: '100vw', // Changé à 100vw
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start', // Changé de 'center' à 'flex-start'
     boxShadow: 'none',
     border: 'none',
+    overflowY: 'auto', // Permet le défilement si nécessaire
+    position: 'fixed', // Changé à fixed pour couvrir tout l'écran
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1000,
   },
 }));
 
@@ -211,27 +219,41 @@ const MotsDePasseOublier = () => {
         },
       }
     }}>
+      {/* Effets décoratifs - masqués sur mobile */}
+      <Box sx={{
+        position: 'absolute',
+        top: '20%',
+        left: '5%',
+        width: '300px',
+        height: '300px',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(25, 118, 210, 0.05) 0%, transparent 70%)',
+        filter: 'blur(40px)',
+        [theme.breakpoints.down('sm')]: {
+          display: 'none',
+        },
+      }} />
       
-      <Container 
-        maxWidth="lg" 
-        sx={{ 
-          px: { xs: 0, sm: 2, md: 3 },
-          height: { xs: '100%', sm: 'auto' },
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        <Fade in={true} timeout={800}>
-          <Box sx={{ 
-            width: '100%',
-            height: { xs: '100%', sm: 'auto' },
+      {!isMobile ? (
+        // Version Desktop/Tablet
+        <Container 
+          maxWidth="lg" 
+          sx={{ 
+            px: { xs: 0, sm: 2, md: 3 },
+            height: 'auto',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
-          }}>
-            {/* Version Desktop/Tablet */}
-            {!isMobile ? (
+          }}
+        >
+          <Fade in={true} timeout={800}>
+            <Box sx={{ 
+              width: '100%',
+              height: 'auto',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
               <Box sx={{ 
                 display: 'flex', 
                 width: '100%', 
@@ -316,78 +338,88 @@ const MotsDePasseOublier = () => {
                   </GlassCard>
                 </Box>
               </Box>
-            ) : (
-              /* Version Mobile - Plein écran */
-              <GlassCard sx={{ 
-                width: '100%',
-                height: '100%',
+            </Box>
+          </Fade>
+        </Container>
+      ) : (
+        // Version Mobile - Plein écran
+        <Box sx={{
+          width: '100vw',
+          height: '100vh',
+          position: 'relative',
+        }}>
+          <GlassCard>
+            {/* En-tête mobile */}
+            <Box sx={{ 
+              textAlign: 'center', 
+              mb: 3,
+              px: 2,
+              pt: 2,
+              flexShrink: 0
+            }}>
+              <Box sx={{
+                width: 60,
+                height: 60,
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, rgba(33, 203, 243, 0.2) 0%, rgba(25, 118, 210, 0.1) 100%)',
+                border: '1px solid rgba(33, 203, 243, 0.3)',
                 display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center'
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 16px',
+                overflow: 'hidden',
+                position: 'relative',
+                boxShadow: 'inset 0 0 20px rgba(33, 203, 243, 0.15), 0 0 30px rgba(33, 203, 243, 0.1)',
               }}>
-                {/* En-tête mobile */}
-                <Box sx={{ 
-                  textAlign: 'center', 
-                  mb: 4,
-                  px: 2
-                }}>
-                  <Box sx={{
-                    width: 70,
-                    height: 70,
-                    borderRadius: '50%',
-                    background: 'linear-gradient(135deg, rgba(33, 203, 243, 0.2) 0%, rgba(25, 118, 210, 0.1) 100%)',
-                    border: '1px solid rgba(33, 203, 243, 0.3)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0 auto 16px',
-                    overflow: 'hidden',
-                    position: 'relative',
-                    boxShadow: 'inset 0 0 20px rgba(33, 203, 243, 0.15), 0 0 30px rgba(33, 203, 243, 0.1)',
-                  }}>
-                    <FlightTakeoff style={{ 
-                      position: 'relative',
-                      zIndex: 2,
-                      color: '#21CBF3',
-                      fontSize: 32,
-                      filter: 'drop-shadow(0 0 8px rgba(33, 203, 243, 0.5))'
-                    }} />
-                  </Box>
-                  
-                  <Typography variant="h4" sx={{ 
-                    color: 'white',
-                    mb: 2,
-                    fontWeight: 800,
-                    lineHeight: 1.2
-                  }}>
-                    Mot de passe oublié ?
-                  </Typography>
-                  
-                  <Typography variant="body1" sx={{ 
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    mb: 3,
-                    fontSize: '1rem',
-                    lineHeight: 1.5
-                  }}>
-                    Entrez votre email pour recevoir un lien de réinitialisation.
-                  </Typography>
-                </Box>
+                <FlightTakeoff style={{ 
+                  position: 'relative',
+                  zIndex: 2,
+                  color: '#21CBF3',
+                  fontSize: 28,
+                  filter: 'drop-shadow(0 0 8px rgba(33, 203, 243, 0.5))'
+                }} />
+              </Box>
+              
+              <Typography variant="h5" sx={{ 
+                color: 'white',
+                mb: 1,
+                fontWeight: 800,
+                lineHeight: 1.2
+              }}>
+                Mot de passe oublié ?
+              </Typography>
+              
+              <Typography variant="body2" sx={{ 
+                color: 'rgba(255, 255, 255, 0.8)',
+                mb: 2,
+                fontSize: '0.9rem',
+                lineHeight: 1.4
+              }}>
+                Entrez votre email pour recevoir un lien de réinitialisation.
+              </Typography>
+            </Box>
 
-                {/* Formulaire mobile */}
-                <FormContent 
-                  formData={formData}
-                  handleChange={handleChange}
-                  handleSubmit={handleSubmit}
-                  isSubmitting={isSubmitting}
-                  error={error}
-                  success={success}
-                  isMobile={isMobile}
-                />
-              </GlassCard>
-            )}
-          </Box>
-        </Fade>
-      </Container>
+            {/* Formulaire mobile - prend tout l'espace */}
+            <Box sx={{ 
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              overflowY: 'auto',
+              pb: 2
+            }}>
+              <FormContent 
+                formData={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+                error={error}
+                success={success}
+                isMobile={isMobile}
+              />
+            </Box>
+          </GlassCard>
+        </Box>
+      )}
 
       {/* Animations CSS */}
       <style jsx global>{`
@@ -420,18 +452,29 @@ const MotsDePasseOublier = () => {
 
         /* Optimisations pour mobile */
         @media (max-width: 600px) {
-          html {
-            font-size: 16px;
+          html, body, #root {
+            height: 100% !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
           }
           
           body {
             -webkit-tap-highlight-color: transparent;
-            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
           }
           
           /* Empêche le zoom sur les inputs iOS */
           input, select, textarea {
             font-size: 16px !important;
+          }
+          
+          /* Empêche le pull-to-refresh sur mobile */
+          * {
+            overscroll-behavior: none;
           }
         }
       `}</style>
@@ -453,24 +496,22 @@ const FormContent = ({
 
   return (
     <>
-      <Typography variant="h5" sx={{ 
-        color: 'white', 
-        mb: 4,
-        fontWeight: 700,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: isMobile ? 'center' : 'flex-start',
-        gap: 2,
-        fontSize: isMobile ? '1.3rem' : '1.5rem',
-        flexDirection: isMobile ? 'column' : 'row',
-        textAlign: isMobile ? 'center' : 'left'
-      }}>
-        <LockReset sx={{ 
-          color: '#21CBF3',
-          fontSize: isMobile ? 28 : 32
-        }} />
-        {isMobile ? 'Réinitialisation' : 'Réinitialiser votre mot de passe'}
-      </Typography>
+      {!isMobile && (
+        <Typography variant="h5" sx={{ 
+          color: 'white', 
+          mb: 4,
+          fontWeight: 700,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2
+        }}>
+          <LockReset sx={{ 
+            color: '#21CBF3',
+            fontSize: 32
+          }} />
+          Réinitialiser votre mot de passe
+        </Typography>
+      )}
       
       {/* Message d'erreur */}
       {error && (
@@ -515,7 +556,7 @@ const FormContent = ({
       )}
       
       {!success ? (
-        <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+        <form onSubmit={handleSubmit} style={{ width: '100%', flex: 1 }}>
           {/* Email */}
           <Box sx={{ mb: 4 }}>
             <AnimatedInput
