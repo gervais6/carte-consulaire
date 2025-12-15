@@ -22,7 +22,7 @@ import {
   Email,
   Login,
   Security,
-  RocketLaunch,
+  FlightTakeoff,
   LocalShipping,
   Payment,
   People
@@ -291,7 +291,7 @@ const LoginForm = () => {
                     Accédez à votre espace personnel pour gérer vos envois de colis et suivre vos transactions en temps réel.
                   </Typography>
                   
-                  {/* Avantages avec icônes MUI */}
+                  {/* Avantages avec icônes MUI - Icône d'avion ajoutée */}
                   <Box sx={{ 
                     display: 'flex', 
                     flexDirection: 'column',
@@ -300,7 +300,7 @@ const LoginForm = () => {
                   }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                       <IconContainer>
-                        <RocketLaunch fontSize="small" />
+                        <FlightTakeoff fontSize="small" />
                       </IconContainer>
                       <Typography variant="body1" sx={{ color: 'rgba(255, 255, 255, 0.9)' }}>
                         Accès instantané à vos voyages
