@@ -1012,6 +1012,11 @@ const Navbar = () => {
                                         p: 3,
                                         borderRadius: 2,
                                         background: 'rgba(255,255,255,0.05)',
+                                        transition: 'all 0.3s ease',
+                                        '&:hover': {
+                                            transform: 'translateX(8px)',
+                                            background: 'rgba(33, 203, 243, 0.1)',
+                                        }
                                     }}>
                                         <Box sx={{
                                             width: { xs: 44, sm: 50 },
@@ -1046,30 +1051,51 @@ const Navbar = () => {
                                 ))}
                             </Box>
 
-                            {/* Boutons */}
-                            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                                <GradientButton 
-                                    fullWidth={isSmallMobile}
-                                    sx={{ 
-                                        mb: { xs: 2, sm: 0 },
-                                        flex: isSmallMobile ? 1 : 'none'
-                                    }}
-                                >
-                                    Commencer maintenant
-                                </GradientButton>
-                                <Button 
-                                    variant="contained"
-                                    fullWidth={isSmallMobile}
-                                    sx={{
-                                        background: 'linear-gradient(90deg, #64748B 0%, #94A3B8 100%)',
-                                        borderRadius: 3,
-                                        padding: '12px 32px',
-                                        fontWeight: 600,
-                                        flex: isSmallMobile ? 1 : 'none'
-                                    }}
-                                >
-                                    En savoir plus
-                                </Button>
+                            {/* Boutons - NOUVELLE DISPOSITION */}
+                            <Box sx={{ 
+                                display: 'flex', 
+                                flexDirection: isSmallMobile ? 'column' : 'row', 
+                                gap: 2,
+                                position: 'relative'
+                            }}>
+                                {/* Premier bouton en haut sur mobile */}
+                                <Box sx={{
+                                    mb: isSmallMobile ? 2 : 0,
+                                    width: isSmallMobile ? '100%' : 'auto'
+                                }}>
+                                    <GradientButton 
+                                        fullWidth={isSmallMobile}
+                                        sx={{ 
+                                            py: { xs: 1.5, sm: 1.8 },
+                                            px: { xs: 3, sm: 6 },
+                                        }}
+                                    >
+                                        Commencer maintenant
+                                    </GradientButton>
+                                </Box>
+                                
+                                {/* Deuxième bouton en bas sur mobile */}
+                                <Box sx={{
+                                    mt: isSmallMobile ? 2 : 0,
+                                    width: isSmallMobile ? '100%' : 'auto'
+                                }}>
+                                    <Button 
+                                        variant="contained"
+                                        fullWidth={isSmallMobile}
+                                        sx={{
+                                            background: 'linear-gradient(90deg, #64748B 0%, #94A3B8 100%)',
+                                            borderRadius: 3,
+                                            py: { xs: 1.5, sm: 1.8 },
+                                            px: { xs: 3, sm: 6 },
+                                            fontWeight: 600,
+                                            '&:hover': {
+                                                background: 'linear-gradient(90deg, #475569 0%, #64748B 100%)',
+                                            },
+                                        }}
+                                    >
+                                        En savoir plus
+                                    </Button>
+                                </Box>
                             </Box>
                         </Grid>
 
@@ -1105,7 +1131,7 @@ const Navbar = () => {
                         </Grid>
                     </Grid>
 
-                    {/* Processus */}
+                    {/* Processus - NOUVELLE DISPOSITION */}
                     <Box sx={{ mt: { xs: 8, sm: 12 } }}>
                         <Typography variant="h3" sx={{ 
                             textAlign: 'center',
@@ -1119,53 +1145,153 @@ const Navbar = () => {
                             Comment ça marche ?
                         </Typography>
                         
+                        {/* Disposition comme les cartes de features */}
                         <Grid container spacing={4}>
                             {[
-                                { icon: <FaSearch />, title: 'Recherchez', desc: 'Trouvez un voyageur vers votre destination' },
-                                { icon: <GiCardboardBoxClosed />, title: 'Réservez', desc: 'Choisissez le nombre de kilos nécessaires' },
-                                { icon: <FaUser />, title: 'Rencontrez', desc: 'Organisez la remise du colis en personne' },
-                                { icon: <IoAirplaneSharp />, title: 'Suivez', desc: 'Suivez votre colis en temps réel' }
+                                { 
+                                    icon: <FaSearch />, 
+                                    title: 'Recherchez', 
+                                    desc: 'Trouvez un voyageur vers votre destination',
+                                    color: '#1976d2'
+                                },
+                                { 
+                                    icon: <GiCardboardBoxClosed />, 
+                                    title: 'Réservez', 
+                                    desc: 'Choisissez le nombre de kilos nécessaires',
+                                    color: '#21CBF3'
+                                },
+                                { 
+                                    icon: <FaUser />, 
+                                    title: 'Rencontrez', 
+                                    desc: 'Organisez la remise du colis en personne',
+                                    color: '#1976d2'
+                                },
+                                { 
+                                    icon: <IoAirplaneSharp />, 
+                                    title: 'Suivez', 
+                                    desc: 'Suivez votre colis en temps réel',
+                                    color: '#21CBF3'
+                                }
                             ].map((step, index) => (
-                                <Grid item xs={6} sm={6} md={3} key={index}>
+                                <Grid item xs={12} sm={6} md={3} key={index}>
                                     <Box sx={{
-                                        textAlign: 'center',
-                                        p: 3,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        p: { xs: 3, sm: 4 },
                                         borderRadius: 3,
                                         background: 'rgba(255,255,255,0.03)',
                                         height: '100%',
+                                        transition: 'all 0.3s ease',
+                                        '&:hover': {
+                                            transform: 'translateY(-4px)',
+                                            background: 'rgba(33, 203, 243, 0.05)',
+                                            boxShadow: '0 10px 20px rgba(0,0,0,0.2)',
+                                        }
                                     }}>
                                         <Box sx={{
-                                            width: 60,
-                                            height: 60,
+                                            width: 70,
+                                            height: 70,
                                             borderRadius: '50%',
-                                            background: 'linear-gradient(135deg, #1976d2 0%, #21CBF3 100%)',
+                                            background: `linear-gradient(135deg, ${step.color} 0%, #21CBF3 100%)`,
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            mx: 'auto',
                                             mb: 3,
+                                            boxShadow: '0 8px 25px rgba(33, 203, 243, 0.4)'
                                         }}>
                                             {React.cloneElement(step.icon, { 
-                                                style: { fontSize: isMobile ? 20 : 24, color: 'white' } 
+                                                style: { 
+                                                    fontSize: isMobile ? 24 : 28, 
+                                                    color: 'white',
+                                                    filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
+                                                } 
                                             })}
                                         </Box>
-                                        <Typography variant="h6" sx={{ 
-                                            fontWeight: 700, 
-                                            mb: 2,
-                                            fontSize: { xs: '1rem', sm: '1.1rem' }
+                                        
+                                        <Box sx={{ textAlign: 'center', flex: 1 }}>
+                                            <Typography variant="h6" sx={{ 
+                                                fontWeight: 700, 
+                                                mb: 2,
+                                                fontSize: { xs: '1.1rem', sm: '1.2rem' },
+                                                color: 'white'
+                                            }}>
+                                                {step.title}
+                                            </Typography>
+                                            <Typography sx={{ 
+                                                color: 'rgba(255,255,255,0.7)', 
+                                                fontSize: { xs: '0.9rem', sm: '1rem' },
+                                                lineHeight: 1.6
+                                            }}>
+                                                {step.desc}
+                                            </Typography>
+                                        </Box>
+                                        
+                                        {/* Numéro d'étape */}
+                                        <Box sx={{
+                                            mt: 3,
+                                            width: 30,
+                                            height: 30,
+                                            borderRadius: '50%',
+                                            background: 'rgba(33, 203, 243, 0.2)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            border: '1px solid rgba(33, 203, 243, 0.4)'
                                         }}>
-                                            {step.title}
-                                        </Typography>
-                                        <Typography sx={{ 
-                                            color: 'rgba(255,255,255,0.7)', 
-                                            fontSize: { xs: '0.8rem', sm: '0.9rem' } 
-                                        }}>
-                                            {step.desc}
-                                        </Typography>
+                                            <Typography variant="caption" sx={{ 
+                                                color: '#21CBF3',
+                                                fontWeight: 700,
+                                                fontSize: '0.9rem'
+                                            }}>
+                                                {index + 1}
+                                            </Typography>
+                                        </Box>
                                     </Box>
                                 </Grid>
                             ))}
                         </Grid>
+                        
+                        {/* Boutons de la section Processus */}
+                        <Box sx={{ 
+                            mt: 8, 
+                            textAlign: 'center',
+                            display: 'flex',
+                            flexDirection: isSmallMobile ? 'column' : 'row',
+                            gap: 3,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <GradientButton
+                                sx={{
+                                    py: { xs: 1.5, sm: 1.8 },
+                                    px: { xs: 4, sm: 8 },
+                                    fontSize: { xs: '0.95rem', sm: '1rem' }
+                                }}
+                            >
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                    <IoAirplaneSharp />
+                                    Voir tous les trajets
+                                </Box>
+                            </GradientButton>
+                            
+                            <Button
+                                variant="outlined"
+                                sx={{
+                                    py: { xs: 1.5, sm: 1.8 },
+                                    px: { xs: 4, sm: 8 },
+                                    fontSize: { xs: '0.95rem', sm: '1rem' },
+                                    borderColor: '#21CBF3',
+                                    color: '#21CBF3',
+                                    '&:hover': {
+                                        borderColor: '#1976d2',
+                                        background: 'rgba(33, 203, 243, 0.1)',
+                                    }
+                                }}
+                            >
+                                Devenir voyageur
+                            </Button>
+                        </Box>
                     </Box>
                 </Container>
             </Box>
