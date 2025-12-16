@@ -1258,6 +1258,159 @@ const Navbar = () => {
         }
     `}</style>
 </Box>
+{/* Bouton WhatsApp flottant */}
+<Box
+  component="a"
+  href="https://wa.me/+221778599418?text=Bonjour%20yónnee,%20je%20souhaite%20en%20savoir%20plus%20sur%20vos%20services"
+  target="_blank"
+  rel="noopener noreferrer"
+  sx={{
+    position: 'fixed',
+    bottom: 30,
+    right: 30,
+    width: 70,
+    height: 70,
+    borderRadius: '50%',
+    background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000,
+    boxShadow: '0 10px 30px rgba(37, 211, 102, 0.4)',
+    cursor: 'pointer',
+    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+    animation: 'float 3s ease-in-out infinite',
+    overflow: 'hidden',
+    '&:before': {
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: 'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%)',
+      opacity: 0,
+      transition: 'opacity 0.4s ease'
+    },
+    '&:hover': {
+      transform: 'scale(1.15) rotate(10deg)',
+      boxShadow: '0 15px 40px rgba(37, 211, 102, 0.6)',
+      '&:before': {
+        opacity: 1
+      },
+      '& .whatsapp-icon': {
+        transform: 'scale(1.2)'
+      },
+      '& .notification-badge': {
+        transform: 'scale(1.2) translate(5px, -5px)',
+        opacity: 1
+      }
+    },
+    '&:active': {
+      transform: 'scale(1.05)'
+    }
+  }}
+>
+  
+
+  {/* Icone WhatsApp */}
+  <Box className="whatsapp-icon" sx={{
+    position: 'relative',
+    zIndex: 1,
+    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+    filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.3))'
+  }}>
+    <svg 
+      width="34" 
+      height="34" 
+      viewBox="0 0 24 24" 
+      fill="white"
+    >
+      <path d="M20.52 3.49C18.18 1.13 15.19 0 12 0 5.48 0 0 5.48 0 12c0 2.13.55 4.16 1.58 5.97L0 24l6.24-1.63c1.75 1 3.77 1.55 5.86 1.55 6.52 0 12-5.48 12-12 0-3.19-1.13-6.18-3.49-8.52zM12 21.75c-1.82 0-3.58-.5-5.12-1.43l-.36-.21-3.74.98.99-3.65-.21-.36C2.75 15.58 2.25 13.82 2.25 12c0-5.38 4.37-9.75 9.75-9.75 2.6 0 5.04 1.01 6.88 2.86 1.84 1.84 2.86 4.28 2.86 6.89 0 5.38-4.37 9.75-9.75 9.75z"/>
+      <path d="M17.5 14.21c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.18.2-.36.22-.67.07-.3-.15-1.27-.47-2.42-1.5-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.08-.15-.67-1.61-.92-2.2-.24-.59-.49-.51-.67-.51-.18 0-.38-.01-.58-.01-.2 0-.51.07-.78.35-.27.28-1.04 1.02-1.04 2.49 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.12 4.51.71.3 1.26.48 1.69.61.71.22 1.36.19 1.87.12.57-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.08-.12-.3-.2-.6-.35z" fill="white"/>
+    </svg>
+  </Box>
+
+  {/* Tooltip au survol */}
+  <Box sx={{
+    position: 'absolute',
+    right: 85,
+    top: '50%',
+    transform: 'translateY(-50%)',
+    background: 'rgba(15, 23, 42, 0.95)',
+    backdropFilter: 'blur(10px)',
+    border: '1px solid rgba(33, 203, 243, 0.3)',
+    borderRadius: 3,
+    padding: '10px 15px',
+    opacity: 0,
+    visibility: 'hidden',
+    transition: 'all 0.3s ease',
+    whiteSpace: 'nowrap',
+    boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+    '&:before': {
+      content: '""',
+      position: 'absolute',
+      top: '50%',
+      right: -6,
+      transform: 'translateY(-50%)',
+      width: 0,
+      height: 0,
+      borderLeft: '6px solid rgba(33, 203, 243, 0.3)',
+      borderTop: '6px solid transparent',
+      borderBottom: '6px solid transparent'
+    }
+  }}>
+    <Typography sx={{ 
+      color: 'white',
+      fontWeight: 600,
+      fontSize: '0.9rem'
+    }}>
+      Contactez-nous sur WhatsApp
+    </Typography>
+  </Box>
+
+  {/* Animation de pulse */}
+  <Box sx={{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: '50%',
+    border: '2px solid rgba(37, 211, 102, 0.4)',
+    animation: 'pulse 2s infinite'
+  }} />
+</Box>
+
+{/* Ajoutez cette animation CSS dans votre style global */}
+<style jsx global>{`
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
+
+  /* Pour afficher le tooltip au survol */
+  a:hover > div:last-of-type {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(-10px);
+  }
+`}</style>
 
         {/* À propos Section */}
 <Box sx={{ py: { xs: 6, md: 10 }, background: 'rgba(0,0,0,0.3)' }}>
