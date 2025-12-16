@@ -1645,82 +1645,90 @@ const Navbar = () => {
         </Grid>
 
         {/* Section supplémentaire - Processus */}
-        <Box sx={{ mt: { xs: 8, md: 12 } }}>
-            <Typography variant="h3" sx={{ 
-                textAlign: 'center',
-                fontWeight: 800,
-                mb: { xs: 4, md: 6 },
-                background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                fontSize: { xs: '1.8rem', sm: '2rem', md: '2.5rem' }
-            }}>
-                Comment ça marche ?
-            </Typography>
-            
-            <Grid container spacing={{ xs: 2, md: 4 }}>
-                {[
-                    { 
-                        icon: <FaSearch style={{ fontSize: 28, color: 'white' }} />, 
-                        title: 'Recherchez', 
-                        desc: 'Trouvez un voyageur vers votre destination' 
-                    },
-                    { 
-                        icon: <GiCardboardBoxClosed style={{ fontSize: 28, color: 'white' }} />, 
-                        title: 'Réservez', 
-                        desc: 'Choisissez le nombre de kilos nécessaires' 
-                    },
-                    { 
-                        icon: <FaUser style={{ fontSize: 28, color: 'white' }} />, 
-                        title: 'Rencontrez', 
-                        desc: 'Organisez la remise du colis en personne' 
-                    },
-                    { 
-                        icon: <IoAirplaneSharp style={{ fontSize: 28, color: 'white' }} />, 
-                        title: 'Suivez', 
-                        desc: 'Suivez votre colis en temps réel' 
+     <Box sx={{ mt: { xs: 8, md: 12 } }}>
+    <Typography variant="h3" sx={{ 
+        textAlign: 'center',
+        fontWeight: 800,
+        mb: { xs: 4, md: 6 },
+        background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        fontSize: { xs: '1.8rem', sm: '2rem', md: '2.5rem' }
+    }}>
+        Comment ça marche ?
+    </Typography>
+    
+    <Grid container spacing={{ xs: 2, md: 4 }}>
+        {[
+            { 
+                icon: <FaSearch style={{ fontSize: 28, color: 'white' }} />, 
+                title: 'Recherchez', 
+                desc: 'Trouvez un voyageur vers votre destination' 
+            },
+            { 
+                icon: <GiCardboardBoxClosed style={{ fontSize: 28, color: 'white' }} />, 
+                title: 'Réservez', 
+                desc: 'Choisissez le nombre de kilos nécessaires' 
+            },
+            { 
+                icon: <FaUser style={{ fontSize: 28, color: 'white' }} />, 
+                title: 'Rencontrez', 
+                desc: 'Organisez la remise du colis en personne' 
+            },
+            { 
+                icon: <IoAirplaneSharp style={{ fontSize: 28, color: 'white' }} />, 
+                title: 'Suivez', 
+                desc: 'Suivez votre colis en temps réel' 
+            }
+        ].map((step, index) => (
+            <Grid item xs={12} sm={6} md={3} key={index}>
+                <Box sx={{
+                    textAlign: 'center',
+                    p: { xs: 2, md: 4 },
+                    borderRadius: 3,
+                    background: 'rgba(255,255,255,0.03)',
+                    height: '100%',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                        transform: 'translateY(-8px)',
+                        background: 'rgba(33, 203, 243, 0.1)',
                     }
-                ].map((step, index) => (
-                    <Grid item xs={6} sm={6} md={3} key={index}>
-                        <Box sx={{
-                            textAlign: 'center',
-                            p: { xs: 2, md: 4 },
-                            borderRadius: 3,
-                            background: 'rgba(255,255,255,0.03)',
-                            height: '100%',
-                            transition: 'all 0.3s ease',
-                            '&:hover': {
-                                transform: 'translateY(-8px)',
-                                background: 'rgba(33, 203, 243, 0.1)',
-                            }
-                        }}>
-                            <Box sx={{
-                                width: { xs: 50, md: 70 },
-                                height: { xs: 50, md: 70 },
-                                borderRadius: '50%',
-                                background: 'linear-gradient(135deg, #1976d2 0%, #21CBF3 100%)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                mx: 'auto',
-                                mb: { xs: 2, md: 3 },
-                                boxShadow: '0 8px 25px rgba(33, 203, 243, 0.4)'
-                            }}>
-                                {React.cloneElement(step.icon, { 
-                                    style: { fontSize: { xs: 20, md: 28 }, color: 'white' } 
-                                })}
-                            </Box>
-                            <Typography variant="h6" sx={{ fontWeight: 700, mb: { xs: 1, md: 2 }, fontSize: { xs: '0.9rem', md: '1rem' } }}>
-                                {step.title}
-                            </Typography>
-                            <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
-                                {step.desc}
-                            </Typography>
-                        </Box>
-                    </Grid>
-                ))}
+                }}>
+                    <Box sx={{
+                        width: { xs: 50, md: 70 },
+                        height: { xs: 50, md: 70 },
+                        borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #1976d2 0%, #21CBF3 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        mx: 'auto',
+                        mb: { xs: 2, md: 3 },
+                        boxShadow: '0 8px 25px rgba(33, 203, 243, 0.4)'
+                    }}>
+                        {React.cloneElement(step.icon, { 
+                            style: { fontSize: { xs: 20, md: 28 }, color: 'white' } 
+                        })}
+                    </Box>
+                    <Typography variant="h6" sx={{ 
+                        fontWeight: 700, 
+                        mb: { xs: 1, md: 2 }, 
+                        fontSize: { xs: '0.9rem', md: '1rem' },
+                        color: 'white'
+                    }}>
+                        {step.title}
+                    </Typography>
+                    <Typography sx={{ 
+                        color: 'rgba(255,255,255,0.7)', 
+                        fontSize: { xs: '0.8rem', md: '0.9rem' } 
+                    }}>
+                        {step.desc}
+                    </Typography>
+                </Box>
             </Grid>
-        </Box>
+        ))}
+    </Grid>
+</Box>
     </Container>
 </Box>
             {/* Modal de réservation moderne */}
