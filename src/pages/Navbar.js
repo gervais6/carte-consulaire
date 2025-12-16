@@ -2109,6 +2109,7 @@ const Navbar = () => {
             </Grid>
             
       {/* Colonne Contact - Version profonde */}
+{/* Colonne Contact - Version profonde */}
 <Grid item xs={12} sm={6} md={4}>
     <Typography variant="h6" sx={{ 
         fontWeight: 700, 
@@ -2134,32 +2135,35 @@ const Navbar = () => {
         Contact
     </Typography>
     
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 2, md: 3 } }}>
-        <Box className="contact-circle" sx={{
-            width: { xs: 40, md: 48 },
-            height: { xs: 40, md: 48 },
-            borderRadius: '50%',
-            background: `linear-gradient(135deg, #21CBF320 0%, #21CBF310 100%)`,
-            border: `1px solid #21CBF330`,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-            '&:hover': {
-                transform: 'scale(1.1) rotate(5deg)',
-                boxShadow: '0 0 25px #21CBF340, inset 0 0 15px #21CBF320'
-            }
-        }}>
-            <MdOutlineEmail style={{ fontSize: { xs: 18, md: 22 }, color: '#21CBF3' }} />
-        </Box>
-        <Typography sx={{ 
-            color: 'rgba(255,255,255,0.95)',
-            fontWeight: 600,
-            fontSize: { xs: '0.9rem', md: '1.05rem' },
-            textShadow: '0 2px 5px rgba(0,0,0,0.2)'
-        }}>
-            contact@yonnee.com
-        </Typography>
+    {/* MAINTENANT EN LIGNE HORIZONTALE COMME "SUIVEZ-NOUS" */}
+    <Box sx={{ display: 'flex', gap: { xs: 1, md: 2 } }}>
+        <a href="mailto:contact@yonnee.com" style={{ textDecoration: 'none' }}>
+            <Box sx={{
+                width: { xs: 40, md: 52 },
+                height: { xs: 40, md: 52 },
+                borderRadius: { xs: 2, md: 3 },
+                background: 'rgba(33, 203, 243, 0.1)',
+                border: '1px solid rgba(33, 203, 243, 0.3)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                position: 'relative',
+                overflow: 'hidden',
+                '&:hover': {
+                    transform: 'translateY(-6px) scale(1.1)',
+                    background: 'rgba(33, 203, 243, 0.2)',
+                    borderColor: 'rgba(33, 203, 243, 0.4)',
+                    boxShadow: '0 15px 35px rgba(33, 203, 243, 0.3), inset 0 0 20px rgba(33, 203, 243, 0.15)',
+                }
+            }}>
+                <MdOutlineEmail style={{ 
+                    fontSize: { xs: 16, md: 20 }, 
+                    color: '#21CBF3' 
+                }} />
+            </Box>
+        </a>
     </Box>
 </Grid>
             
