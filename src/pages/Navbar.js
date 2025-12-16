@@ -2108,7 +2108,6 @@ const Navbar = () => {
                
             </Grid>
             
-            {/* Colonne Contact - Version profonde */}
       {/* Colonne Contact - Version profonde */}
 <Grid item xs={12} sm={6} md={4}>
     <Typography variant="h6" sx={{ 
