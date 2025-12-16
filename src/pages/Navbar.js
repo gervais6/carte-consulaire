@@ -126,7 +126,7 @@ const Navbar = () => {
             nom,
             prenom,
             email,
-            num,
+            phone: num.trim(), // Changez "num" en "phone"
             kilos,
             company: localSelectedSubmission.company,
             from: localSelectedSubmission.from,
@@ -1412,7 +1412,7 @@ const Navbar = () => {
   }
 `}</style>
 
-        {/* À propos Section */}
+ {/* À propos Section */}
 <Box sx={{ py: { xs: 6, md: 10 }, background: 'rgba(0,0,0,0.3)' }}>
     <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
         <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center">
@@ -1425,7 +1425,7 @@ const Navbar = () => {
                     WebkitTextFillColor: 'transparent',
                     fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' }
                 }}>
-                    Pourquoi<br/>choisir yónnee ?
+                    Le marketplace<br/>de colis voyageurs
                 </Typography>
                 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 2, md: 3 } }}>
@@ -1457,10 +1457,11 @@ const Navbar = () => {
                         </Box>
                         <Box>
                             <Typography variant="h6" sx={{ fontWeight: 600, mb: { xs: 0.5, md: 1 }, fontSize: { xs: '0.9rem', md: '1rem' } }}>
-                                Économisez jusqu'à 70%
+                                Vous voyagez ? Gagnez avec vos kilos disponibles
                             </Typography>
                             <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
-                                Moins cher que les transporteurs traditionnels
+                                Proposez l'espace libre dans vos bagages et transformez votre voyage en revenu supplémentaire.
+                                Fixez votre prix et trouvez des colis sur votre trajet.
                             </Typography>
                         </Box>
                     </Box>
@@ -1493,10 +1494,11 @@ const Navbar = () => {
                         </Box>
                         <Box>
                             <Typography variant="h6" sx={{ fontWeight: 600, mb: { xs: 0.5, md: 1 }, fontSize: { xs: '0.9rem', md: '1rem' } }}>
-                                Sécurité garantie
+                                Vous envoyez un colis ? Économisez jusqu'à 70%
                             </Typography>
                             <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
-                                Profils vérifiés et suivi en temps réel
+                                Trouvez des voyageurs vers votre destination ou choisissez parmi nos agences partenaires.
+                                Payez moins cher que les transporteurs traditionnels.
                             </Typography>
                         </Box>
                     </Box>
@@ -1529,49 +1531,19 @@ const Navbar = () => {
                         </Box>
                         <Box>
                             <Typography variant="h6" sx={{ fontWeight: 600, mb: { xs: 0.5, md: 1 }, fontSize: { xs: '0.9rem', md: '1rem' } }}>
-                                Flexibilité totale
+                                Une double marketplace unique
                             </Typography>
                             <Typography sx={{ color: 'rgba(255,255,255,0.7)', fontSize: { xs: '0.8rem', md: '0.9rem' } }}>
-                                Des départs quotidiens vers toutes destinations
+                                • <strong>Voyageurs particuliers</strong> : des personnes réelles avec de l'espace dans leurs bagages
+                                <br/>
+                                • <strong>Agences professionnelles</strong> : des transporteurs vérifiés pour plus de régularité
                             </Typography>
                         </Box>
                     </Box>
                 </Box>
 
                 {/* Bouton Call to Action */}
-                <Box sx={{ mt: { xs: 4, md: 6 }, display: 'flex', gap: 2, flexWrap: 'wrap' ,display: { xs: 'none', md: 'flex' } // ← AJOUTÉ CETTE LIGNE
- }}>
-                    <GradientButton 
-                        sx={{ 
-                            mr: { xs: 0, md: 3 },
-                            mb: { xs: 2, sm: 0 },
-                            width: { xs: '100%', sm: 'auto' }
-                        }}
-                    >
-                        Commencer maintenant
-                    </GradientButton>
-                    <Button 
-                        variant="contained"
-                        sx={{
-                            background: 'linear-gradient(90deg, #64748B 0%, #94A3B8 100%)',
-                            borderRadius: 3,
-                            padding: { xs: '10px 20px', md: '12px 32px' },
-                            fontWeight: 600,
-                            textTransform: 'none',
-                            fontSize: { xs: '0.9rem', md: '1rem' },
-                            transition: 'all 0.3s ease',
-                            '&:hover': {
-                                transform: 'translateY(-2px)',
-                                boxShadow: '0 10px 20px rgba(100, 116, 139, 0.3)',
-                                background: 'linear-gradient(90deg, #475569 0%, #64748B 100%)',
-                            },
-                            color: 'white',
-                            width: { xs: '100%', sm: 'auto' }
-                        }}
-                    >
-                        En savoir plus
-                    </Button>
-                </Box>
+               
             </Grid>
 
             <Grid item xs={12} md={6}>
