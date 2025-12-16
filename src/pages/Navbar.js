@@ -1386,7 +1386,8 @@ const Navbar = () => {
                 </Box>
 
                 {/* Bouton Call to Action */}
-                <Box sx={{ mt: { xs: 4, md: 6 }, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                <Box sx={{ mt: { xs: 4, md: 6 }, display: 'flex', gap: 2, flexWrap: 'wrap' ,display: { xs: 'none', md: 'flex' } // ← AJOUTÉ CETTE LIGNE
+ }}>
                     <GradientButton 
                         sx={{ 
                             mr: { xs: 0, md: 3 },
