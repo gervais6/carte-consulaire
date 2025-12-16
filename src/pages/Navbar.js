@@ -2109,101 +2109,63 @@ const Navbar = () => {
             </Grid>
             
             {/* Colonne Contact - Version profonde */}
-            <Grid item xs={12} sm={6} md={4}>
-                <Typography variant="h6" sx={{ 
-                    fontWeight: 700, 
-                    mb: { xs: 3, md: 4 },
-                    background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    position: 'relative',
-                    display: 'inline-block',
-                    fontSize: { xs: '1rem', md: '1.1rem' },
-                    '&:before': {
-                        content: '""',
-                        position: 'absolute',
-                        bottom: -6,
-                        left: 0,
-                        width: '30px',
-                        height: '3px',
-                        background: '#21CBF3',
-                        borderRadius: 2,
-                        boxShadow: '0 0 10px rgba(33, 203, 243, 0.5)'
-                    }
-                }}>
-                    Contact
-                </Typography>
-                
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 2, md: 3 } }}>
-                    {[
-                        { 
-                            icon: <MdOutlineEmail style={{ fontSize: { xs: 18, md: 22 } }} />, 
-                            value: 'contact@yonnee.com',
-                            color: '#21CBF3'
-                        },
-                     
-                    ].map((contact, index) => (
-                        <Box 
-                            key={index}
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: { xs: 2, md: 3 },
-                                p: { xs: 2, md: 3 },
-                                borderRadius: 3,
-                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                                position: 'relative',
-                                overflow: 'hidden',
-                                '&:before': {
-                                    content: '""',
-                                    position: 'absolute',
-                                    left: 0,
-                                    top: 0,
-                                    bottom: 0,
-                                    width: '3px',
-                                    background: contact.color,
-                                    opacity: 0,
-                                    transition: 'opacity 0.4s ease'
-                                },
-                                '&:hover': {
-                                    transform: 'translateX(8px)',
-                                    background: 'rgba(255,255,255,0.05)',
-                                    borderColor: 'rgba(33, 203, 243, 0.2)',
-                                    '&:before': {
-                                        opacity: 0.8
-                                    },
-                                    '& .contact-circle': {
-                                        transform: 'scale(1.1) rotate(5deg)',
-                                        boxShadow: `0 0 25px ${contact.color}40, inset 0 0 15px ${contact.color}20`
-                                    }
-                                }
-                            }}
-                        >
-                            <Box className="contact-circle" sx={{
-                                width: { xs: 40, md: 48 },
-                                height: { xs: 40, md: 48 },
-                                borderRadius: '50%',
-                                background: `linear-gradient(135deg, ${contact.color}20 0%, ${contact.color}10 100%)`,
-                                border: `1px solid ${contact.color}30`,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
-                            }}>
-                                {contact.icon}
-                            </Box>
-                            <Typography sx={{ 
-                                color: 'rgba(255,255,255,0.95)',
-                                fontWeight: 600,
-                                fontSize: { xs: '0.9rem', md: '1.05rem' },
-                                textShadow: '0 2px 5px rgba(0,0,0,0.2)'
-                            }}>
-                                {contact.value}
-                            </Typography>
-                        </Box>
-                    ))}
-                </Box>
-            </Grid>
+      {/* Colonne Contact - Version profonde */}
+<Grid item xs={12} sm={6} md={4}>
+    <Typography variant="h6" sx={{ 
+        fontWeight: 700, 
+        mb: { xs: 3, md: 4 },
+        background: 'linear-gradient(90deg, #FFFFFF 0%, #21CBF3 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        position: 'relative',
+        display: 'inline-block',
+        fontSize: { xs: '1rem', md: '1.1rem' },
+        '&:before': {
+            content: '""',
+            position: 'absolute',
+            bottom: -6,
+            left: 0,
+            width: '30px',
+            height: '3px',
+            background: '#21CBF3',
+            borderRadius: 2,
+            boxShadow: '0 0 10px rgba(33, 203, 243, 0.5)'
+        }
+    }}>
+        Contact
+    </Typography>
+    
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 2, md: 3 } }}>
+        <Box className="contact-circle" sx={{
+            width: { xs: 40, md: 48 },
+            height: { xs: 40, md: 48 },
+            borderRadius: '50%',
+            background: `linear-gradient(135deg, #21CBF320 0%, #21CBF310 100%)`,
+            border: `1px solid #21CBF330`,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+            '&:hover': {
+                transform: 'scale(1.1) rotate(5deg)',
+                boxShadow: '0 0 25px #21CBF340, inset 0 0 15px #21CBF320'
+            }
+        }}>
+            <MdOutlineEmail style={{ fontSize: { xs: 18, md: 22 }, color: '#21CBF3' }} />
+        </Box>
+        <Typography sx={{ 
+            color: 'rgba(255,255,255,0.95)',
+            fontWeight: 600,
+            fontSize: { xs: '0.9rem', md: '1.05rem' },
+            textShadow: '0 2px 5px rgba(0,0,0,0.2)',
+            display: 'flex',
+            alignItems: 'center',
+            height: { xs: '40px', md: '48px' }
+        }}>
+            contact@yonnee.com
+        </Typography>
+    </Box>
+</Grid>
             
             {/* Colonne Social & Apps - Version profonde */}
             <Grid item xs={12} sm={6} md={4}>
