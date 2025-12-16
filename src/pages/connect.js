@@ -96,15 +96,15 @@ const GlassCard = styled(Paper)(({ theme }) => ({
     borderRadius: 0,
     margin: 0,
     backdropFilter: 'blur(10px)',
-    height: '100vh', // Changé à 100vh
-    width: '100vw', // Changé à 100vw
+    height: '100vh',
+    width: '100vw',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-start', // Changé de 'center' à 'flex-start'
+    justifyContent: 'flex-start',
     boxShadow: 'none',
     border: 'none',
-    overflowY: 'auto', // Permet le défilement si nécessaire
-    position: 'fixed', // Changé à fixed pour couvrir tout l'écran
+    overflowY: 'auto',
+    position: 'fixed',
     top: 0,
     left: 0,
     right: 0,
@@ -196,20 +196,77 @@ const LoginForm = () => {
         }
         
         setIsSubmitting(true);
-    
+
         try {
-            const response = await axios.post("http://localhost:8000/api/login", formData);
+            console.log('🔐 Tentative de connexion pour:', formData.email);
+            
+            // Version simple et optimisée
+            const response = await axios.post("http://localhost:8000/api/auth/login", formData);
+            
+            console.log('✅ Connexion réussie:', response.data);
+            
             if (response.data.success) {
-                login(response.data.token);
-                setSuccess("Connexion réussie ! Redirection en cours...");
-                setTimeout(() => {
-                    navigate('/suivi');
-                }, 2000);
-            } else {
-                setError(response.data.message || "Identifiants incorrects.");
+                const { token, user } = response.data;
+                
+                // Stocker dans localStorage
+                localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(user));
+                
+                // Utiliser AuthContext
+                login(token, user);
+                
+                // Vérifier le rôle et rediriger
+                if (user.role === 'admin') {
+                    setSuccess("Connexion admin réussie ! Redirection vers le dashboard...");
+                    setTimeout(() => navigate('/admin'), 1500);
+                } else {
+                    setSuccess("Connexion réussie ! Redirection en cours...");
+                    setTimeout(() => navigate('/suivi'), 1500);
+                }
             }
+            
         } catch (error) {
-            const errorMessage = error.response?.data?.message || "Erreur lors de la connexion. Veuillez réessayer.";
+            console.error('❌ Erreur:', error.response?.data || error.message);
+            
+            let errorMessage = "Email ou mot de passe incorrect.";
+            
+            // Si échec connexion standard, essayer connexion admin
+            if (error.response?.status === 401) {
+                try {
+                    console.log('⚠️  Échec connexion standard, tentative admin...');
+                    
+                    // Essayer la connexion admin
+                    const adminResponse = await axios.post("http://localhost:8000/api/auth/admin/login", formData);
+                    
+                    if (adminResponse.data.success) {
+                        const { token, user } = adminResponse.data;
+                        
+                        // Stocker pour admin
+                        localStorage.setItem('adminToken', token);
+                        localStorage.setItem('adminUser', JSON.stringify(user));
+                        
+                        setSuccess("Connexion admin réussie ! Redirection vers le dashboard...");
+                        
+                        setTimeout(() => {
+                            navigate('/admin');
+                        }, 1500);
+                        return;
+                    }
+                } catch (adminError) {
+                    console.error('❌ Échec connexion admin aussi:', adminError.response?.data?.message);
+                    
+                    if (adminError.response?.data?.message) {
+                        errorMessage = adminError.response.data.message;
+                    } else {
+                        errorMessage = "Email ou mot de passe incorrect.";
+                    }
+                }
+            } else if (error.response?.data?.message) {
+                errorMessage = error.response.data.message;
+            } else if (error.code === 'ERR_NETWORK') {
+                errorMessage = "Serveur inaccessible. Vérifiez que le backend est démarré sur le port 8000.";
+            }
+            
             setError(errorMessage);
         } finally {
             setIsSubmitting(false);

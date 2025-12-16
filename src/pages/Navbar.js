@@ -145,48 +145,56 @@ const Navbar = () => {
         submission.to.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const data = {
-            nom,
-            prenom,
-            email,
-            num,
-            kilos,
-            company: localSelectedSubmission.company,
-            from: localSelectedSubmission.from,
-            to: localSelectedSubmission.to,
-            price: localSelectedSubmission.price,
-            departure_date: localSelectedSubmission.departure_date,
-        };
-
-        try {
-            const response = await fetch('http://localhost:8000/api/reservations', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                console.log('Réservation réussie:', result);
-                setNom('');
-                setPrenom('');
-                setEmail('');
-                setNum('');
-                setKilos('');
-                setLocalSelectedSubmission(null);
-                setReservationSuccess(true);
-                setModalOpen(false);
-            } else {
-                console.error('Erreur lors de la réservation:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Erreur de réseau:', error);
-        }
+   const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!localSelectedSubmission) return;
+    
+    const data = {
+        nom,
+        prenom,
+        email,
+        num,
+        kilos: parseFloat(kilos),
     };
+
+    try {
+        const response = await fetch(`http://localhost:8000/api/submissions/${localSelectedSubmission._id}/reservations`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+        
+        if (response.ok) {
+            console.log('Réservation réussie:', result);
+            setNom('');
+            setPrenom('');
+            setEmail('');
+            setNum('');
+            setKilos('');
+            setLocalSelectedSubmission(null);
+            setReservationSuccess(true);
+            setModalOpen(false);
+            
+            // Recharger les soumissions pour mettre à jour les kilos
+            const submissionsResponse = await fetch('http://localhost:8000/api/submissions');
+            if (submissionsResponse.ok) {
+                const submissionsData = await submissionsResponse.json();
+                setSubmissions(submissionsData.submissions || []);
+            }
+        } else {
+            console.error('Erreur lors de la réservation:', result.message);
+            alert(`Erreur: ${result.message}`);
+        }
+    } catch (error) {
+        console.error('Erreur de réseau:', error);
+        alert('Erreur de réseau. Veuillez réessayer.');
+    }
+};
 
     const handleOpenModal = (submission) => {
         setLocalSelectedSubmission(submission);
@@ -1051,39 +1059,7 @@ const Navbar = () => {
                                 ))}
                             </Box>
 
-                            {/* Boutons - SEULEMENT SUR DESKTOP */}
-                            {!isMobile && (
-                                <Box sx={{ 
-                                    display: 'flex', 
-                                    gap: 2,
-                                    flexWrap: 'wrap',
-                                    mt: 4
-                                }}>
-                                    <GradientButton 
-                                        sx={{ 
-                                            py: 1.8,
-                                            px: 6,
-                                        }}
-                                    >
-                                        Commencer maintenant
-                                    </GradientButton>
-                                    <Button 
-                                        variant="contained"
-                                        sx={{
-                                            background: 'linear-gradient(90deg, #64748B 0%, #94A3B8 100%)',
-                                            borderRadius: 3,
-                                            py: 1.8,
-                                            px: 6,
-                                            fontWeight: 600,
-                                            '&:hover': {
-                                                background: 'linear-gradient(90deg, #475569 0%, #64748B 100%)',
-                                            },
-                                        }}
-                                    >
-                                        En savoir plus
-                                    </Button>
-                                </Box>
-                            )}
+                      
                         </Grid>
 
                         {/* Mockup téléphone */}
@@ -1239,45 +1215,7 @@ const Navbar = () => {
                             ))}
                         </Grid>
                         
-                        {/* Boutons de la section Processus - SEULEMENT SUR DESKTOP */}
-                        {!isMobile && (
-                            <Box sx={{ 
-                                mt: 8, 
-                                textAlign: 'center',
-                                display: 'flex',
-                                gap: 3,
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
-                                <GradientButton
-                                    sx={{
-                                        py: 1.8,
-                                        px: 8,
-                                    }}
-                                >
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                                        <IoAirplaneSharp />
-                                        Voir tous les trajets
-                                    </Box>
-                                </GradientButton>
-                                
-                                <Button
-                                    variant="outlined"
-                                    sx={{
-                                        py: 1.8,
-                                        px: 8,
-                                        borderColor: '#21CBF3',
-                                        color: '#21CBF3',
-                                        '&:hover': {
-                                            borderColor: '#1976d2',
-                                            background: 'rgba(33, 203, 243, 0.1)',
-                                        }
-                                    }}
-                                >
-                                    Devenir voyageur
-                                </Button>
-                            </Box>
-                        )}
+                       
                     </Box>
                 </Container>
             </Box>

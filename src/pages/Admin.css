@@ -1,327 +1,297 @@
-.wrapper {
-    display: flex;
+.admin-dashboard {
     min-height: 100vh;
-    background: #343a40;
+    background-color: #f8f9fa;
 }
 
-.main-content {
-    flex: 1;
-    padding: 20px;
-    transition: margin-right 0.3s;
-    background: #343a40;
-
-}
-
+/* Sidebar Styles - PAS DE HOVER */
 .sidebar {
-    width: 300px;
-    background: #343a40;
-    border-left: 1px solid #e5e7eb;
-    height: 100vh;
+    width: 280px;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
     position: fixed;
-    right: 0;
+    left: 0;
     top: 0;
-    transition: transform 0.3s;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.05);
-    overflow-y: auto;
-    color: #e5e7eb;
 }
 
 .sidebar.collapsed {
-    transform: translateX(100%);
+    width: 80px;
 }
 
-.toggle-btn {
-    position: fixed;
-    right: 310px;
-    top: 20px;
-    z-index: 1000;
-    transition: right 0.3s;
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .nav-link span {
+    display: none;
 }
 
-.toggle-btn.collapsed {
-    right: 20px;
+/* Liens de la sidebar sans hover */
+.sidebar .nav-link {
+    border-radius: 8px;
+    margin: 4px 0;
+    transition: background-color 0.2s ease;
 }
 
-.nav-link {
-    color: white;
-    text-decoration: none;
-    padding: 0.75rem 1.25rem;
-    transition: all 0.2s;
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-.nav-link:hover {
-    color:hsl(0, 0%, 0%);
-    
+.sidebar .nav-link.active {
+    background-color: #0d6efd;
 }
 
-.nav-link.active {
-    color: #1f2937;
-    font-weight: 500;
+/* Main Content */
+.main-content {
+    transition: all 0.3s ease;
+    min-height: 100vh;
+    margin-left: 280px;
 }
 
-.sidebar-header {
-    border-bottom: 1px solid #1f2937;
+.sidebar.collapsed + .main-content {
+    margin-left: 80px;
 }
 
-.notification-badge {
-    background: #ef4444;
-    color: white;
-    padding: 0.25rem 0.5rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
+/* Card Styles */
+.card {
+    border-radius: 12px;
+    border: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.user-status {
-    width: 10px;
-    height: 10px;
-    background: #10b981;
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Icon Circle */
+.icon-circle {
     border-radius: 50%;
-    display: inline-block;
-    margin-right: 5px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Avatar Circle */
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Badge Styles */
+.badge {
+    padding: 6px 12px;
+    font-weight: 500;
+    border-radius: 20px;
+}
+
+/* Table Styles */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: #6c757d;
+    white-space: nowrap;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Form Controls */
+.form-control:focus,
+.form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 0.5rem;
+}
+
+/* Carte jaune avec texte blanc comme les autres */
+.card.bg-warning {
+    background-color: #ffc107 !important;
+    color: white !important;
+}
+
+.card.bg-warning .icon-circle {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Toutes les cartes de statistiques */
+.card.bg-primary,
+.card.bg-success,
+.card.bg-warning,
+.card.bg-info {
+    border: none;
+    color: white;
+}
+
+.card.bg-primary .icon-circle,
+.card.bg-success .icon-circle,
+.card.bg-warning .icon-circle,
+.card.bg-info .icon-circle {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.card.bg-primary {
+    background-color: #0d6efd !important;
+}
+
+.card.bg-success {
+    background-color: #198754 !important;
+}
+
+.card.bg-info {
+    background-color: #0dcaf0 !important;
+}
+
+/* Input Group */
+.input-group-text {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Animation pour le chargement */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card, .table {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
     .sidebar {
+        position: fixed;
+        left: -280px;
+        z-index: 1050;
+    }
+    
+    .sidebar.collapsed {
+        left: 0;
+        width: 80px;
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
         width: 100%;
     }
-    .toggle-btn {
-        right: 20px;
+    
+    .sidebar:not(.collapsed) {
+        left: 0;
+        width: 280px;
+    }
+    
+    .sidebar:not(.collapsed) + .main-content {
+        margin-left: 280px;
+    }
+    
+    .row {
+        margin-left: -8px;
+        margin-right: -8px;
+    }
+    
+    .col-md-6, .col-xl-3 {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+    
+    .card-header h5 {
+        font-size: 1rem;
     }
 }
 
-
-body{
-    background:#343a40;
-    margin-top:20px;
-    color: #616f80;
+/* Filtres de statut */
+.btn-outline-primary {
+    border-radius: 20px;
+    padding: 0.25rem 1rem;
+    font-size: 0.875rem;
 }
 
-.card {
-    border: none;
-    margin-bottom: 24px;
-    -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
-    box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+.btn-primary {
+    border-radius: 20px;
+    padding: 0.25rem 1rem;
+    font-size: 0.875rem;
 }
 
-.avatar-xs {
-    height: 2.3rem;
-    width: 2.3rem;
-}
-
-/* Admin.css */
-
-/* Réduire la taille de la police pour les titres */
-.font-size-20 {
-    font-size: 16px; /* Ajustez la taille selon vos besoins */
-}
-
-/* Réduire la taille de la police pour les paragraphes */
-.text-muted {
-    font-size: 14px; /* Ajustez la taille selon vos besoins */
-}
-
-/* Réduire la taille de la police pour les tableaux */
-.table th, .table td {
-    font-size: 14px; /* Ajustez la taille selon vos besoins */
-}
-
-/* Réduire la taille de la police pour les alertes */
-.alert {
-    font-size: 14px; /* Ajustez la taille selon vos besoins */
-}
-
-
-
-/* Admin.css */
-
-/* Styles pour la sidebar */
-.sidebar {
-    width: 300px;
-    border-left: 1px solid #000000; /* Bordure gauche noire */
-    height: 100vh;
-    position: fixed;
-    right: 0;
+/* Header */
+header {
+    position: sticky;
     top: 0;
-    transition: transform 0.3s;
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.05);
-    overflow-y: auto;
+    z-index: 1030;
 }
 
-/* Autres styles de la sidebar */
-.sidebar-header {
-    border-bottom: 1px solid #000000; /* Bordure inférieure noire */
+/* Toast Notifications */
+.Toastify__toast {
+    border-radius: 8px;
 }
 
-/* Autres styles globaux */
-body {
-    background: #343a40; /* Couleur de fond sombre */
-    margin-top: 20px;
-    color: #ffffff; /* Couleur du texte */
+/* Statut Badge Colors */
+.bg-warning {
+    background-color: #ffc107 !important;
 }
 
-/* Autres styles pour les cartes, tableaux, etc. */
-.card {
-    border: none;
-    margin-bottom: 24px;
-    box-shadow: 0 0 13px 0 rgba(236, 236, 241, .44);
+.bg-info {
+    background-color: #0dcaf0 !important;
 }
 
-/* Styles pour les liens de navigation */
-.nav-link {
-    color: #4b5563; /* Couleur des liens */
-    padding: 0.75rem 1.25rem;
-    transition: all 0.2s;
+.bg-success {
+    background-color: #198754 !important;
 }
 
-.nav-link:hover {
-    background: #212529; /* Couleur de fond au survol */
-    color: #212529; /* Couleur du texte au survol */
+.bg-secondary {
+    background-color: #6c757d !important;
 }
 
-.nav-link.active {
-    background: #212529; /* Couleur de fond active */
-    color: #212529; /* Couleur du texte active */
-    font-weight: 500;
-}
-
-/* Autres styles pour les alertes, tableaux, etc. */
-.alert {
-    font-size: 14px; /* Ajustez la taille selon vos besoins */
-}
-
-.table th, .table td {
-    font-size: 14px; /* Ajustez la taille selon vos besoins */
-}
-
-
-
-/* Admin.css */
-
-/* Styles pour la table */
-.table {
-    background-color: #343a40; /* Couleur de fond sombre */
-    color: #ffffff; /* Couleur du texte */
-}
-
-.table th, .table td {
-    border: 1px solid #000000; /* Bordure noire */
-}
-
-.table th {
-    background-color: #495057; /* Couleur de fond des en-têtes */
-    color: #ffffff; /* Couleur du texte des en-têtes */
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #3a3f43; /* Couleur de fond des lignes paires */
-}
-
-/* Autres styles globaux */
-body {
-    background: #343a40; /* Couleur de fond sombre */
-    margin-top: 20px;
-    color: #ffffff; /* Couleur du texte */
-}
-
-/* Autres styles pour les cartes, tableaux, etc. */
-.card {
-    border: none;
-    margin-bottom: 24px;
-    box-shadow: 0 0 13px 0 rgba(236, 236, 241, .44);
-}
-
-
-/* Admin.css */
-
-/* Styles pour le conteneur de recherche */
-.input-group {
-    position: relative;
-}
-
-/* Styles pour l'icône de recherche */
-.input-group-text {
-    background-color: #343a40; /* Couleur de fond sombre */
-    border: none; /* Pas de bordure */
-    color: white; /* Couleur de l'icône */
-}
-
-/* Styles pour le champ de saisie */
-.form-control {
-    background-color: #495057; /* Couleur de fond sombre */
-    color: white; /* Couleur du texte */
-    border: none; /* Pas de bordure */
-}
-
-.form-control:focus {
-    outline: none; /* Pas de contour au focus */
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Ombre au focus */
-}
-
-
-.search-icon {
-    position: absolute;
-    top: 50%;
-    left: 15px;
-    transform: translateY(-50%);
-    color: #888;
-}
-
-
-
-
-
-.admin-dashboard {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-.card {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.table {
-    background-color: #ffffff;
-    border-radius: 10px;
-}
-
-.table th, .table td {
-    padding: 15px;
-    text-align: center;
-}
-
-.table th {
-    background-color: #007bff;
-    color: white;
-}
-
-.sidebar {
-    background-color: #343a40;
-    color: white;
-}
-
-.sidebar a {
-    color: white;
-}
-
-.sidebar a:hover {
-    background-color: #495057;
-}
-
-.btn {
-    border-radius: 20px;
-}
-
-.input-group {
-    border-radius: 20px;
-}
-
-.input-group input {
-    border-radius: 20px;
-}
-
-.toast {
-    border-radius: 10px;
+.bg-danger {
+    background-color: #dc3545 !important;
 }

@@ -216,7 +216,7 @@ const Compte = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post("http://localhost:8000/api/register", postData);
+      const response = await axios.post("http://localhost:8000/api/auth/register", postData);
       console.log(response.data);
       setSuccess("Inscription réussie ! Redirection en cours...");
       setTimeout(() => {
