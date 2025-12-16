@@ -2135,12 +2135,7 @@ const Navbar = () => {
         Contact
     </Typography>
     
-    <Box sx={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        gap: { xs: 2, md: 3 },
-        width: '100%' // ← AJOUTÉ POUR OCCUPER TOUTE LA LARGEUR
-    }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 2, md: 3 } }}>
         <Box className="contact-circle" sx={{
             width: { xs: 40, md: 48 },
             height: { xs: 40, md: 48 },
@@ -2151,7 +2146,6 @@ const Navbar = () => {
             alignItems: 'center',
             justifyContent: 'center',
             transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-            flexShrink: 0, // ← AJOUTÉ POUR EMPÊCHER LA RÉDUCTION
             '&:hover': {
                 transform: 'scale(1.1) rotate(5deg)',
                 boxShadow: '0 0 25px #21CBF340, inset 0 0 15px #21CBF320'
@@ -2163,12 +2157,7 @@ const Navbar = () => {
             color: 'rgba(255,255,255,0.95)',
             fontWeight: 600,
             fontSize: { xs: '0.9rem', md: '1.05rem' },
-            textShadow: '0 2px 5px rgba(0,0,0,0.2)',
-            display: 'flex',
-            alignItems: 'center',
-            height: { xs: '40px', md: '48px' },
-            flex: 1, // ← AJOUTÉ POUR PRENDRE L'ESPACE DISPONIBLE
-            minWidth: 0 // ← AJOUTÉ POUR LE TEXTE TRÈS LONG
+            textShadow: '0 2px 5px rgba(0,0,0,0.2)'
         }}>
             contact@yonnee.com
         </Typography>
