@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './Admin.css';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,8 +29,199 @@ import {
   FaUndo,
   FaEnvelope,
   FaPhone,
-  FaIndustry
+  FaIndustry,
+  FaChartLine,
+  FaDatabase,
+  FaMoneyBillWave
 } from 'react-icons/fa';
+import { 
+  Box, 
+  Container, 
+  Grid, 
+  Card, 
+  CardContent, 
+  Typography, 
+  TextField, 
+  Button, 
+  IconButton,
+  InputAdornment,
+  Chip,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Menu,
+  MenuItem,
+  CircularProgress,
+  Alert,
+  Divider,
+  Avatar,
+  Badge
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+// Styles modernes et professionnels avec bordures élégantes
+const ModernCard = styled(Card)(({ theme }) => ({
+  borderRadius: 16,
+  background: '#FFFFFF',
+  boxShadow: '0 4px 24px rgba(0, 0, 0, 0.06)',
+  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+  border: 'none',
+  position: 'relative',
+  overflow: 'hidden',
+  '&:hover': {
+    transform: 'translateY(-4px)',
+    boxShadow: '0 12px 40px rgba(0, 0, 0, 0.12)',
+  },
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '4px',
+    background: 'linear-gradient(90deg, #1F2937 0%, #374151 100%)',
+    borderRadius: '16px 16px 0 0',
+  }
+}));
+
+const ResultCard = styled(Box)(({ theme }) => ({
+  borderRadius: 12,
+  background: '#FFFFFF',
+  border: '1px solid rgba(229, 231, 235, 0.5)',
+  backdropFilter: 'blur(10px)',
+  position: 'relative',
+  overflow: 'hidden',
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    inset: 0,
+    borderRadius: 'inherit',
+    padding: '1px',
+    background: 'linear-gradient(135deg, rgba(31, 41, 55, 0.1), rgba(31, 41, 55, 0.05))',
+    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+    WebkitMaskComposite: 'xor',
+    maskComposite: 'exclude',
+  }
+}));
+
+const ModernTextField = styled(TextField)(({ theme }) => ({
+  '& .MuiOutlinedInput-root': {
+    borderRadius: 12,
+    background: '#FFFFFF',
+    transition: 'all 0.2s ease',
+    '& fieldset': {
+      border: '1px solid #E5E7EB',
+      transition: 'border 0.2s ease',
+    },
+    '&:hover fieldset': {
+      border: '1px solid #1F2937',
+    },
+    '&.Mui-focused fieldset': {
+      border: '2px solid #1F2937',
+      boxShadow: '0 0 0 3px rgba(31, 41, 55, 0.1)',
+    }
+  },
+  '& .MuiOutlinedInput-input': {
+    fontWeight: 500,
+  },
+  '& .MuiInputLabel-root': {
+    fontWeight: 500,
+    color: '#6B7280',
+  }
+}));
+
+const ModernButton = styled(Button)(({ theme }) => ({
+  borderRadius: 12,
+  fontWeight: 600,
+  textTransform: 'none',
+  fontSize: '0.95rem',
+  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+  border: 'none',
+  position: 'relative',
+  overflow: 'hidden',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0))',
+    opacity: 0,
+    transition: 'opacity 0.2s ease',
+  },
+  '&:hover::before': {
+    opacity: 1,
+  }
+}));
+
+const PrimaryButton = styled(ModernButton)(({ theme }) => ({
+  background: 'linear-gradient(90deg, #1F2937 0%, #374151 100%)',
+  color: '#FFFFFF',
+  '&:hover': {
+    background: 'linear-gradient(90deg, #374151 0%, #4B5563 100%)',
+    boxShadow: '0 8px 24px rgba(31, 41, 55, 0.25)',
+  },
+}));
+
+const DangerButton = styled(ModernButton)(({ theme }) => ({
+  background: 'linear-gradient(90deg, #DC2626 0%, #B91C1C 100%)',
+  color: '#FFFFFF',
+  '&:hover': {
+    background: 'linear-gradient(90deg, #B91C1C 0%, #991B1B 100%)',
+    boxShadow: '0 8px 24px rgba(220, 38, 38, 0.25)',
+  },
+}));
+
+const ModernChip = styled(Chip)(({ theme }) => ({
+  borderRadius: 8,
+  fontWeight: 600,
+  border: 'none',
+  '&.MuiChip-outlined': {
+    background: 'transparent',
+    border: '1px solid rgba(31, 41, 55, 0.1)',
+  }
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:hover': {
+    backgroundColor: 'rgba(31, 41, 55, 0.02)',
+  },
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
+const Sidebar = styled(Box)(({ theme, collapsed }) => ({
+  width: collapsed ? '80px' : '280px',
+  background: 'linear-gradient(180deg, #1F2937 0%, #111827 100%)',
+  color: '#FFFFFF',
+  transition: 'width 0.3s ease',
+  display: 'flex',
+  flexDirection: 'column',
+  position: 'fixed',
+  height: '100vh',
+  zIndex: 1000,
+  borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+}));
+
+const MainContent = styled(Box)(({ theme }) => ({
+  marginLeft: '280px',
+  background: '#F9FAFB',
+  minHeight: '100vh',
+  transition: 'margin-left 0.3s ease',
+  '&.collapsed': {
+    marginLeft: '80px',
+  }
+}));
 
 const AdminDashboard = () => {
     const [formData, setFormData] = useState({
@@ -54,6 +244,8 @@ const AdminDashboard = () => {
     const [submissions, setSubmissions] = useState([]);
     const [statusMessage, setStatusMessage] = useState('');
     const [activeStatusFilter, setActiveStatusFilter] = useState('all');
+    const [menuAnchor, setMenuAnchor] = useState(null);
+    const [selectedReservation, setSelectedReservation] = useState(null);
 
     // Base URL pour les API
     const API_BASE_URL = 'http://localhost:8000/api';
@@ -341,8 +533,6 @@ const AdminDashboard = () => {
             departure_date: submission.departure_date ? submission.departure_date.split('T')[0] : '',
             price: submission.price
         });
-        // Scroll vers le formulaire
-        document.querySelector('.submission-form-section')?.scrollIntoView({ behavior: 'smooth' });
     };
 
     const filteredReservations = reservations.filter(reservation => {
@@ -390,20 +580,27 @@ const AdminDashboard = () => {
 
     const getStatusBadge = (status) => {
         const statusConfig = {
-            'En attente': { color: 'warning', icon: <FaBox className="me-1" /> },
-            'En transit': { color: 'info', icon: <FaShippingFast className="me-1" /> },
-            'Livré': { color: 'success', icon: <FaCheckCircle className="me-1" /> },
-            'Retourné': { color: 'secondary', icon: <FaUndo className="me-1" /> },
-            'Annulé': { color: 'danger', icon: <FaTimesCircle className="me-1" /> }
+            'En attente': { color: '#F59E0B', bgColor: '#FEF3C7' },
+            'En transit': { color: '#3B82F6', bgColor: '#DBEAFE' },
+            'Livré': { color: '#10B981', bgColor: '#D1FAE5' },
+            'Retourné': { color: '#8B5CF6', bgColor: '#EDE9FE' },
+            'Annulé': { color: '#EF4444', bgColor: '#FEE2E2' }
         };
         
-        const config = statusConfig[status] || { color: 'light', icon: <FaBox className="me-1" /> };
+        const config = statusConfig[status] || { color: '#6B7280', bgColor: '#F3F4F6' };
         
         return (
-            <span className={`badge bg-${config.color} text-dark d-flex align-items-center`}>
-                {config.icon}
-                {status}
-            </span>
+            <Chip
+                label={status}
+                size="small"
+                sx={{
+                    backgroundColor: config.bgColor,
+                    color: config.color,
+                    fontWeight: 600,
+                    borderRadius: '8px',
+                    border: 'none',
+                }}
+            />
         );
     };
 
@@ -415,644 +612,886 @@ const AdminDashboard = () => {
         { value: 'Annulé', label: 'Annulé', count: reservations.filter(r => r.currentStatus === 'Annulé').length }
     ];
 
+    const handleMenuOpen = (event, reservation) => {
+        setMenuAnchor(event.currentTarget);
+        setSelectedReservation(reservation);
+    };
+
+    const handleMenuClose = () => {
+        setMenuAnchor(null);
+        setSelectedReservation(null);
+    };
+
+    const handleStatusChange = (newStatus) => {
+        if (selectedReservation) {
+            addStatus(selectedReservation._id || selectedReservation.id, newStatus);
+        }
+        handleMenuClose();
+    };
+
     return (
-        <div className="admin-dashboard">
+        <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: '#F9FAFB' }}>
             <ToastContainer />
-            <div className="wrapper d-flex">
-                {/* Sidebar */}
-                <div className={`sidebar bg-dark text-white ${sidebarCollapsed ? 'collapsed' : ''}`}>
-                    <div className="sidebar-header p-4 border-bottom">
-                        <div className="d-flex align-items-center justify-content-between">
-                            {!sidebarCollapsed && (
-                                <>
-                                    <div className="d-flex align-items-center">
-                                        <div className="logo-icon bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style={{ width: '40px', height: '40px' }}>
-                                            <FaTruck className="fs-5" />
-                                        </div>
-                                        <h5 className="mb-0 fw-bold">TransLog Admin</h5>
-                                    </div>
-                                    <button className="btn btn-sm btn-outline-light" onClick={toggleSidebar}>
-                                        <FaChevronLeft />
-                                    </button>
-                                </>
-                            )}
-                            {sidebarCollapsed && (
-                                <button className="btn btn-sm btn-outline-light" onClick={toggleSidebar}>
-                                    <FaChevronRight />
-                                </button>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="p-4 border-bottom">
-                        <div className="d-flex align-items-center">
-                            <div className="position-relative">
-                                <img 
-                                    src="https://ui-avatars.com/api/?name=Admin+User&background=0D6EFD&color=fff&bold=true" 
-                                    className="rounded-circle me-3" 
-                                    alt="Admin" 
-                                    width="45" 
-                                    height="45" 
-                                />
-                                <span className="position-absolute bottom-0 end-0 bg-success rounded-circle border border-2 border-white" style={{ width: '12px', height: '12px' }}></span>
-                            </div>
-                            {!sidebarCollapsed && (
-                                <div>
-                                    <h6 className="mb-0 fw-bold">Administrateur</h6>
-                                    <small className="text-light">Dashboard</small>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-
-                    <nav className="nav flex-column p-3">
-                        <a 
-                            href="#" 
-                            className={`nav-link d-flex align-items-center py-3 ${!showProfile && !showNextDeparture ? 'active bg-primary' : 'text-light'}`}
-                            onClick={() => { setShowProfile(false); setShowNextDeparture(false); }}
-                        >
-                            <FaHome className={`${sidebarCollapsed ? 'mx-auto' : 'me-3'}`} />
-                            {!sidebarCollapsed && <span>Dashboard</span>}
-                        </a>
-                        <a 
-                            href="#" 
-                            className={`nav-link d-flex align-items-center py-3 ${showProfile ? 'active bg-primary' : 'text-light'}`}
-                            onClick={handleProfileClick}
-                        >
-                            <FaUsers className={`${sidebarCollapsed ? 'mx-auto' : 'me-3'}`} />
-                            {!sidebarCollapsed && <span>Utilisateurs</span>}
-                        </a>
-                        <a 
-                            href="#" 
-                            className={`nav-link d-flex align-items-center py-3 ${showNextDeparture ? 'active bg-primary' : 'text-light'}`}
-                            onClick={handleNextDepartureClick}
-                        >
-                            <FaCalendarDay className={`${sidebarCollapsed ? 'mx-auto' : 'me-3'}`} />
-                            {!sidebarCollapsed && <span>Prochains Départs</span>}
-                        </a>
-                    </nav>
-                </div>
-
-                {/* Main Content */}
-                <div className="main-content flex-grow-1 bg-light">
-                    {/* Header */}
-                    <header className="bg-white shadow-sm border-bottom px-4 py-3">
-                        <div className="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h1 className="h4 mb-0 fw-bold text-dark">
-                                    {showProfile ? 'Gestion des utilisateurs' : 
-                                     showNextDeparture ? 'Gestion des départs' : 
-                                     'Tableau de bord administratif'}
-                                </h1>
-                                {!showProfile && !showNextDeparture && (
-                                    <small className="text-muted">Gestion complète des réservations et soumissions</small>
-                                )}
-                            </div>
-                            <div className="d-flex gap-3 align-items-center">
-                                <div className="position-relative">
-                                    <button className="btn btn-outline-secondary position-relative">
-                                        <FaBell />
-                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {pendingReservations}
-                                        </span>
-                                    </button>
-                                </div>
-                                <button className="btn btn-outline-secondary">
-                                    <FaCog />
-                                </button>
-                            </div>
-                        </div>
-                    </header>
-
-                    {/* Content */}
-                    <div className="p-4">
-                        {error && <div className="alert alert-danger">{error}</div>}
-                        
-                        {showProfile ? (
-                            <div className="container-fluid">
-                                <div className="card border-0 shadow-sm">
-                                    <div className="card-header bg-white border-0 py-3">
-                                        <h5 className="mb-0 fw-bold">Utilisateurs connectés</h5>
-                                    </div>
-                                    <div className="card-body">
-                                        {loading ? (
-                                            <div className="text-center py-5">
-                                                <div className="spinner-border text-primary" role="status">
-                                                    <span className="visually-hidden">Chargement...</span>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <div className="table-responsive">
-                                                <table className="table table-hover">
-                                                    <thead className="table-light">
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>Nom</th>
-                                                            <th>Prénom</th>
-                                                            <th>Email</th>
-                                                            <th>Téléphone</th>
-                                                            <th>Statut</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {Array.isArray(connectedUsers) && connectedUsers.length > 0 ? (
-                                                            connectedUsers.map(user => (
-                                                                <tr key={user._id || user.id}>
-                                                                    <td><span className="badge bg-secondary">#{user._id?.substring(0, 8) || user.id}</span></td>
-                                                                    <td>{user.name}</td>
-                                                                    <td>{user.prenom}</td>
-                                                                    <td>
-                                                                        <div className="d-flex align-items-center">
-                                                                            <FaEnvelope className="me-2 text-muted" />
-                                                                            {user.email}
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div className="d-flex align-items-center">
-                                                                            <FaPhone className="me-2 text-muted" />
-                                                                            {user.telephone || user.phone || 'N/A'}
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <span className="badge bg-success">Connecté</span>
-                                                                    </td>
-                                                                </tr>
-                                                            ))
-                                                        ) : (
-                                                            <tr>
-                                                                <td colSpan="6" className="text-center py-4">
-                                                                    <div className="text-muted">Aucun utilisateur connecté</div>
-                                                                </td>
-                                                            </tr>
-                                                        )}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                        ) : showNextDeparture ? (
-                            <div className="container-fluid">
-                                <div className="row">
-                                    {/* Formulaire d'ajout/modification */}
-                                    <div className="col-lg-6 mb-4 submission-form-section">
-                                        <div className="card border-0 shadow-sm h-100">
-                                            <div className="card-header bg-white border-0 py-3">
-                                                <h5 className="mb-0 fw-bold">
-                                                    {formData.id ? 'Modifier un départ' : 'Ajouter un nouveau départ'}
-                                                </h5>
-                                            </div>
-                                            <div className="card-body">
-                                                <form onSubmit={handleSubmit}>
-                                                    <div className="row g-3">
-                                                        <div className="col-md-6">
-                                                            <label className="form-label fw-medium">Entreprise *</label>
-                                                            <div className="input-group">
-                                                                <span className="input-group-text bg-light">
-                                                                    <FaBuilding className="text-primary" />
-                                                                </span>
-                                                                <input
-                                                                    type="text"
-                                                                    name="company"
-                                                                    className="form-control"
-                                                                    placeholder="Nom de l'entreprise"
-                                                                    value={formData.company}
-                                                                    onChange={handleChange}
-                                                                    required
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-6">
-                                                            <label className="form-label fw-medium">Prix (F CFA) *</label>
-                                                            <div className="input-group">
-                                                                <span className="input-group-text bg-light">
-                                                                    <FaEuroSign className="text-primary" />
-                                                                </span>
-                                                                <input
-                                                                    type="number"
-                                                                    name="price"
-                                                                    className="form-control"
-                                                                    placeholder="Prix"
-                                                                    value={formData.price}
-                                                                    onChange={handleChange}
-                                                                    required
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-6">
-                                                            <label className="form-label fw-medium">Départ *</label>
-                                                            <div className="input-group">
-                                                                <span className="input-group-text bg-light">
-                                                                    <FaMapMarkerAlt className="text-primary" />
-                                                                </span>
-                                                                <input
-                                                                    type="text"
-                                                                    name="from"
-                                                                    className="form-control"
-                                                                    placeholder="Ville de départ"
-                                                                    value={formData.from}
-                                                                    onChange={handleChange}
-                                                                    required
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-6">
-                                                            <label className="form-label fw-medium">Destination *</label>
-                                                            <div className="input-group">
-                                                                <span className="input-group-text bg-light">
-                                                                    <FaMapMarkerAlt className="text-primary" />
-                                                                </span>
-                                                                <input
-                                                                    type="text"
-                                                                    name="to"
-                                                                    className="form-control"
-                                                                    placeholder="Ville d'arrivée"
-                                                                    value={formData.to}
-                                                                    onChange={handleChange}
-                                                                    required
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-6">
-                                                            <label className="form-label fw-medium">Poids (kg) *</label>
-                                                            <div className="input-group">
-                                                                <span className="input-group-text bg-light">
-                                                                    <FaWeightHanging className="text-primary" />
-                                                                </span>
-                                                                <input
-                                                                    type="number"
-                                                                    name="kilos"
-                                                                    className="form-control"
-                                                                    placeholder="Poids en kg"
-                                                                    value={formData.kilos}
-                                                                    onChange={handleChange}
-                                                                    required
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-6">
-                                                            <label className="form-label fw-medium">Date de départ *</label>
-                                                            <div className="input-group">
-                                                                <span className="input-group-text bg-light">
-                                                                    <FaCalendarAlt className="text-primary" />
-                                                                </span>
-                                                                <input
-                                                                    type="date"
-                                                                    name="departure_date"
-                                                                    className="form-control"
-                                                                    value={formData.departure_date}
-                                                                    onChange={handleChange}
-                                                                    required
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="mt-4 d-flex gap-2">
-                                                        <button type="submit" className="btn btn-primary px-4" disabled={loading}>
-                                                            {loading ? 'Envoi en cours...' : formData.id ? 'Mettre à jour' : 'Ajouter le départ'}
-                                                        </button>
-                                                        {formData.id && (
-                                                            <button 
-                                                                type="button" 
-                                                                className="btn btn-outline-secondary"
-                                                                onClick={() => setFormData({ id: null, company: '', from: '', to: '', kilos: '', departure_date: '', price: '' })}
-                                                            >
-                                                                Annuler
-                                                            </button>
-                                                        )}
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Liste des départs existants */}
-                                    <div className="col-lg-6">
-                                        <div className="card border-0 shadow-sm">
-                                            <div className="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
-                                                <h5 className="mb-0 fw-bold">Départs programmés ({submissions.length})</h5>
-                                            </div>
-                                            <div className="card-body">
-                                                {loading ? (
-                                                    <div className="text-center py-4">
-                                                        <div className="spinner-border text-primary" role="status">
-                                                            <span className="visually-hidden">Chargement...</span>
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <div className="table-responsive">
-                                                        <table className="table table-hover">
-                                                            <thead className="table-light">
-                                                                <tr>
-                                                                    <th>Entreprise</th>
-                                                                    <th>Trajet</th>
-                                                                    <th>Date</th>
-                                                                    <th>Actions</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {filteredSubmissions.length === 0 ? (
-                                                                    <tr>
-                                                                        <td colSpan="4" className="text-center py-4">
-                                                                            <div className="text-muted">Aucun départ programmé</div>
-                                                                        </td>
-                                                                    </tr>
-                                                                ) : (
-                                                                    filteredSubmissions.map((submission) => (
-                                                                        <tr key={submission._id || submission.id}>
-                                                                            <td className="fw-medium">
-                                                                                <div className="d-flex align-items-center">
-                                                                                    <FaIndustry className="me-2 text-muted" />
-                                                                                    {submission.company}
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div className="fw-medium">{submission.from} → {submission.to}</div>
-                                                                                <small className="text-muted">
-                                                                                    {submission.kilos} kg • {parseFloat(submission.price || 0).toFixed(2)} F CFA
-                                                                                </small>
-                                                                            </td>
-                                                                            <td>
-                                                                                <span className="badge bg-light text-dark">
-                                                                                    {submission.departure_date ? new Date(submission.departure_date).toLocaleDateString() : 'Date non définie'}
-                                                                                </span>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div className="d-flex gap-2">
-                                                                                    <button 
-                                                                                        className="btn btn-sm btn-outline-primary"
-                                                                                        onClick={() => handleEditSubmission(submission)}
-                                                                                        title="Modifier"
-                                                                                    >
-                                                                                        <FaEdit />
-                                                                                    </button>
-                                                                                    <button 
-                                                                                        className="btn btn-sm btn-outline-danger"
-                                                                                        onClick={() => handleDeleteSubmission(submission._id || submission.id)}
-                                                                                        title="Supprimer"
-                                                                                    >
-                                                                                        <FaTrash />
-                                                                                    </button>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    ))
-                                                                )}
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
+            
+            {/* Sidebar */}
+            <Sidebar collapsed={sidebarCollapsed}>
+                <Box sx={{ p: 3, borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        {!sidebarCollapsed && (
                             <>
-                                {/* Statistiques */}
-                                <div className="row mb-4">
-                                    <div className="col-xl-3 col-md-6 mb-4">
-                                        <div className="card border-0 shadow-sm bg-primary text-white">
-                                            <div className="card-body">
-                                                <div className="d-flex justify-content-between align-items-center">
-                                                    <div>
-                                                        <h2 className="mb-0 fw-bold">{reservations.length}</h2>
-                                                        <p className="mb-0 opacity-75">Réservations totales</p>
-                                                    </div>
-                                                    <div className="icon-circle bg-white bg-opacity-25 p-3">
-                                                        <FaArchive className="fs-3" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-xl-3 col-md-6 mb-4">
-                                        <div className="card border-0 shadow-sm bg-success text-white">
-                                            <div className="card-body">
-                                                <div className="d-flex justify-content-between align-items-center">
-                                                    <div>
-                                                        <h2 className="mb-0 fw-bold">{totalKilos} kg</h2>
-                                                        <p className="mb-0 opacity-75">Poids total</p>
-                                                    </div>
-                                                    <div className="icon-circle bg-white bg-opacity-25 p-3">
-                                                        <FaBalanceScale className="fs-3" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-xl-3 col-md-6 mb-4">
-                                        <div className="card border-0 shadow-sm bg-warning text-white">
-                                            <div className="card-body">
-                                                <div className="d-flex justify-content-between align-items-center">
-                                                    <div>
-                                                        <h2 className="mb-0 fw-bold">{totalPrice.toFixed(2)} F CFA</h2>
-                                                        <p className="mb-0 opacity-75">Valeur totale</p>
-                                                    </div>
-                                                    <div className="icon-circle bg-white bg-opacity-25 p-3">
-                                                        <FaEuroSign className="fs-3" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-xl-3 col-md-6 mb-4">
-                                        <div className="card border-0 shadow-sm bg-info text-white">
-                                            <div className="card-body">
-                                                <div className="d-flex justify-content-between align-items-center">
-                                                    <div>
-                                                        <h2 className="mb-0 fw-bold">{activeReservations}</h2>
-                                                        <p className="mb-0 opacity-75">Réservations actives</p>
-                                                    </div>
-                                                    <div className="icon-circle bg-white bg-opacity-25 p-3">
-                                                        <FaTruck className="fs-3" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Barre de recherche et filtres */}
-                                <div className="card border-0 shadow-sm mb-4">
-                                    <div className="card-body">
-                                        <div className="row align-items-center">
-                                            <div className="col-md-6 mb-3 mb-md-0">
-                                                <h5 className="mb-0 fw-bold">Gestion des réservations</h5>
-                                                <small className="text-muted">{filteredReservations.length} réservation(s) trouvée(s)</small>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <div className="input-group">
-                                                    <span className="input-group-text bg-white border-end-0">
-                                                        <FaSearch className="text-muted" />
-                                                    </span>
-                                                    <input
-                                                        type="text"
-                                                        className="form-control border-start-0"
-                                                        placeholder="Rechercher une réservation..."
-                                                        value={searchTerm}
-                                                        onChange={handleSearchChange}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        {/* Filtres par statut */}
-                                        <div className="mt-3">
-                                            <div className="d-flex flex-wrap gap-2">
-                                                {statusFilters.map(filter => (
-                                                    <button
-                                                        key={filter.value}
-                                                        className={`btn btn-sm ${activeStatusFilter === filter.value ? 'btn-primary' : 'btn-outline-primary'}`}
-                                                        onClick={() => setActiveStatusFilter(filter.value)}
-                                                    >
-                                                        {filter.label}
-                                                        <span className="badge bg-light text-dark ms-2">
-                                                            {filter.count}
-                                                        </span>
-                                                    </button>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Table des Réservations COMPLÈTE */}
-                                <div className="card border-0 shadow-sm">
-                                    <div className="card-body">
-                                        <div className="table-responsive">
-                                            <table className="table table-hover">
-                                                <thead className="table-light">
-                                                    <tr>
-                                                        <th>Client</th>
-                                                        <th>Contact</th>
-                                                        <th>Entreprise</th>
-                                                        <th>Trajet</th>
-                                                        <th>Date</th>
-                                                        <th>Poids</th>
-                                                        <th>Prix</th>
-                                                        <th>Statut</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {loading ? (
-                                                        <tr>
-                                                            <td colSpan="9" className="text-center py-5">
-                                                                <div className="spinner-border text-primary" role="status">
-                                                                    <span className="visually-hidden">Chargement...</span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    ) : filteredReservations.length === 0 ? (
-                                                        <tr>
-                                                            <td colSpan="9" className="text-center py-4">
-                                                                <div className="text-muted">Aucune réservation trouvée</div>
-                                                            </td>
-                                                        </tr>
-                                                    ) : (
-                                                        filteredReservations.map((reservation, index) => (
-                                                            <tr key={reservation._id || index}>
-                                                                <td>
-                                                                    <div className="d-flex align-items-center">
-                                                                        <div className="avatar-circle bg-primary text-white me-3">
-                                                                            {reservation.nom?.charAt(0)}{reservation.prenom?.charAt(0)}
-                                                                        </div>
-                                                                        <div>
-                                                                            <div className="fw-medium">{reservation.nom} {reservation.prenom}</div>
-                                                                            <small className="text-muted">ID: {reservation._id?.substring(0, 8) || reservation.id}</small>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div className="d-flex flex-column">
-                                                                        <div className="d-flex align-items-center mb-1">
-                                                                            <FaEnvelope className="me-2 text-muted small" />
-                                                                            <small>{reservation.email}</small>
-                                                                        </div>
-                                                                        <div className="d-flex align-items-center">
-                                                                            <FaPhone className="me-2 text-muted small" />
-                                                                            <small>{reservation.num}</small>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div className="d-flex align-items-center">
-                                                                        <FaIndustry className="me-2 text-muted" />
-                                                                        <span>{reservation.company}</span>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div className="fw-medium">{reservation.from}</div>
-                                                                    <div className="text-muted small">→ {reservation.to}</div>
-                                                                </td>
-                                                                <td>
-                                                                    <span className="badge bg-light text-dark">
-                                                                        {reservation.departure_date ? new Date(reservation.departure_date).toLocaleDateString() : 'Date non définie'}
-                                                                    </span>
-                                                                </td>
-                                                                <td>
-                                                                    <span className="badge bg-light text-dark fw-bold">
-                                                                        {reservation.kilos} kg
-                                                                    </span>
-                                                                </td>
-                                                                <td className="fw-bold text-primary">
-                                                                    {parseFloat(reservation.price || 0).toFixed(2)} F CFA
-                                                                </td>
-                                                                <td>
-                                                                    <div className="dropdown">
-                                                                        <button 
-                                                                            className="btn btn-sm dropdown-toggle" 
-                                                                            type="button" 
-                                                                            data-bs-toggle="dropdown"
-                                                                            style={{ 
-                                                                                backgroundColor: '#f8f9fa',
-                                                                                border: '1px solid #dee2e6'
-                                                                            }}
-                                                                        >
-                                                                            {getStatusBadge(reservation.currentStatus)}
-                                                                        </button>
-                                                                        <ul className="dropdown-menu shadow-sm">
-                                                                            {['En attente', 'En transit', 'Livré', 'Retourné', 'Annulé'].map((status) => (
-                                                                                <li key={status}>
-                                                                                    <button 
-                                                                                        className="dropdown-item d-flex align-items-center"
-                                                                                        onClick={() => addStatus(reservation._id || reservation.id, status)}
-                                                                                    >
-                                                                                        {getStatusBadge(status)}
-                                                                                    </button>
-                                                                                </li>
-                                                                            ))}
-                                                                        </ul>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <button 
-                                                                        className="btn btn-sm btn-outline-danger"
-                                                                        onClick={() => handleDeleteReservation(reservation._id || reservation.id)}
-                                                                        title="Supprimer"
-                                                                    >
-                                                                        <FaTrash />
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                        ))
-                                                    )}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                    <Box sx={{
+                                        width: 40,
+                                        height: 40,
+                                        borderRadius: '12px',
+                                        background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}>
+                                        <FaTruck style={{ color: '#FFFFFF', fontSize: 20 }} />
+                                    </Box>
+                                    <Typography variant="h6" sx={{ fontWeight: 700, color: '#FFFFFF' }}>
+                                        Admin Panel
+                                    </Typography>
+                                </Box>
+                                <IconButton onClick={toggleSidebar} sx={{ color: '#FFFFFF' }}>
+                                    <FaChevronLeft />
+                                </IconButton>
                             </>
                         )}
-                    </div>
-                </div>
-            </div>
-        </div>
+                        {sidebarCollapsed && (
+                            <IconButton onClick={toggleSidebar} sx={{ color: '#FFFFFF' }}>
+                                <FaChevronRight />
+                            </IconButton>
+                        )}
+                    </Box>
+                </Box>
+
+                <Box sx={{ p: 3, borderBottom: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                        <Avatar 
+                            sx={{ 
+                                width: 45, 
+                                height: 45,
+                                bgcolor: '#3B82F6',
+                                color: '#FFFFFF',
+                                fontWeight: 600
+                            }}
+                        >
+                            A
+                        </Avatar>
+                        {!sidebarCollapsed && (
+                            <Box>
+                                <Typography sx={{ color: '#FFFFFF', fontWeight: 600 }}>
+                                    Administrateur
+                                </Typography>
+                                <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                                    Super Admin
+                                </Typography>
+                            </Box>
+                        )}
+                    </Box>
+                </Box>
+
+                <Box sx={{ p: 2, flex: 1 }}>
+                    <Button
+                        fullWidth
+                        startIcon={<FaHome />}
+                        sx={{
+                            justifyContent: 'flex-start',
+                            color: !showProfile && !showNextDeparture ? '#FFFFFF' : 'rgba(255, 255, 255, 0.7)',
+                            backgroundColor: !showProfile && !showNextDeparture ? 'rgba(59, 130, 246, 0.2)' : 'transparent',
+                            borderRadius: '12px',
+                            mb: 1,
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            }
+                        }}
+                        onClick={() => { setShowProfile(false); setShowNextDeparture(false); }}
+                    >
+                        {!sidebarCollapsed && 'Dashboard'}
+                    </Button>
+                    
+                    <Button
+                        fullWidth
+                        startIcon={<FaUsers />}
+                        sx={{
+                            justifyContent: 'flex-start',
+                            color: showProfile ? '#FFFFFF' : 'rgba(255, 255, 255, 0.7)',
+                            backgroundColor: showProfile ? 'rgba(59, 130, 246, 0.2)' : 'transparent',
+                            borderRadius: '12px',
+                            mb: 1,
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            }
+                        }}
+                        onClick={handleProfileClick}
+                    >
+                        {!sidebarCollapsed && 'Utilisateurs'}
+                    </Button>
+                    
+                    <Button
+                        fullWidth
+                        startIcon={<FaCalendarDay />}
+                        sx={{
+                            justifyContent: 'flex-start',
+                            color: showNextDeparture ? '#FFFFFF' : 'rgba(255, 255, 255, 0.7)',
+                            backgroundColor: showNextDeparture ? 'rgba(59, 130, 246, 0.2)' : 'transparent',
+                            borderRadius: '12px',
+                            mb: 1,
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            }
+                        }}
+                        onClick={handleNextDepartureClick}
+                    >
+                        {!sidebarCollapsed && 'Départs'}
+                    </Button>
+                </Box>
+            </Sidebar>
+
+            {/* Main Content */}
+            <MainContent className={sidebarCollapsed ? 'collapsed' : ''}>
+                {/* Header */}
+                <Box sx={{ 
+                    bgcolor: '#FFFFFF', 
+                    borderBottom: '1px solid #E5E7EB',
+                    px: 4,
+                    py: 2
+                }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Box>
+                            <Typography variant="h5" sx={{ 
+                                fontWeight: 700,
+                                color: '#1F2937',
+                                mb: 0.5
+                            }}>
+                                {showProfile ? 'Gestion des utilisateurs' : 
+                                 showNextDeparture ? 'Gestion des départs' : 
+                                 'Tableau de bord administratif'}
+                            </Typography>
+                            <Typography variant="body2" sx={{ color: '#6B7280' }}>
+                                {showProfile ? 'Gérez les utilisateurs de la plateforme' :
+                                 showNextDeparture ? 'Gérez les départs programmés' :
+                                 'Gestion complète des réservations et soumissions'}
+                            </Typography>
+                        </Box>
+                        
+                        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                            <IconButton sx={{ position: 'relative' }}>
+                                <Badge badgeContent={pendingReservations} color="error">
+                                    <FaBell style={{ color: '#6B7280' }} />
+                                </Badge>
+                            </IconButton>
+                            <IconButton>
+                                <FaCog style={{ color: '#6B7280' }} />
+                            </IconButton>
+                        </Box>
+                    </Box>
+                </Box>
+
+                {/* Content */}
+                <Box sx={{ p: 4 }}>
+                    {error && (
+                        <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }}>
+                            {error}
+                        </Alert>
+                    )}
+                    
+                    {showProfile ? (
+                        <ModernCard>
+                            <CardContent sx={{ p: 4 }}>
+                                <Typography variant="h6" sx={{ 
+                                    fontWeight: 700,
+                                    color: '#1F2937',
+                                    mb: 3
+                                }}>
+                                    Utilisateurs connectés
+                                </Typography>
+                                
+                                {loading ? (
+                                    <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+                                        <CircularProgress />
+                                    </Box>
+                                ) : (
+                                    <TableContainer component={Paper} elevation={0} sx={{ borderRadius: 2 }}>
+                                        <Table>
+                                            <TableHead sx={{ bgcolor: '#F9FAFB' }}>
+                                                <TableRow>
+                                                    <TableCell sx={{ fontWeight: 600 }}>ID</TableCell>
+                                                    <TableCell sx={{ fontWeight: 600 }}>Nom</TableCell>
+                                                    <TableCell sx={{ fontWeight: 600 }}>Prénom</TableCell>
+                                                    <TableCell sx={{ fontWeight: 600 }}>Email</TableCell>
+                                                    <TableCell sx={{ fontWeight: 600 }}>Téléphone</TableCell>
+                                                    <TableCell sx={{ fontWeight: 600 }}>Statut</TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {Array.isArray(connectedUsers) && connectedUsers.length > 0 ? (
+                                                    connectedUsers.map(user => (
+                                                        <StyledTableRow key={user._id || user.id}>
+                                                            <TableCell>
+                                                                <Typography variant="body2" sx={{ 
+                                                                    color: '#6B7280',
+                                                                    fontFamily: 'monospace'
+                                                                }}>
+                                                                    #{user._id?.substring(0, 8) || user.id}
+                                                                </Typography>
+                                                            </TableCell>
+                                                            <TableCell>{user.name}</TableCell>
+                                                            <TableCell>{user.prenom}</TableCell>
+                                                            <TableCell>
+                                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                                    <FaEnvelope style={{ color: '#9CA3AF' }} />
+                                                                    <Typography variant="body2">
+                                                                        {user.email}
+                                                                    </Typography>
+                                                                </Box>
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                                                    <FaPhone style={{ color: '#9CA3AF' }} />
+                                                                    <Typography variant="body2">
+                                                                        {user.telephone || user.phone || 'N/A'}
+                                                                    </Typography>
+                                                                </Box>
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <ModernChip 
+                                                                    label="Connecté"
+                                                                    sx={{ 
+                                                                        bgcolor: 'rgba(16, 185, 129, 0.1)',
+                                                                        color: '#10B981'
+                                                                    }}
+                                                                />
+                                                            </TableCell>
+                                                        </StyledTableRow>
+                                                    ))
+                                                ) : (
+                                                    <TableRow>
+                                                        <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
+                                                            <Typography variant="body2" sx={{ color: '#6B7280' }}>
+                                                                Aucun utilisateur connecté
+                                                            </Typography>
+                                                        </TableCell>
+                                                    </TableRow>
+                                                )}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                )}
+                            </CardContent>
+                        </ModernCard>
+                    ) : showNextDeparture ? (
+                        <Grid container spacing={3}>
+                            {/* Formulaire d'ajout/modification */}
+                            <Grid item xs={12} md={6}>
+                                <ModernCard>
+                                    <CardContent sx={{ p: 4 }}>
+                                        <Typography variant="h6" sx={{ 
+                                            fontWeight: 700,
+                                            color: '#1F2937',
+                                            mb: 3
+                                        }}>
+                                            {formData.id ? 'Modifier un départ' : 'Ajouter un nouveau départ'}
+                                        </Typography>
+                                        
+                                        <form onSubmit={handleSubmit}>
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="body2" sx={{ 
+                                                        mb: 1, 
+                                                        color: '#374151',
+                                                        fontWeight: 600
+                                                    }}>
+                                                        Entreprise *
+                                                    </Typography>
+                                                    <ModernTextField
+                                                        fullWidth
+                                                        name="company"
+                                                        placeholder="Nom de l'entreprise"
+                                                        value={formData.company}
+                                                        onChange={handleChange}
+                                                        required
+                                                        InputProps={{
+                                                            startAdornment: (
+                                                                <InputAdornment position="start">
+                                                                    <FaBuilding style={{ color: '#1F2937' }} />
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="body2" sx={{ 
+                                                        mb: 1, 
+                                                        color: '#374151',
+                                                        fontWeight: 600
+                                                    }}>
+                                                        Prix (F CFA) *
+                                                    </Typography>
+                                                    <ModernTextField
+                                                        fullWidth
+                                                        type="number"
+                                                        name="price"
+                                                        placeholder="Prix"
+                                                        value={formData.price}
+                                                        onChange={handleChange}
+                                                        required
+                                                        InputProps={{
+                                                            startAdornment: (
+                                                                <InputAdornment position="start">
+                                                                    <FaEuroSign style={{ color: '#1F2937' }} />
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="body2" sx={{ 
+                                                        mb: 1, 
+                                                        color: '#374151',
+                                                        fontWeight: 600
+                                                    }}>
+                                                        Départ *
+                                                    </Typography>
+                                                    <ModernTextField
+                                                        fullWidth
+                                                        name="from"
+                                                        placeholder="Ville de départ"
+                                                        value={formData.from}
+                                                        onChange={handleChange}
+                                                        required
+                                                        InputProps={{
+                                                            startAdornment: (
+                                                                <InputAdornment position="start">
+                                                                    <FaMapMarkerAlt style={{ color: '#1F2937' }} />
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="body2" sx={{ 
+                                                        mb: 1, 
+                                                        color: '#374151',
+                                                        fontWeight: 600
+                                                    }}>
+                                                        Destination *
+                                                    </Typography>
+                                                    <ModernTextField
+                                                        fullWidth
+                                                        name="to"
+                                                        placeholder="Ville d'arrivée"
+                                                        value={formData.to}
+                                                        onChange={handleChange}
+                                                        required
+                                                        InputProps={{
+                                                            startAdornment: (
+                                                                <InputAdornment position="start">
+                                                                    <FaMapMarkerAlt style={{ color: '#1F2937' }} />
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="body2" sx={{ 
+                                                        mb: 1, 
+                                                        color: '#374151',
+                                                        fontWeight: 600
+                                                    }}>
+                                                        Poids (kg) *
+                                                    </Typography>
+                                                    <ModernTextField
+                                                        fullWidth
+                                                        type="number"
+                                                        name="kilos"
+                                                        placeholder="Poids en kg"
+                                                        value={formData.kilos}
+                                                        onChange={handleChange}
+                                                        required
+                                                        InputProps={{
+                                                            startAdornment: (
+                                                                <InputAdornment position="start">
+                                                                    <FaWeightHanging style={{ color: '#1F2937' }} />
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                    <Typography variant="body2" sx={{ 
+                                                        mb: 1, 
+                                                        color: '#374151',
+                                                        fontWeight: 600
+                                                    }}>
+                                                        Date de départ *
+                                                    </Typography>
+                                                    <ModernTextField
+                                                        fullWidth
+                                                        type="date"
+                                                        name="departure_date"
+                                                        value={formData.departure_date}
+                                                        onChange={handleChange}
+                                                        required
+                                                        InputProps={{
+                                                            startAdornment: (
+                                                                <InputAdornment position="start">
+                                                                    <FaCalendarAlt style={{ color: '#1F2937' }} />
+                                                                </InputAdornment>
+                                                            ),
+                                                        }}
+                                                    />
+                                                </Grid>
+                                            </Grid>
+                                            
+                                            <Box sx={{ mt: 4, display: 'flex', gap: 2 }}>
+                                                <PrimaryButton
+                                                    type="submit"
+                                                    disabled={loading}
+                                                    startIcon={loading ? <CircularProgress size={20} color="inherit" /> : null}
+                                                >
+                                                    {loading ? 'Envoi en cours...' : formData.id ? 'Mettre à jour' : 'Ajouter le départ'}
+                                                </PrimaryButton>
+                                                {formData.id && (
+                                                    <Button
+                                                        variant="outlined"
+                                                        onClick={() => setFormData({ id: null, company: '', from: '', to: '', kilos: '', departure_date: '', price: '' })}
+                                                        sx={{ borderRadius: '12px' }}
+                                                    >
+                                                        Annuler
+                                                    </Button>
+                                                )}
+                                            </Box>
+                                        </form>
+                                    </CardContent>
+                                </ModernCard>
+                            </Grid>
+
+                            {/* Liste des départs existants */}
+                            <Grid item xs={12} md={6}>
+                                <ModernCard>
+                                    <CardContent sx={{ p: 4 }}>
+                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                                            <Typography variant="h6" sx={{ fontWeight: 700, color: '#1F2937' }}>
+                                                Départs programmés ({submissions.length})
+                                            </Typography>
+                                        </Box>
+                                        
+                                        {loading ? (
+                                            <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+                                                <CircularProgress />
+                                            </Box>
+                                        ) : (
+                                            <Box sx={{ maxHeight: '500px', overflow: 'auto' }}>
+                                                {filteredSubmissions.length === 0 ? (
+                                                    <Box sx={{ textAlign: 'center', py: 4 }}>
+                                                        <Typography variant="body2" sx={{ color: '#6B7280' }}>
+                                                            Aucun départ programmé
+                                                        </Typography>
+                                                    </Box>
+                                                ) : (
+                                                    <Grid container spacing={2}>
+                                                        {filteredSubmissions.map((submission) => (
+                                                            <Grid item xs={12} key={submission._id || submission.id}>
+                                                                <ResultCard sx={{ p: 2 }}>
+                                                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                                        <Box>
+                                                                            <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1F2937' }}>
+                                                                                {submission.company}
+                                                                            </Typography>
+                                                                            <Typography variant="body2" sx={{ color: '#6B7280' }}>
+                                                                                {submission.from} → {submission.to}
+                                                                            </Typography>
+                                                                            <Box sx={{ display: 'flex', gap: 1, mt: 0.5 }}>
+                                                                                <ModernChip 
+                                                                                    label={`${submission.kilos} kg`}
+                                                                                    size="small"
+                                                                                    sx={{ 
+                                                                                        bgcolor: 'rgba(243, 244, 246, 0.5)',
+                                                                                        color: '#374151',
+                                                                                    }} 
+                                                                                />
+                                                                                <ModernChip 
+                                                                                    label={`${parseFloat(submission.price || 0).toFixed(2)} F CFA`}
+                                                                                    size="small"
+                                                                                    sx={{ 
+                                                                                        bgcolor: 'rgba(229, 231, 235, 0.3)',
+                                                                                        color: '#374151',
+                                                                                    }} 
+                                                                                />
+                                                                            </Box>
+                                                                        </Box>
+                                                                        <Box sx={{ display: 'flex', gap: 1 }}>
+                                                                            <IconButton 
+                                                                                size="small"
+                                                                                onClick={() => handleEditSubmission(submission)}
+                                                                                sx={{ color: '#1F2937' }}
+                                                                            >
+                                                                                <FaEdit />
+                                                                            </IconButton>
+                                                                            <IconButton 
+                                                                                size="small"
+                                                                                onClick={() => handleDeleteSubmission(submission._id || submission.id)}
+                                                                                sx={{ color: '#DC2626' }}
+                                                                            >
+                                                                                <FaTrash />
+                                                                            </IconButton>
+                                                                        </Box>
+                                                                    </Box>
+                                                                    <Typography variant="caption" sx={{ color: '#9CA3AF', display: 'block', mt: 1 }}>
+                                                                        Départ: {submission.departure_date ? new Date(submission.departure_date).toLocaleDateString() : 'Date non définie'}
+                                                                    </Typography>
+                                                                </ResultCard>
+                                                            </Grid>
+                                                        ))}
+                                                    </Grid>
+                                                )}
+                                            </Box>
+                                        )}
+                                    </CardContent>
+                                </ModernCard>
+                            </Grid>
+                        </Grid>
+                    ) : (
+                        <>
+                            {/* Statistiques */}
+                            <Grid container spacing={3} sx={{ mb: 4 }}>
+                                <Grid item xs={12} sm={6} md={3}>
+                                    <ModernCard>
+                                        <CardContent sx={{ p: 3 }}>
+                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <Box>
+                                                    <Typography variant="h4" sx={{ 
+                                                        fontWeight: 700,
+                                                        color: '#1F2937',
+                                                        mb: 0.5
+                                                    }}>
+                                                        {reservations.length}
+                                                    </Typography>
+                                                    <Typography variant="body2" sx={{ color: '#6B7280' }}>
+                                                        Réservations totales
+                                                    </Typography>
+                                                </Box>
+                                                <Box sx={{
+                                                    width: 48,
+                                                    height: 48,
+                                                    borderRadius: '12px',
+                                                    background: 'rgba(59, 130, 246, 0.1)',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center'
+                                                }}>
+                                                    <FaDatabase style={{ color: '#3B82F6', fontSize: 24 }} />
+                                                </Box>
+                                            </Box>
+                                        </CardContent>
+                                    </ModernCard>
+                                </Grid>
+                                
+                                <Grid item xs={12} sm={6} md={3}>
+                                    <ModernCard>
+                                        <CardContent sx={{ p: 3 }}>
+                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <Box>
+                                                    <Typography variant="h4" sx={{ 
+                                                        fontWeight: 700,
+                                                        color: '#1F2937',
+                                                        mb: 0.5
+                                                    }}>
+                                                        {totalKilos} kg
+                                                    </Typography>
+                                                    <Typography variant="body2" sx={{ color: '#6B7280' }}>
+                                                        Poids total
+                                                    </Typography>
+                                                </Box>
+                                                <Box sx={{
+                                                    width: 48,
+                                                    height: 48,
+                                                    borderRadius: '12px',
+                                                    background: 'rgba(16, 185, 129, 0.1)',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center'
+                                                }}>
+                                                    <FaBalanceScale style={{ color: '#10B981', fontSize: 24 }} />
+                                                </Box>
+                                            </Box>
+                                        </CardContent>
+                                    </ModernCard>
+                                </Grid>
+                                
+                                <Grid item xs={12} sm={6} md={3}>
+                                    <ModernCard>
+                                        <CardContent sx={{ p: 3 }}>
+                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <Box>
+                                                    <Typography variant="h4" sx={{ 
+                                                        fontWeight: 700,
+                                                        color: '#1F2937',
+                                                        mb: 0.5
+                                                    }}>
+                                                        {totalPrice.toFixed(2)} F CFA
+                                                    </Typography>
+                                                    <Typography variant="body2" sx={{ color: '#6B7280' }}>
+                                                        Valeur totale
+                                                    </Typography>
+                                                </Box>
+                                                <Box sx={{
+                                                    width: 48,
+                                                    height: 48,
+                                                    borderRadius: '12px',
+                                                    background: 'rgba(245, 158, 11, 0.1)',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center'
+                                                }}>
+                                                    <FaMoneyBillWave style={{ color: '#F59E0B', fontSize: 24 }} />
+                                                </Box>
+                                            </Box>
+                                        </CardContent>
+                                    </ModernCard>
+                                </Grid>
+                                
+                                <Grid item xs={12} sm={6} md={3}>
+                                    <ModernCard>
+                                        <CardContent sx={{ p: 3 }}>
+                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <Box>
+                                                    <Typography variant="h4" sx={{ 
+                                                        fontWeight: 700,
+                                                        color: '#1F2937',
+                                                        mb: 0.5
+                                                    }}>
+                                                        {activeReservations}
+                                                    </Typography>
+                                                    <Typography variant="body2" sx={{ color: '#6B7280' }}>
+                                                        Réservations actives
+                                                    </Typography>
+                                                </Box>
+                                                <Box sx={{
+                                                    width: 48,
+                                                    height: 48,
+                                                    borderRadius: '12px',
+                                                    background: 'rgba(99, 102, 241, 0.1)',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center'
+                                                }}>
+                                                    <FaTruck style={{ color: '#6366F1', fontSize: 24 }} />
+                                                </Box>
+                                            </Box>
+                                        </CardContent>
+                                    </ModernCard>
+                                </Grid>
+                            </Grid>
+
+                            {/* Barre de recherche et filtres */}
+                            <ModernCard sx={{ mb: 3 }}>
+                                <CardContent sx={{ p: 3 }}>
+                                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                                        <Box>
+                                            <Typography variant="h6" sx={{ fontWeight: 700, color: '#1F2937' }}>
+                                                Gestion des réservations
+                                            </Typography>
+                                            <Typography variant="body2" sx={{ color: '#6B7280' }}>
+                                                {filteredReservations.length} réservation(s) trouvée(s)
+                                            </Typography>
+                                        </Box>
+                                        <Box sx={{ width: '300px' }}>
+                                            <ModernTextField
+                                                fullWidth
+                                                placeholder="Rechercher une réservation..."
+                                                value={searchTerm}
+                                                onChange={handleSearchChange}
+                                                InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment position="start">
+                                                            <FaSearch style={{ color: '#9CA3AF' }} />
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
+                                            />
+                                        </Box>
+                                    </Box>
+                                    
+                                    {/* Filtres par statut */}
+                                    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                                        {statusFilters.map(filter => (
+                                            <ModernChip
+                                                key={filter.value}
+                                                label={`${filter.label} (${filter.count})`}
+                                                onClick={() => setActiveStatusFilter(filter.value)}
+                                                sx={{
+                                                    bgcolor: activeStatusFilter === filter.value ? '#1F2937' : 'rgba(229, 231, 235, 0.3)',
+                                                    color: activeStatusFilter === filter.value ? '#FFFFFF' : '#374151',
+                                                    '&:hover': {
+                                                        bgcolor: activeStatusFilter === filter.value ? '#374151' : 'rgba(229, 231, 235, 0.5)',
+                                                    }
+                                                }}
+                                            />
+                                        ))}
+                                    </Box>
+                                </CardContent>
+                            </ModernCard>
+
+                            {/* Table des Réservations */}
+                            <ModernCard>
+                                <CardContent sx={{ p: 0 }}>
+                                    {loading ? (
+                                        <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+                                            <CircularProgress />
+                                        </Box>
+                                    ) : filteredReservations.length === 0 ? (
+                                        <Box sx={{ textAlign: 'center', py: 8 }}>
+                                            {/* Correction ici: utilisation de FaBox au lieu de FaShippingBox */}
+                                            <FaBox style={{ fontSize: 48, color: '#9CA3AF', marginBottom: 16 }} />
+                                            <Typography variant="h6" sx={{ color: '#6B7280', mb: 1 }}>
+                                                Aucune réservation trouvée
+                                            </Typography>
+                                            <Typography variant="body2" sx={{ color: '#9CA3AF' }}>
+                                                Essayez de modifier vos critères de recherche
+                                            </Typography>
+                                        </Box>
+                                    ) : (
+                                        <TableContainer sx={{ maxHeight: '600px' }}>
+                                            <Table stickyHeader>
+                                                <TableHead>
+                                                    <TableRow>
+                                                        <TableCell sx={{ fontWeight: 700, bgcolor: '#F9FAFB' }}>Client</TableCell>
+                                                        <TableCell sx={{ fontWeight: 700, bgcolor: '#F9FAFB' }}>Contact</TableCell>
+                                                        <TableCell sx={{ fontWeight: 700, bgcolor: '#F9FAFB' }}>Trajet</TableCell>
+                                                        <TableCell sx={{ fontWeight: 700, bgcolor: '#F9FAFB' }}>Date</TableCell>
+                                                        <TableCell sx={{ fontWeight: 700, bgcolor: '#F9FAFB' }}>Poids</TableCell>
+                                                        <TableCell sx={{ fontWeight: 700, bgcolor: '#F9FAFB' }}>Prix</TableCell>
+                                                        <TableCell sx={{ fontWeight: 700, bgcolor: '#F9FAFB' }}>Statut</TableCell>
+                                                        <TableCell sx={{ fontWeight: 700, bgcolor: '#F9FAFB' }}>Actions</TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {filteredReservations.map((reservation) => (
+                                                        <StyledTableRow key={reservation._id}>
+                                                            <TableCell>
+                                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                                                    <Avatar sx={{ 
+                                                                        width: 40, 
+                                                                        height: 40,
+                                                                        bgcolor: '#3B82F6',
+                                                                        color: '#FFFFFF',
+                                                                        fontWeight: 600
+                                                                    }}>
+                                                                        {reservation.nom?.charAt(0)}{reservation.prenom?.charAt(0)}
+                                                                    </Avatar>
+                                                                    <Box>
+                                                                        <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#1F2937' }}>
+                                                                            {reservation.nom} {reservation.prenom}
+                                                                        </Typography>
+                                                                        <Typography variant="caption" sx={{ color: '#6B7280' }}>
+                                                                            {reservation.company}
+                                                                        </Typography>
+                                                                    </Box>
+                                                                </Box>
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Box>
+                                                                    <Typography variant="body2" sx={{ color: '#1F2937' }}>
+                                                                        {reservation.email}
+                                                                    </Typography>
+                                                                    <Typography variant="caption" sx={{ color: '#6B7280' }}>
+                                                                        {reservation.num}
+                                                                    </Typography>
+                                                                </Box>
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Typography variant="body2" sx={{ color: '#1F2937' }}>
+                                                                    {reservation.from} → {reservation.to}
+                                                                </Typography>
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <ModernChip 
+                                                                    label={reservation.departure_date ? new Date(reservation.departure_date).toLocaleDateString() : 'N/A'}
+                                                                    sx={{ 
+                                                                        bgcolor: 'rgba(243, 244, 246, 0.5)',
+                                                                        color: '#374151',
+                                                                    }} 
+                                                                />
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <ModernChip 
+                                                                    label={`${reservation.kilos} kg`}
+                                                                    sx={{ 
+                                                                        bgcolor: 'rgba(229, 231, 235, 0.3)',
+                                                                        color: '#374151',
+                                                                        fontWeight: 600
+                                                                    }} 
+                                                                />
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Typography variant="body2" sx={{ color: '#1F2937', fontWeight: 600 }}>
+                                                                    {parseFloat(reservation.price || 0).toFixed(2)} F CFA
+                                                                </Typography>
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <Button
+                                                                    size="small"
+                                                                    onClick={(e) => handleMenuOpen(e, reservation)}
+                                                                    sx={{ 
+                                                                        p: 0,
+                                                                        minWidth: 'auto',
+                                                                        '&:hover': { bgcolor: 'transparent' }
+                                                                    }}
+                                                                >
+                                                                    {getStatusBadge(reservation.currentStatus)}
+                                                                </Button>
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                <IconButton 
+                                                                    size="small"
+                                                                    onClick={() => handleDeleteReservation(reservation._id)}
+                                                                    sx={{ color: '#DC2626' }}
+                                                                >
+                                                                    <FaTrash />
+                                                                </IconButton>
+                                                            </TableCell>
+                                                        </StyledTableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    )}
+                                </CardContent>
+                            </ModernCard>
+                        </>
+                    )}
+                </Box>
+            </MainContent>
+
+            {/* Menu des statuts */}
+            <Menu
+                anchorEl={menuAnchor}
+                open={Boolean(menuAnchor)}
+                onClose={handleMenuClose}
+                PaperProps={{
+                    sx: {
+                        borderRadius: '12px',
+                        boxShadow: '0 4px 24px rgba(0, 0, 0, 0.12)',
+                        minWidth: '180px'
+                    }
+                }}
+            >
+                {['En attente', 'En transit', 'Livré', 'Retourné', 'Annulé'].map((status) => (
+                    <MenuItem 
+                        key={status}
+                        onClick={() => handleStatusChange(status)}
+                        sx={{ py: 1.5 }}
+                    >
+                        {getStatusBadge(status)}
+                    </MenuItem>
+                ))}
+            </Menu>
+        </Box>
     );
 };
 

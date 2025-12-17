@@ -1417,17 +1417,7 @@ const Navbar = () => {
                                     </Button>
                                 </Link>
                                 
-                                <PrimaryButton
-                                    sx={{
-                                        px: { xs: 2, sm: 3 },
-                                        py: 1,
-                                        fontSize: { xs: '0.75rem', sm: '0.85rem' },
-                                        borderRadius: 12,
-                                        fontWeight: 600,
-                                    }}
-                                >
-                                    Proposer un voyage
-                                </PrimaryButton>
+                               
                             </Box>
                         </Grid>
                     </Grid>

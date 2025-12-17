@@ -13,7 +13,6 @@ import {
   Grid,
   Fade,
   Divider,
-  Alert,
   CircularProgress,
   useTheme,
   useMediaQuery,
@@ -28,7 +27,6 @@ import {
   Email,
   FlightTakeoff,
   Security,
-  HowToReg,
   ArrowBack
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
@@ -163,20 +161,20 @@ const GlassCard = styled(ModernCard)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     borderRadius: 0,
     margin: 0,
-    height: '100vh',
-    width: '100vw',
+    height: '100%',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     boxShadow: 'none',
     border: 'none',
-    overflowY: 'auto',
     position: 'fixed',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     zIndex: 1000,
+    overflowY: 'auto',
   },
 }));
 
@@ -197,15 +195,16 @@ const AnimatedInput = styled(ModernTextField)(({ theme }) => ({
     },
     '& input': {
       color: '#1F2937',
-      padding: '16px',
-      fontSize: '1rem',
+      padding: '16px 14px',
+      fontSize: '16px',
       '&::placeholder': {
         color: '#9CA3AF',
         opacity: 1,
       },
       [theme.breakpoints.down('sm')]: {
-        padding: '16px',
-        fontSize: '1rem',
+        padding: '14px',
+        fontSize: '16px',
+        height: 'auto',
       },
     },
   },
@@ -214,7 +213,7 @@ const AnimatedInput = styled(ModernTextField)(({ theme }) => ({
   },
   [theme.breakpoints.down('sm')]: {
     '& .MuiInputAdornment-root': {
-      marginRight: 12,
+      marginRight: 8,
     },
   },
 }));
@@ -326,8 +325,6 @@ const Compte = () => {
         },
       }} />
       
-  
-      
       {!isMobile ? (
         // Version Desktop/Tablet - Formulaire centré seul
         <Container 
@@ -396,8 +393,6 @@ const Compte = () => {
                       }}>
                         Créer votre compte
                       </Typography>
-
-                     
                     </Box>
 
                     {/* Formulaire */}
@@ -421,21 +416,16 @@ const Compte = () => {
           </Fade>
         </Container>
       ) : (
-        // Version Mobile - Plein écran
-        <Box sx={{
-          width: '100vw',
-          height: '100vh',
-          position: 'relative',
-        }}>
+        // Version Mobile - Plein écran simplifié
+        <GlassCard>
           {/* En-tête mobile avec bouton retour */}
           <Box sx={{
-            position: 'absolute',
+            position: 'sticky',
             top: 0,
-            left: 0,
-            right: 0,
             zIndex: 10,
             p: 2,
-            background: 'transparent',
+            background: '#FFFFFF',
+            borderBottom: '1px solid rgba(229, 231, 235, 0.8)',
             display: 'flex',
             alignItems: 'center',
             gap: 2
@@ -459,82 +449,77 @@ const Compte = () => {
             </Typography>
           </Box>
 
-          <GlassCard>
-            <CardContent sx={{ 
-              p: 3,
-              pt: 8, // Pour compenser l'en-tête
-              height: '100%',
+          <CardContent sx={{ 
+            p: 3,
+            height: 'calc(100vh - 73px)',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            {/* En-tête mobile */}
+            <Box sx={{ 
+              textAlign: 'center', 
+              mb: 3,
+              flexShrink: 0
+            }}>
+              <Box sx={{
+                width: 60,
+                height: 60,
+                borderRadius: '14px',
+                background: 'linear-gradient(135deg, #1F2937 0%, #374151 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 12px',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                boxShadow: '0 8px 32px rgba(31, 41, 55, 0.2)',
+              }}>
+                <FlightTakeoff style={{ 
+                  color: '#FFFFFF',
+                  fontSize: 28,
+                }} />
+              </Box>
+              
+              <Typography variant="h6" sx={{ 
+                color: '#1F2937',
+                mb: 0.5,
+                fontWeight: 900,
+                background: 'linear-gradient(90deg, #1F2937 0%, #4B5563 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>
+                Yónnee
+              </Typography>
+              
+              <Typography variant="body2" sx={{ 
+                color: '#6B7280',
+                fontSize: '0.875rem'
+              }}>
+                Créer votre compte
+              </Typography>
+            </Box>
+
+            {/* Formulaire mobile simplifié */}
+            <Box sx={{ 
+              flex: 1,
               display: 'flex',
               flexDirection: 'column'
             }}>
-              {/* En-tête mobile */}
-              <Box sx={{ 
-                textAlign: 'center', 
-                mb: 4,
-                flexShrink: 0
-              }}>
-                <Box sx={{
-                  width: 70,
-                  height: 70,
-                  borderRadius: '16px',
-                  background: 'linear-gradient(135deg, #1F2937 0%, #374151 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 16px',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  boxShadow: '0 8px 32px rgba(31, 41, 55, 0.2)',
-                }}>
-                  <FlightTakeoff style={{ 
-                    color: '#FFFFFF',
-                    fontSize: 32,
-                  }} />
-                </Box>
-                
-                <Typography variant="h5" sx={{ 
-                  color: '#1F2937',
-                  mb: 1,
-                  fontWeight: 900,
-                  background: 'linear-gradient(90deg, #1F2937 0%, #4B5563 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}>
-                  Yónnee
-                </Typography>
-                
-                <Typography variant="body1" sx={{ 
-                  color: '#6B7280',
-                  fontSize: '0.9rem'
-                }}>
-                  Créer votre compte
-                </Typography>
-              </Box>
-
-              {/* Formulaire mobile */}
-              <Box sx={{ 
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                overflowY: 'auto',
-                pb: 2
-              }}>
-                <FormContent 
-                  formData={formData}
-                  handleChange={handleChange}
-                  handleSubmit={handleSubmit}
-                  isSubmitting={isSubmitting}
-                  error={error}
-                  success={success}
-                  showPassword={showPassword}
-                  setShowPassword={setShowPassword}
-                  showPasswordConfirmation={showPasswordConfirmation}
-                  setShowPasswordConfirmation={setShowPasswordConfirmation}
-                  isMobile={isMobile}
-                />
-              </Box>
-            </CardContent>
-          </GlassCard>
-        </Box>
+              <FormContent 
+                formData={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                isSubmitting={isSubmitting}
+                error={error}
+                success={success}
+                showPassword={showPassword}
+                setShowPassword={setShowPassword}
+                showPasswordConfirmation={showPasswordConfirmation}
+                setShowPasswordConfirmation={setShowPasswordConfirmation}
+                isMobile={isMobile}
+              />
+            </Box>
+          </CardContent>
+        </GlassCard>
       )}
     </Box>
   );
@@ -618,14 +603,15 @@ const FormContent = ({
         </ResultCard>
       )}
       
-      <form onSubmit={handleSubmit} style={{ width: '100%', flex: 1 }}>
+      <form onSubmit={handleSubmit} style={{ width: '100%', flex: 1, display: 'flex', flexDirection: 'column' }}>
         {/* Nom et Prénom */}
-        <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid container spacing={2} sx={{ mb: 2, flexShrink: 0 }}>
           <Grid item xs={12} sm={6}>
             <Typography variant="body2" sx={{ 
               mb: 1, 
               color: '#374151',
-              fontWeight: 600
+              fontWeight: 600,
+              fontSize: '0.875rem'
             }}>
               Nom
             </Typography>
@@ -640,7 +626,8 @@ const FormContent = ({
               placeholder="Votre nom"
               sx={{
                 '& .MuiInputBase-input': {
-                  fontSize: isMobile ? '1rem' : '1rem'
+                  fontSize: '16px',
+                  padding: isMobile ? '12px 14px' : '16px 14px',
                 }
               }}
             />
@@ -649,7 +636,8 @@ const FormContent = ({
             <Typography variant="body2" sx={{ 
               mb: 1, 
               color: '#374151',
-              fontWeight: 600
+              fontWeight: 600,
+              fontSize: '0.875rem'
             }}>
               Prénom
             </Typography>
@@ -664,7 +652,8 @@ const FormContent = ({
               placeholder="Votre prénom"
               sx={{
                 '& .MuiInputBase-input': {
-                  fontSize: isMobile ? '1rem' : '1rem'
+                  fontSize: '16px',
+                  padding: isMobile ? '12px 14px' : '16px 14px',
                 }
               }}
             />
@@ -672,11 +661,12 @@ const FormContent = ({
         </Grid>
 
         {/* Email */}
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 2, flexShrink: 0 }}>
           <Typography variant="body2" sx={{ 
             mb: 1, 
             color: '#374151',
             fontWeight: 600,
+            fontSize: '0.875rem',
             display: 'flex',
             alignItems: 'center',
             gap: 1
@@ -695,18 +685,20 @@ const FormContent = ({
             placeholder="exemple@email.com"
             sx={{
               '& .MuiInputBase-input': {
-                fontSize: isMobile ? '1rem' : '1rem'
+                fontSize: '16px',
+                padding: isMobile ? '12px 14px' : '16px 14px',
               }
             }}
           />
         </Box>
 
         {/* Mot de passe */}
-        <Box sx={{ mb: 3 }}>
+        <Box sx={{ mb: 2, flexShrink: 0 }}>
           <Typography variant="body2" sx={{ 
             mb: 1, 
             color: '#374151',
             fontWeight: 600,
+            fontSize: '0.875rem',
             display: 'flex',
             alignItems: 'center',
             gap: 1
@@ -744,18 +736,20 @@ const FormContent = ({
             }}
             sx={{
               '& .MuiInputBase-input': {
-                fontSize: isMobile ? '1rem' : '1rem'
+                fontSize: '16px',
+                padding: isMobile ? '12px 14px' : '16px 14px',
               }
             }}
           />
         </Box>
 
         {/* Confirmation mot de passe */}
-        <Box sx={{ mb: 4 }}>
+        <Box sx={{ mb: 3, flexShrink: 0 }}>
           <Typography variant="body2" sx={{ 
             mb: 1, 
             color: '#374151',
             fontWeight: 600,
+            fontSize: '0.875rem',
             display: 'flex',
             alignItems: 'center',
             gap: 1
@@ -793,57 +787,58 @@ const FormContent = ({
             }}
             sx={{
               '& .MuiInputBase-input': {
-                fontSize: isMobile ? '1rem' : '1rem'
+                fontSize: '16px',
+                padding: isMobile ? '12px 14px' : '16px 14px',
               }
             }}
           />
         </Box>
 
         {/* Bouton d'inscription */}
-        <PrimaryButton
-          type="submit"
-          fullWidth
-          disabled={isSubmitting}
-          sx={{ 
-            mb: 3,
-            py: isMobile ? 1.5 : 1.5,
-            fontSize: isMobile ? '1rem' : '1.1rem',
-            position: 'relative',
-            overflow: 'hidden',
-            minHeight: isMobile ? 56 : 56,
-          }}
-        >
-          {isSubmitting ? (
-            <Box sx={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
-              gap: 1 
-            }}>
-              <CircularProgress 
-                size={isMobile ? 20 : 20} 
-                thickness={4}
-                sx={{ color: 'white' }}
-              />
-              Inscription en cours...
-            </Box>
-          ) : (
-            "S'inscrire"
-          )}
-        </PrimaryButton>
+        <Box sx={{ flexShrink: 0, mb: 2 }}>
+          <PrimaryButton
+            type="submit"
+            fullWidth
+            disabled={isSubmitting}
+            sx={{ 
+              py: isMobile ? 1.25 : 1.5,
+              fontSize: isMobile ? '0.95rem' : '1rem',
+              minHeight: isMobile ? 48 : 56,
+            }}
+          >
+            {isSubmitting ? (
+              <Box sx={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                gap: 1 
+              }}>
+                <CircularProgress 
+                  size={20} 
+                  thickness={4}
+                  sx={{ color: 'white' }}
+                />
+                Inscription en cours...
+              </Box>
+            ) : (
+              "S'inscrire"
+            )}
+          </PrimaryButton>
+        </Box>
 
         {/* Séparateur */}
         <Divider sx={{ 
-          my: 3, 
+          my: 2, 
           borderColor: 'rgba(229, 231, 235, 0.8)',
           '&:before, &:after': {
             borderColor: 'rgba(229, 231, 235, 0.8)',
-          }
+          },
+          flexShrink: 0
         }}>
           <Typography variant="body2" sx={{ 
             color: '#9CA3AF', 
             px: 2,
-            fontSize: isMobile ? '0.85rem' : '0.875rem',
+            fontSize: '0.875rem',
             backgroundColor: '#F9FAFB'
           }}>
             Déjà membre ?
@@ -851,48 +846,49 @@ const FormContent = ({
         </Divider>
 
         {/* Bouton de connexion */}
-        <Button
-          component={Link}
-          to="/connect"
-          variant="outlined"
-          fullWidth
-          sx={{
-            color: '#1F2937',
-            border: '1px solid rgba(31, 41, 55, 0.2)',
-            borderRadius: 12,
-            py: isMobile ? 1.5 : 1.5,
-            fontWeight: 600,
-            fontSize: isMobile ? '1rem' : '1rem',
-            background: '#FFFFFF',
-            transition: 'all 0.3s ease',
-            '&:hover': {
-              borderColor: '#1F2937',
-              background: '#F9FAFB',
-              transform: 'translateY(-2px)',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-            },
-          }}
-          startIcon={<Person />}
-        >
-          Se connecter
-        </Button>
-      </form>
+        <Box sx={{ flexShrink: 0, mb: 2 }}>
+          <Button
+            component={Link}
+            to="/connect"
+            variant="outlined"
+            fullWidth
+            sx={{
+              color: '#1F2937',
+              border: '1px solid rgba(31, 41, 55, 0.2)',
+              borderRadius: 12,
+              py: isMobile ? 1.25 : 1.5,
+              fontWeight: 600,
+              fontSize: isMobile ? '0.95rem' : '1rem',
+              background: '#FFFFFF',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                borderColor: '#1F2937',
+                background: '#F9FAFB',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+              },
+            }}
+            startIcon={<Person />}
+          >
+            Se connecter
+          </Button>
+        </Box>
 
-      {/* Sécurité */}
-      <Box sx={{ 
-        mt: 4, 
-        pt: 3, 
-        borderTop: '1px solid rgba(229, 231, 235, 0.8)',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 2,
-        justifyContent: 'center'
-      }}>
-        <Security sx={{ color: '#6B7280', fontSize: '1rem' }} />
-        <Typography variant="caption" sx={{ color: '#6B7280', fontSize: '0.8rem' }}>
-          Données protégées et cryptées
-        </Typography>
-      </Box>
+        {/* Sécurité */}
+        <Box sx={{ 
+          mt: 'auto',
+          pt: 2, 
+          borderTop: '1px solid rgba(229, 231, 235, 0.8)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          justifyContent: 'center',
+          flexShrink: 0
+        }}>
+        
+        
+        </Box>
+      </form>
     </>
   );
 };
