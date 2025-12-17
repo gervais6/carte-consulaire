@@ -982,9 +982,8 @@ const SimulateurPoids = () => {
                   <br />
                   2. Comparez automatiquement toutes les offres
                   <br />
-                  3. Contactez directement le voyageur via WhatsApp
-                  <br />
-                  4. Vos données de réservation sont sauvegardées
+                  3. Contactez directement le voyageur  via WhatsApp
+                 
                 </Typography>
               </ResultCard>
             </Fade>
